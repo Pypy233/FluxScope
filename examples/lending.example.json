@@ -1,0 +1,1139 @@
+{
+  "schema": "fluxscope/analysis",
+  "schema_version": "0.1.0",
+  "meta": {
+    "id": "example-lending",
+    "title": "Example C — Collateralised borrowing (synthetic)",
+    "description": "A user supplies Token C as collateral (receipt cC), borrows Token D, and later repays. The borrowed D in the user's wallet and the debt it creates are separate objects.",
+    "synthetic": true,
+    "created_at": "2026-10-20T00:00:00Z",
+    "generator": {
+      "name": "examples/generate.py",
+      "version": "0.1.0"
+    },
+    "tags": [
+      "example",
+      "lending",
+      "debt"
+    ]
+  },
+  "scope": {
+    "kind": "example",
+    "project": {
+      "name": "Example lending pool (synthetic)",
+      "version": "example-1",
+      "entry_contracts": [
+        "ExampleLendingPool"
+      ],
+      "files": [
+        "example/ExampleLendingPool.sol"
+      ]
+    },
+    "chain": {
+      "chain_id": 31337,
+      "name": "local test chain (synthetic)",
+      "block": 3600
+    },
+    "components": [
+      {
+        "name": "hand-written example",
+        "role": "example"
+      }
+    ],
+    "boundaries": [
+      {
+        "id": "bnd:c:oracle",
+        "target": "Price oracle",
+        "reason": "Oracle implementation not in scope; prices are read through IOracle.",
+        "evidence": [
+          "ev:c:hf"
+        ]
+      }
+    ],
+    "notes": [
+      "Synthetic example data for exercising the viewer. Names, code, addresses and transactions are invented."
+    ]
+  },
+  "assets": [
+    {
+      "id": "asset:C",
+      "label": "Token C (example)",
+      "symbol": "C",
+      "kind": "token",
+      "standard": "ERC20",
+      "identity": {
+        "kind": "example",
+        "expression": "ExampleLendingPool.collateralToken"
+      },
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:ledgers"
+      ]
+    },
+    {
+      "id": "asset:D",
+      "label": "Token D (example)",
+      "symbol": "D",
+      "kind": "token",
+      "standard": "ERC20",
+      "identity": {
+        "kind": "example",
+        "expression": "ExampleLendingPool.debtAsset"
+      },
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:ledgers"
+      ]
+    },
+    {
+      "id": "asset:cC",
+      "label": "cC collateral receipt",
+      "kind": "share",
+      "identity": {
+        "kind": "contract_self",
+        "contract": "ExampleLendingPool",
+        "expression": "collateralShares"
+      },
+      "issuer": "ent:pool",
+      "description": "Internal ledger of supplied collateral.",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:ledgers"
+      ]
+    },
+    {
+      "id": "asset:debtD",
+      "label": "Debt in Token D",
+      "kind": "debt_token",
+      "identity": {
+        "kind": "contract_self",
+        "contract": "ExampleLendingPool",
+        "expression": "debtOf"
+      },
+      "issuer": "ent:pool",
+      "description": "Non-transferable obligation denominated in Token D. Not an asset of the holder.",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:ledgers"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "ent:c:user",
+      "label": "Borrower (any account)",
+      "kind": "account",
+      "expression": "msg.sender"
+    },
+    {
+      "id": "ent:pool",
+      "label": "ExampleLendingPool",
+      "kind": "contract",
+      "contract": {
+        "name": "ExampleLendingPool",
+        "file": "example/ExampleLendingPool.sol"
+      },
+      "evidence": [
+        "ev:c:supply"
+      ]
+    },
+    {
+      "id": "ent:oracle",
+      "label": "Price oracle",
+      "kind": "external_contract",
+      "in_scope": false,
+      "description": "IOracle; implementation not analysed."
+    },
+    {
+      "id": "ent:liquidator",
+      "label": "Liquidator (any account)",
+      "kind": "account",
+      "expression": "msg.sender of liquidate()"
+    }
+  ],
+  "operations": [
+    {
+      "id": "op:c:supply",
+      "kind": "deposit",
+      "label": "supply(amount) — collateral",
+      "initiator": "ent:c:user",
+      "executor": "ent:pool",
+      "entrypoint": {
+        "contract": "ExampleLendingPool",
+        "function": "supply",
+        "signature": "supply(uint256)"
+      },
+      "inputs": [
+        {
+          "id": "f:c:sup-in",
+          "asset": "asset:C",
+          "from": "ent:c:user",
+          "to": "ent:pool",
+          "amount": {
+            "asset": "asset:C",
+            "unit": "decimal",
+            "value": "1000",
+            "expression": "amount"
+          },
+          "mechanism": "transferFrom",
+          "evidence": [
+            "ev:c:supply"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:c:sup-out",
+          "asset": "asset:cC",
+          "from": null,
+          "to": "ent:c:user",
+          "amount": {
+            "asset": "asset:cC",
+            "unit": "decimal",
+            "value": "1000",
+            "expression": "amount"
+          },
+          "mechanism": "ledger-credit",
+          "evidence": [
+            "ev:c:supply"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:supply"
+      ]
+    },
+    {
+      "id": "op:c:borrow",
+      "kind": "borrow",
+      "label": "borrow(amount)",
+      "initiator": "ent:c:user",
+      "executor": "ent:pool",
+      "description": "Two separate outputs: Token D paid to the borrower and a debt record denominated in D.",
+      "entrypoint": {
+        "contract": "ExampleLendingPool",
+        "function": "borrow",
+        "signature": "borrow(uint256)"
+      },
+      "conditions": [
+        {
+          "id": "c:c:hf",
+          "kind": "require",
+          "text": "Position stays healthy: debt ≤ 75% of oracle-priced collateral",
+          "expression": "debtOf[user] * 10000 <= value * LTV_BPS",
+          "evidence": [
+            "ev:c:hf"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:c:bor-d",
+          "asset": "asset:D",
+          "from": "ent:pool",
+          "to": "ent:c:user",
+          "amount": {
+            "asset": "asset:D",
+            "unit": "decimal",
+            "value": "600",
+            "expression": "amount"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:c:borrow-pay",
+            "ev:c:tx-borrow"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported"
+          }
+        },
+        {
+          "id": "f:c:bor-debt",
+          "asset": "asset:debtD",
+          "from": null,
+          "to": "ent:c:user",
+          "amount": {
+            "asset": "asset:debtD",
+            "unit": "decimal",
+            "value": "600",
+            "expression": "amount"
+          },
+          "mechanism": "ledger-credit",
+          "evidence": [
+            "ev:c:borrow-debt"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:borrow",
+        "ev:c:tx-borrow"
+      ]
+    },
+    {
+      "id": "op:c:repay",
+      "kind": "repay",
+      "label": "repay(amount, onBehalfOf)",
+      "initiator": "ent:c:user",
+      "executor": "ent:pool",
+      "entrypoint": {
+        "contract": "ExampleLendingPool",
+        "function": "repay",
+        "signature": "repay(uint256,address)"
+      },
+      "participants": [
+        {
+          "role": "payer",
+          "entity": "ent:c:user",
+          "expression": "msg.sender"
+        },
+        {
+          "role": "debtor",
+          "entity": "ent:c:user",
+          "expression": "onBehalfOf",
+          "evidence": [
+            "ev:c:repay"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "id": "f:c:rep-d",
+          "asset": "asset:D",
+          "from": "ent:c:user",
+          "to": "ent:pool",
+          "amount": {
+            "asset": "asset:D",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "transferFrom",
+          "evidence": [
+            "ev:c:repay"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        },
+        {
+          "id": "f:c:rep-debt",
+          "asset": "asset:debtD",
+          "from": "ent:c:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:debtD",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "ledger-debit",
+          "evidence": [
+            "ev:c:repay"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:repay"
+      ]
+    },
+    {
+      "id": "op:c:withdraw",
+      "kind": "withdraw",
+      "label": "withdraw(amount) — collateral",
+      "initiator": "ent:c:user",
+      "executor": "ent:pool",
+      "entrypoint": {
+        "contract": "ExampleLendingPool",
+        "function": "withdraw",
+        "signature": "withdraw(uint256)"
+      },
+      "conditions": [
+        {
+          "id": "c:c:whf",
+          "kind": "require",
+          "text": "Position stays healthy after removing collateral",
+          "expression": "_healthy(msg.sender)",
+          "evidence": [
+            "ev:c:hf"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "id": "f:c:wd-cc",
+          "asset": "asset:cC",
+          "from": "ent:c:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:cC",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "ledger-debit",
+          "evidence": [
+            "ev:c:withdraw"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:c:wd-c",
+          "asset": "asset:C",
+          "from": "ent:pool",
+          "to": "ent:c:user",
+          "amount": {
+            "asset": "asset:C",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:c:withdraw"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:withdraw"
+      ]
+    },
+    {
+      "id": "op:c:liquidate",
+      "kind": "liquidate",
+      "label": "liquidate(user, repayAmount)",
+      "initiator": "ent:liquidator",
+      "executor": "ent:pool",
+      "entrypoint": {
+        "contract": "ExampleLendingPool",
+        "function": "liquidate",
+        "signature": "liquidate(address,uint256)"
+      },
+      "conditions": [
+        {
+          "id": "c:c:lq",
+          "kind": "require",
+          "text": "Borrower is unhealthy",
+          "expression": "!_healthy(user)",
+          "evidence": [
+            "ev:c:liq"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "id": "f:c:lq-d",
+          "asset": "asset:D",
+          "from": "ent:liquidator",
+          "to": "ent:pool",
+          "amount": {
+            "asset": "asset:D",
+            "unit": "unknown",
+            "expression": "repayAmount"
+          },
+          "mechanism": "transferFrom",
+          "evidence": [
+            "ev:c:liq"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        },
+        {
+          "id": "f:c:lq-debt",
+          "asset": "asset:debtD",
+          "from": "ent:c:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:debtD",
+            "unit": "unknown",
+            "expression": "repayAmount"
+          },
+          "mechanism": "ledger-debit",
+          "evidence": [
+            "ev:c:liq"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        },
+        {
+          "id": "f:c:lq-cc",
+          "asset": "asset:cC",
+          "from": "ent:c:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:cC",
+            "unit": "unknown",
+            "expression": "seized"
+          },
+          "mechanism": "ledger-debit",
+          "evidence": [
+            "ev:c:liq"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:c:lq-c",
+          "asset": "asset:C",
+          "from": "ent:pool",
+          "to": "ent:liquidator",
+          "amount": {
+            "asset": "asset:C",
+            "unit": "unknown",
+            "expression": "quote(repayAmount) * 105 / 100"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:c:liq"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:liq"
+      ]
+    }
+  ],
+  "positions": [
+    {
+      "id": "pos:c:user-cC",
+      "holder": "ent:c:user",
+      "asset": "asset:cC",
+      "kind": "share",
+      "label": "cC collateral receipt of borrower",
+      "amount": {
+        "asset": "asset:cC",
+        "unit": "decimal",
+        "value": "1000",
+        "expression": "collateralShares[user]"
+      },
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:supply"
+      ]
+    },
+    {
+      "id": "pos:c:pool-C",
+      "holder": "ent:pool",
+      "asset": "asset:C",
+      "kind": "custody",
+      "label": "C held by pool",
+      "amount": {
+        "asset": "asset:C",
+        "unit": "unknown",
+        "expression": "collateralToken.balanceOf(pool)"
+      },
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:supply"
+      ]
+    },
+    {
+      "id": "pos:c:user-D",
+      "holder": "ent:c:user",
+      "asset": "asset:D",
+      "kind": "custody",
+      "label": "Borrowed D in borrower's wallet",
+      "amount": {
+        "asset": "asset:D",
+        "unit": "decimal",
+        "value": "600",
+        "expression": "amount"
+      },
+      "description": "Token D the borrower received. It is matched by a separate debt position; it is not the borrower's own equity.",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:borrow-pay",
+        "ev:c:tx-borrow"
+      ]
+    },
+    {
+      "id": "pos:c:user-debt",
+      "holder": "ent:c:user",
+      "asset": "asset:debtD",
+      "kind": "debt",
+      "counterparty": "ent:pool",
+      "label": "Debt of borrower (in D)",
+      "amount": {
+        "asset": "asset:debtD",
+        "unit": "decimal",
+        "value": "600",
+        "expression": "debtOf[user]"
+      },
+      "description": "Obligation owed to the pool. Interest accrual is not modelled in this example.",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:borrow-debt"
+      ]
+    },
+    {
+      "id": "pos:c:pool-D",
+      "holder": "ent:pool",
+      "asset": "asset:D",
+      "kind": "custody",
+      "label": "Available D liquidity",
+      "amount": {
+        "asset": "asset:D",
+        "unit": "unknown",
+        "expression": "debtAsset.balanceOf(pool)"
+      },
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:borrow-pay"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel:c:claim",
+      "kind": "claim",
+      "source": "pos:c:user-cC",
+      "target": "pos:c:pool-C",
+      "label": "1:1 claim (if healthy)",
+      "basis_detail": "withdraw transfers `amount` of C for `amount` of cC",
+      "conditions": [
+        {
+          "id": "c:c:rc",
+          "kind": "require",
+          "text": "Withdrawal keeps the position healthy",
+          "expression": "_healthy(msg.sender)",
+          "evidence": [
+            "ev:c:hf"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:withdraw"
+      ]
+    },
+    {
+      "id": "rel:c:debt",
+      "kind": "debt",
+      "source": "pos:c:user-debt",
+      "target": "ent:pool",
+      "label": "owes D to pool",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:borrow-debt"
+      ]
+    },
+    {
+      "id": "rel:c:collat",
+      "kind": "collateral",
+      "source": "pos:c:user-cC",
+      "target": "pos:c:user-debt",
+      "label": "secures debt",
+      "basis_detail": "_healthy() compares debtOf with oracle value of collateralShares",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:hf"
+      ]
+    },
+    {
+      "id": "rel:c:dep-oracle",
+      "kind": "depends_on",
+      "source": "pos:c:user-debt",
+      "target": "ent:oracle",
+      "label": "health factor uses oracle price",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "unresolved",
+        "note": "Oracle implementation not in scope."
+      },
+      "evidence": [
+        "ev:c:hf"
+      ]
+    },
+    {
+      "id": "rel:c:exit-cc",
+      "kind": "exit",
+      "source": "pos:c:user-cC",
+      "target": "op:c:withdraw",
+      "label": "withdraw",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:withdraw"
+      ]
+    },
+    {
+      "id": "rel:c:exit-debt",
+      "kind": "exit",
+      "source": "pos:c:user-debt",
+      "target": "op:c:repay",
+      "label": "repay",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:repay"
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "exit:c:collateral",
+      "position": "pos:c:user-cC",
+      "label": "Repay debt, then withdraw collateral",
+      "steps": [
+        {
+          "order": 1,
+          "operation": "op:c:repay",
+          "actor": "ent:c:user",
+          "transaction": "separate",
+          "optional": true,
+          "description": "Needed only while the remaining collateral would not keep the position healthy.",
+          "conditions": [
+            {
+              "id": "c:c:x1",
+              "kind": "branch",
+              "text": "Outstanding debt makes the withdrawal unhealthy",
+              "expression": "!_healthy(after withdraw)",
+              "evidence": [
+                "ev:c:hf"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:c:repay"
+          ]
+        },
+        {
+          "order": 2,
+          "operation": "op:c:withdraw",
+          "actor": "ent:c:user",
+          "transaction": "separate",
+          "conditions": [
+            {
+              "id": "c:c:x2",
+              "kind": "require",
+              "text": "Position healthy after withdrawal (oracle price)",
+              "expression": "_healthy(msg.sender)",
+              "evidence": [
+                "ev:c:hf"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:c:withdraw"
+          ]
+        }
+      ],
+      "consumes": [
+        {
+          "id": "f:c:x-c",
+          "asset": "asset:cC",
+          "from": "ent:c:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:cC",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "ledger-debit",
+          "evidence": [
+            "ev:c:withdraw"
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "id": "f:c:x-r",
+          "asset": "asset:C",
+          "from": "ent:pool",
+          "to": "ent:c:user",
+          "amount": {
+            "asset": "asset:C",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:c:withdraw"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:withdraw"
+      ],
+      "unresolved": [
+        "unr:c:oracle"
+      ]
+    },
+    {
+      "id": "exit:c:debt",
+      "position": "pos:c:user-debt",
+      "label": "Repay debt",
+      "steps": [
+        {
+          "order": 1,
+          "operation": "op:c:repay",
+          "actor": "ent:c:user",
+          "transaction": "same",
+          "description": "Anyone may repay on behalf of the borrower (onBehalfOf).",
+          "evidence": [
+            "ev:c:repay"
+          ]
+        }
+      ],
+      "consumes": [
+        {
+          "id": "f:c:xd-c",
+          "asset": "asset:D",
+          "from": "ent:c:user",
+          "to": "ent:pool",
+          "amount": {
+            "asset": "asset:D",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "transferFrom",
+          "evidence": [
+            "ev:c:repay"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:c:repay"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev:c:ledgers",
+      "kind": "source",
+      "title": "collateral and debt ledgers",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 14,
+        "end_line": 15,
+        "snippet": "    mapping(address => uint256) public collateralShares;   // cC receipt ledger\n    mapping(address => uint256) public debtOf;             // debt D ledger (not transferable)",
+        "contract": "ExampleLendingPool"
+      }
+    },
+    {
+      "id": "ev:c:supply",
+      "kind": "source",
+      "title": "ExampleLendingPool.supply()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 18,
+        "end_line": 21,
+        "snippet": "    function supply(uint256 amount) external {\n        collateralToken.transferFrom(msg.sender, address(this), amount);\n        collateralShares[msg.sender] += amount;\n    }",
+        "contract": "ExampleLendingPool",
+        "function": "supply(uint256)"
+      }
+    },
+    {
+      "id": "ev:c:borrow",
+      "kind": "source",
+      "title": "ExampleLendingPool.borrow()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 23,
+        "end_line": 27,
+        "snippet": "    function borrow(uint256 amount) external {\n        debtOf[msg.sender] += amount;\n        require(_healthy(msg.sender), \"undercollateralised\");\n        debtAsset.transfer(msg.sender, amount);\n    }",
+        "contract": "ExampleLendingPool",
+        "function": "borrow(uint256)"
+      }
+    },
+    {
+      "id": "ev:c:borrow-debt",
+      "kind": "source",
+      "title": "debtOf[msg.sender] += amount",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 24,
+        "end_line": 24,
+        "snippet": "        debtOf[msg.sender] += amount;",
+        "contract": "ExampleLendingPool",
+        "function": "borrow(uint256)"
+      }
+    },
+    {
+      "id": "ev:c:borrow-pay",
+      "kind": "source",
+      "title": "debtAsset.transfer(msg.sender, amount)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 26,
+        "end_line": 26,
+        "snippet": "        debtAsset.transfer(msg.sender, amount);",
+        "contract": "ExampleLendingPool",
+        "function": "borrow(uint256)"
+      }
+    },
+    {
+      "id": "ev:c:repay",
+      "kind": "source",
+      "title": "ExampleLendingPool.repay()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 29,
+        "end_line": 32,
+        "snippet": "    function repay(uint256 amount, address onBehalfOf) external {\n        debtAsset.transferFrom(msg.sender, address(this), amount);\n        debtOf[onBehalfOf] -= amount;\n    }",
+        "contract": "ExampleLendingPool",
+        "function": "repay(uint256,address)"
+      }
+    },
+    {
+      "id": "ev:c:withdraw",
+      "kind": "source",
+      "title": "ExampleLendingPool.withdraw()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 34,
+        "end_line": 38,
+        "snippet": "    function withdraw(uint256 amount) external {\n        collateralShares[msg.sender] -= amount;\n        require(_healthy(msg.sender), \"undercollateralised\");\n        collateralToken.transfer(msg.sender, amount);\n    }",
+        "contract": "ExampleLendingPool",
+        "function": "withdraw(uint256)"
+      }
+    },
+    {
+      "id": "ev:c:liq",
+      "kind": "source",
+      "title": "ExampleLendingPool.liquidate()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 40,
+        "end_line": 47,
+        "snippet": "    function liquidate(address user, uint256 repayAmount) external {\n        require(!_healthy(user), \"healthy\");\n        debtAsset.transferFrom(msg.sender, address(this), repayAmount);\n        debtOf[user] -= repayAmount;\n        uint256 seized = oracle.quote(address(debtAsset), address(collateralToken), repayAmount) * 105 / 100;\n        collateralShares[user] -= seized;\n        collateralToken.transfer(msg.sender, seized);\n    }",
+        "contract": "ExampleLendingPool",
+        "function": "liquidate(address,uint256)"
+      }
+    },
+    {
+      "id": "ev:c:hf",
+      "kind": "source",
+      "title": "_healthy(): oracle-priced LTV check",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleLendingPool.sol",
+        "start_line": 49,
+        "end_line": 52,
+        "snippet": "    function _healthy(address user) internal view returns (bool) {\n        uint256 value = oracle.quote(address(collateralToken), address(debtAsset), collateralShares[user]);\n        return debtOf[user] * 10000 <= value * LTV_BPS;\n    }",
+        "contract": "ExampleLendingPool",
+        "function": "_healthy(address)"
+      }
+    },
+    {
+      "id": "ev:c:tx-borrow",
+      "kind": "transaction",
+      "title": "Borrow transaction (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xexample000000000000000000000000000000000000000000000000000000c002",
+        "block": 3501,
+        "call_path": "User → ExampleLendingPool.borrow(600e18)",
+        "data": {
+          "amount": "600000000000000000000"
+        }
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "example/ExampleLendingPool.sol",
+      "language": "solidity",
+      "synthetic": true,
+      "sha256": "2d2e8cea41e13217fcb34078de1c1e8d531f396d2dd8368e4c7ae4a30537a2aa",
+      "content": "// SYNTHETIC EXAMPLE CODE — not from a real project\n// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport {IERC20} from \"./IERC20.sol\";\nimport {IOracle} from \"./IOracle.sol\";\n\n/// Example lending pool with one collateral token (C) and one borrowable token (D).\ncontract ExampleLendingPool {\n    IERC20 public immutable collateralToken;   // Token C (example)\n    IERC20 public immutable debtAsset;         // Token D (example)\n    IOracle public immutable oracle;           // external price source\n\n    mapping(address => uint256) public collateralShares;   // cC receipt ledger\n    mapping(address => uint256) public debtOf;             // debt D ledger (not transferable)\n    uint256 public constant LTV_BPS = 7500;\n\n    function supply(uint256 amount) external {\n        collateralToken.transferFrom(msg.sender, address(this), amount);\n        collateralShares[msg.sender] += amount;\n    }\n\n    function borrow(uint256 amount) external {\n        debtOf[msg.sender] += amount;\n        require(_healthy(msg.sender), \"undercollateralised\");\n        debtAsset.transfer(msg.sender, amount);\n    }\n\n    function repay(uint256 amount, address onBehalfOf) external {\n        debtAsset.transferFrom(msg.sender, address(this), amount);\n        debtOf[onBehalfOf] -= amount;\n    }\n\n    function withdraw(uint256 amount) external {\n        collateralShares[msg.sender] -= amount;\n        require(_healthy(msg.sender), \"undercollateralised\");\n        collateralToken.transfer(msg.sender, amount);\n    }\n\n    function liquidate(address user, uint256 repayAmount) external {\n        require(!_healthy(user), \"healthy\");\n        debtAsset.transferFrom(msg.sender, address(this), repayAmount);\n        debtOf[user] -= repayAmount;\n        uint256 seized = oracle.quote(address(debtAsset), address(collateralToken), repayAmount) * 105 / 100;\n        collateralShares[user] -= seized;\n        collateralToken.transfer(msg.sender, seized);\n    }\n\n    function _healthy(address user) internal view returns (bool) {\n        uint256 value = oracle.quote(address(collateralToken), address(debtAsset), collateralShares[user]);\n        return debtOf[user] * 10000 <= value * LTV_BPS;\n    }\n}\n"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "unr:c:oracle",
+      "kind": "external_implementation",
+      "text": "Health checks depend on IOracle.quote(); the oracle implementation and its update conditions are not analysed.",
+      "subjects": [
+        "ent:oracle",
+        "rel:c:dep-oracle",
+        "exit:c:collateral"
+      ],
+      "evidence": [
+        "ev:c:hf"
+      ]
+    },
+    {
+      "id": "unr:c:interest",
+      "kind": "other",
+      "text": "No interest accrual exists in this example; real markets grow debt over time.",
+      "subjects": [
+        "pos:c:user-debt"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task:c:borrowed",
+      "question": "Is the borrowed Token D the borrower's own money?",
+      "focus": [
+        "pos:c:user-D"
+      ],
+      "view": "holdings",
+      "answer": "No. The borrower holds 600 D in the wallet and, separately, a debt of 600 D owed to the pool. They are separate positions and are not netted."
+    },
+    {
+      "id": "task:c:collateral",
+      "question": "Who holds the collateral Token C, and what is needed to get it back?",
+      "focus": [
+        "exit:c:collateral"
+      ],
+      "view": "exits",
+      "answer": "The pool holds C; the borrower holds cC. Repay enough debt so the position stays healthy, then withdraw."
+    },
+    {
+      "id": "task:c:debtdeps",
+      "question": "What does the debt position depend on?",
+      "focus": [
+        "pos:c:user-debt"
+      ],
+      "view": "dependencies",
+      "answer": "It is secured by the cC position and its health check depends on the external price oracle."
+    }
+  ]
+}

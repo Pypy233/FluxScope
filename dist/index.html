@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FluxScope</title>
+<style>
+:root { --bg:#f4f5f8; --panel:#fff; --text:#1b2232; --muted:#5f6b80; --border:#e1e4ea; --accent:#2f6fed; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+main { max-width:1040px; margin:0 auto; padding:36px 20px 60px; }
+h1 { font-size:30px; margin:0 0 4px; }
+h2 { font-size:18px; margin:34px 0 12px; }
+h3 { font-size:17px; margin:0 0 6px; }
+.lead { color:var(--muted); font-size:16px; max-width:820px; }
+.how { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:14px 18px; }
+.how li { margin:4px 0; }
+.grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
+.card { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px 18px; display:flex; flex-direction:column; }
+.card.primary { border-top:3px solid var(--accent); }
+.role { font-weight:600; margin:0 0 6px; font-size:14px; }
+.desc { color:var(--muted); font-size:13.5px; margin:0 0 8px; flex:1; }
+.stats { font-size:12.5px; color:var(--muted); margin:0 0 12px; }
+.links { display:flex; gap:8px; flex-wrap:wrap; }
+.btn { display:inline-block; padding:6px 12px; border-radius:6px; border:1px solid #c9ceda; color:var(--text); text-decoration:none; font-size:13.5px; }
+.btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+.btn.ghost { border-color:transparent; color:var(--muted); }
+.btn:hover { filter:brightness(.95); }
+code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12.5px; }
+footer { margin-top:36px; color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>FluxScope</h1>
+  <p class="lead">Recovers how assets and positions move through a DeFi system (asset flows, holdings,
+  claims, dependencies and exit paths) from Solidity code with static analysis, rules and an optional
+  language model, and shows the result next to the source, with the evidence behind every statement.</p>
+
+  <div class="how">
+    <b>How to read a report</b> (works offline in the browser; nothing is installed or sent anywhere):
+    <ul>
+      <li>It opens in the <b>Code</b> view: the source on the left, a <i>system map</i> of contracts and users on the right.</li>
+      <li>Pick a function in the list: the graph shows only that function (caller, assets moved, calls; <code>+</code> opens the next level),
+          and the source is annotated with what the analysis read from each line.</li>
+      <li>Hover a marked line to find it in the graph, or a graph item to find its lines; <i>pin</i> functions to build the picture up
+          (in the Kaia report: <code>redeem</code>, pin, then <code>claim</code> — the two-step withdrawal).</li>
+      <li>The tabs <b>Flows · Holdings · Dependencies · Exits · All</b> show the whole system; <i>Holdings</i> answers who holds a share,
+          what it claims and how to exit.</li>
+    </ul>
+  </div>
+
+  <h2>Real projects (pinned commits)</h2>
+  <div class="grid">
+    <article class="card primary">
+      <h3>Kaia yield aggregator (partial snapshot)</h3>
+      <p class="role">Development project for ledgers, debts and registries: two-step withdrawals, strategy debt, a Yearn V2 vault and an ERC-4626 vault with registered strategies.</p>
+      <p class="desc">Kaia-side vault stack of a yield aggregator: CooldownVault (two-step-withdrawal wrapper of the underlying, 1:1 shares, strategy predeposit debt) feeding a Yearn V2 vault whose CustomYearnStrategy deposits the underlying into CustomVault (ERC-4626), which allocates to registered CustomStrategy contracts. Partial snapshot (the local yield path only) pinned to a fixed commit; the Yearn V2 vault (Vyper), the router, health checks, external-assets providers and execution targets are outside the analysed scope.</p>
+      <p class="stats">4 contracts · 57 entry points · 28 positions · 82 relations · 18 source files · commit <code>ddbfd27e1f</code></p>
+      <div class="links"><a class="btn primary" href="reports/kaia-yield.html">Open report</a><a class="btn" href="reports/kaia-yield.llm.html">With LLM proposals</a><a class="btn ghost" href="reports/kaia-yield.json">JSON</a></div>
+    </article>
+    <article class="card primary">
+      <h3>Beefy Vault V7 + StrategyERC4626</h3>
+      <p class="role">Development project of the first milestone: vault, strategy and an external ERC-4626 vault.</p>
+      <p class="desc">Beefy yield vault (BeefyVaultV7) whose strategy (StrategyERC4626) deploys the vault&#x27;s want token into an external ERC-4626 vault. Snapshot of beefy-contracts pinned to a fixed commit; the external ERC-4626 vault, swapper, fee config, factory and Merkl claimer are outside the analysed scope.</p>
+      <p class="stats">2 contracts · 26 entry points · 18 positions · 48 relations · 10 source files · commit <code>e33f868e2d</code></p>
+      <div class="links"><a class="btn primary" href="reports/beefy-erc4626.html">Open report</a><a class="btn" href="reports/beefy-erc4626.llm.html">With LLM proposals</a><a class="btn ghost" href="reports/beefy-erc4626.json">JSON</a></div>
+    </article>
+    <article class="card primary">
+      <h3>MetaMorpho vault (Morpho Blue allocator)</h3>
+      <p class="role">Held-out project: analysed without analyzer changes. Morpho Blue itself is outside the scope (interface only), which the system map shows as a boundary.</p>
+      <p class="desc">MetaMorpho: an ERC-4626 vault that supplies its asset to Morpho Blue lending markets in a curated supply queue and withdraws through a withdraw queue; fees are minted as shares. Held-out case: analysed without analyzer changes. Morpho Blue itself is outside the analysed scope (interface only).</p>
+      <p class="stats">1 contracts · 19 entry points · 7 positions · 17 relations · 13 source files · commit <code>f5faa9c21b</code></p>
+      <div class="links"><a class="btn primary" href="reports/metamorpho.html">Open report</a><a class="btn" href="reports/metamorpho.llm.html">With LLM proposals</a><a class="btn ghost" href="reports/metamorpho.json">JSON</a></div>
+    </article></div>
+
+  <h2>Fixtures and examples</h2>
+  <div class="grid">
+    <article class="card">
+      <h3>OpenZeppelin ERC4626 (5.4.0)</h3>
+      <p class="role">Unmodified OpenZeppelin ERC-4626 (generality check).</p>
+      <p class="desc">OpenZeppelin&#x27;s ERC4626 implementation behind a minimal constructor wrapper; the underlying token is outside the analysed scope.</p>
+      <p class="stats">1 contracts · 7 entry points · 3 positions · 6 relations · 4 source files</p>
+      <div class="links"><a class="btn primary" href="reports/oz-erc4626.html">Open report</a><a class="btn ghost" href="reports/oz-erc4626.json">JSON</a></div>
+    </article>
+    <article class="card">
+      <h3>Receiver vault (synthetic fixture)</h3>
+      <p class="role">Synthetic fixture whose mint / burn helpers are not called _mint / _burn.</p>
+      <p class="desc">SYNTHETIC TEST FIXTURE: a vault with separate caller / receiver / owner roles, a keeper-only allocation into a tokenized strategy, and a lending pool that is only available as an interface.</p>
+      <p class="stats">2 contracts · 12 entry points · 6 positions · 18 relations · 1 source files</p>
+      <div class="links"><a class="btn primary" href="reports/receiver-vault.html">Open report</a><a class="btn ghost" href="reports/receiver-vault.json">JSON</a></div>
+    </article>
+    <article class="card">
+      <h3>Synthetic examples</h3>
+      <p class="desc">Viewer gallery with three hand-written cases (nested vault, swap + LP, lending), clearly marked as example data.
+      JSON results can be imported into it.</p>
+      <div class="links"><a class="btn primary" href="fluxscope.html">Open gallery</a></div>
+    </article>
+  </div>
+
+  <footer>Static analysis results are candidate behaviour supported by code, not observed executions. Third-party Solidity shown in
+  the reports keeps its own licence (SPDX header of each file).</footer>
+</main>
+</body>
+</html>

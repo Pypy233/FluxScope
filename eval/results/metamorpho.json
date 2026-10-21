@@ -1,0 +1,2555 @@
+{
+ "truth": "eval/metamorpho.truth.json",
+ "project": "corpus/metamorpho",
+ "configs": {
+  "rules": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11,
+    "by_support": {
+     "rule": [
+      11,
+      11
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations_missing": [],
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "other",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "mint",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "mint",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "other",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    }
+   },
+   "claims": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 2,
+    "precision": 1.0,
+    "recall": 0.333,
+    "missed": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": []
+   },
+   "exits": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "missed": [],
+    "extra": [],
+    "_truth": []
+   }
+  },
+  "llm-only": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "call",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 1,
+    "precision": 1.0,
+    "recall": 0.667,
+    "missed": [
+     "('any:mm', 'mm:asset')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 1,
+    "fp": 5,
+    "fn": 1,
+    "precision": 0.167,
+    "recall": 0.5,
+    "missed": [
+     "('mm', 'morpho')"
+    ],
+    "extra": [
+     "('any:mm', 'allocator_role')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('any:mm', 'owner')",
+     "('mm:supply:morpho', 'allocator_role')",
+     "('mm:supply:morpho', 'morpho')"
+    ],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 4,
+    "fn": 0,
+    "precision": 0.333,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any', 'allocator_role')",
+     "('any', 'mm')",
+     "('any', 'owner')",
+     "('mm', 'allocator_role')"
+    ]
+   },
+   "exits": {
+    "tp": 5,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.833,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('mm:asset', 'MetaMorpho.skim(address)')"
+    ],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('Are supply positions in different Morpho Blue markets (same loan token but different collateral, oracle, IRM, LLTV) one fungible asset or distinct assets with different risk?', 'supply:morpho')",
+     "('Is the ERC4626 _asset a plain ERC20, or could it be fee-on-transfer/rebasing so that amounts credited by Morpho and the vault differ from amounts moved?', 'asset')",
+     "('mm:asset', 'skim(address) accepts any token: can it be the vault asset or the mm share token itself, and is any idle vault asset balance meant to belong to share holders rather than the skim recipient?')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "29f6b88996c2b1f57cd2f204fc807c771d84c7c1859b4333f969821a90ef8363",
+    "sample": 0,
+    "response_sha256": "1cedcac1237e42e33e7ba8df10e470890c4b871c3de83d8bd3fe8b7cbdc7af68",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "llm-only@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "call",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 1,
+    "precision": 1.0,
+    "recall": 0.667,
+    "missed": [
+     "('any:mm', 'mm:asset')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 0,
+    "fp": 4,
+    "fn": 2,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ],
+    "extra": [
+     "('any:mm', 'allocator_role')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('any:mm', 'owner')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 1,
+    "fp": 3,
+    "fn": 1,
+    "precision": 0.25,
+    "recall": 0.5,
+    "missed": [
+     "('any', 'morpho')"
+    ],
+    "extra": [
+     "('any', 'allocator_role')",
+     "('any', 'mm')",
+     "('any', 'owner')"
+    ]
+   },
+   "exits": {
+    "tp": 5,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.625,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('mm:asset', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:asset', 'MetaMorpho.skim(address)')",
+     "('mm:asset', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 4,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "(\"MetaMorpho supplies to several Morpho Blue markets (different collateral, oracle, IRM, LLTV) that only share the loan token; is supply:morpho one fungible asset, or should each market's supply position be treated as a separate asset with its own risk and liquidity?\", 'supply:morpho')",
+     "('Fee shares are minted as mm to feeRecipient during fee accrual; it cannot be settled from this code whether feeRecipient is an independent party or one of the owner/curator roles, which affects who absorbs the dilution.', 'mm')",
+     "('The vault asset is an arbitrary ERC20 chosen at construction; the code cannot settle whether it is a standard token (no fee-on-transfer, rebasing or callback behavior), which affects whether deposited, supplied and withdrawn amounts match.', 'asset')",
+     "('asset', \"skim(address token) sends the vault's entire balance of an arbitrary token to skimRecipient; the code does not exclude the vault asset itself, so it cannot be settled whether idle vault asset (donations, or asset held mid-operation) is meant to belong to share holders or to the skim recipient.\")"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "04503efe329dbc6539170de00f5a0087963ba0126bc640ad9b066ef43ce20aa8",
+    "sample": 1,
+    "response_sha256": "674f469248485ceeb936fe502aadf41ca1c3180d71994cbbd3c8c86e2f78baa6",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "llm-only@3": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "call",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 1,
+    "precision": 1.0,
+    "recall": 0.667,
+    "missed": [
+     "('any:mm', 'mm:asset')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 0,
+    "fp": 4,
+    "fn": 2,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ],
+    "extra": [
+     "('any:mm', 'allocator_role')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('any:mm', 'owner')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 1,
+    "fp": 3,
+    "fn": 1,
+    "precision": 0.25,
+    "recall": 0.5,
+    "missed": [
+     "('any', 'morpho')"
+    ],
+    "extra": [
+     "('any', 'allocator_role')",
+     "('any', 'mm')",
+     "('any', 'owner')"
+    ]
+   },
+   "exits": {
+    "tp": 5,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.625,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('mm:asset', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:asset', 'MetaMorpho.skim(address)')",
+     "('mm:asset', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 4,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "(\"Markets removed from the withdraw queue via submitMarketRemoval/updateWithdrawQueue may still hold a MetaMorpho supply position that no longer counts in totalAssets; is that leftover position still part of the shareholders' claim?\", 'supply:morpho')",
+     "('Each Morpho Blue market Id is a separate supply position with its own collateral token, oracle, IRM and LLTV; the code sums them in totalAssets as one value, but whether they should be treated as one asset or one asset per market (with different risk) cannot be settled from this code.', 'supply:morpho')",
+     "('The vault asset is an arbitrary ERC20 set at construction; whether it is fee-on-transfer, rebasing or otherwise non-standard (which would break the asset/share accounting and Morpho supply amounts) cannot be determined from the code.', 'asset')",
+     "('asset', \"skim(address) sends the vault's whole balance of an arbitrary token to skimRecipient with no check that the token is not the vault asset (or the mm share itself); idle asset held by MetaMorpho is not counted in totalAssets, so is idle asset owned by shareholders or by the skim recipient?\")"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "cee71ada264fec534279455e2711005931b271798c6a954aca0a899a5d43c98a",
+    "sample": 2,
+    "response_sha256": "b81d391e8393a44ee9b56af696350cb165724d9a16ae48db5880deb4e23b0b52",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "combined": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11,
+    "by_support": {
+     "rule": [
+      8,
+      8
+     ],
+     "llm": [
+      3,
+      3
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations_missing": [],
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "other",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    }
+   },
+   "claims": {
+    "tp": 1,
+    "fp": 2,
+    "fn": 2,
+    "precision": 0.333,
+    "recall": 0.333,
+    "missed": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "extra": [
+     "('any:mm', 'morpho:asset:expr:47d57da7')",
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 2,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any:mm', 'ent:expr:eea19e27')",
+     "('any:mm', 'morpho:asset:expr:47d57da7')"
+    ],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.667,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any', 'ent')"
+    ]
+   },
+   "exits": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset', 'asset:expr:47d57da7')",
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "5169d6f6702b96523d39e826ffb8d365238897092a2ed679234ea8e6c59fc91f",
+    "sample": 0,
+    "response_sha256": "cb1e1caf34fc1cf6c27fe370bdaa0f0d50365cdad6476590e65afc3f4db0e2ec",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 56,
+    "accepted": 55,
+    "rejected": [
+     {
+      "what": "question",
+      "reason": "unknown fact_refs: ['ent:vault._owner', 'ent:role:81f4e61c', 'ent:role:b185e696']",
+      "item": {
+       "kind": "other",
+       "subjects": [
+        "ent:vault._owner",
+        "ent:vault.curator",
+        "ent:vault.guardian",
+        "ent:vault.skimRecipient"
+       ],
+       "text": "Owner and guardian functions in the code (setCurator, setIsAllocator, setSkimRecipient, submitTimelock, submitGuardian, acceptTimelock, acceptGuardian, revokePendingCap and others) are not in the OPERATIONS list, yet they decide who can steer funds and how long the timelock is.",
+       "fact_refs": [
+        "ent:vault._owner",
+        "ent:role:81f4e61c",
+        "ent:role:b185e696"
+       ]
+      }
+     }
+    ],
+    "context_chars": 88305
+   }
+  },
+  "combined+checked": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11,
+    "by_support": {
+     "rule": [
+      8,
+      8
+     ],
+     "llm": [
+      3,
+      3
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations_missing": [],
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "other",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    }
+   },
+   "claims": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.5,
+    "recall": 0.333,
+    "missed": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "extra": [
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": []
+   },
+   "exits": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "5169d6f6702b96523d39e826ffb8d365238897092a2ed679234ea8e6c59fc91f",
+    "sample": 0,
+    "response_sha256": "cb1e1caf34fc1cf6c27fe370bdaa0f0d50365cdad6476590e65afc3f4db0e2ec",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 56,
+    "accepted": 55,
+    "rejected": [
+     {
+      "what": "question",
+      "reason": "unknown fact_refs: ['ent:vault._owner', 'ent:role:81f4e61c', 'ent:role:b185e696']",
+      "item": {
+       "kind": "other",
+       "subjects": [
+        "ent:vault._owner",
+        "ent:vault.curator",
+        "ent:vault.guardian",
+        "ent:vault.skimRecipient"
+       ],
+       "text": "Owner and guardian functions in the code (setCurator, setIsAllocator, setSkimRecipient, submitTimelock, submitGuardian, acceptTimelock, acceptGuardian, revokePendingCap and others) are not in the OPERATIONS list, yet they decide who can steer funds and how long the timelock is.",
+       "fact_refs": [
+        "ent:vault._owner",
+        "ent:role:81f4e61c",
+        "ent:role:b185e696"
+       ]
+      }
+     }
+    ],
+    "context_chars": 88305
+   }
+  },
+  "combined@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11,
+    "by_support": {
+     "rule": [
+      7,
+      7
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations_missing": [],
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "call",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 1,
+    "fp": 2,
+    "fn": 2,
+    "precision": 0.333,
+    "recall": 0.333,
+    "missed": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "extra": [
+     "('any:mm', 'morpho:asset:expr:47d57da7')",
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 2,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.4,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any:mm', 'ent:expr:eea19e27')",
+     "('any:mm', 'morpho:asset:expr:47d57da7')",
+     "('ent:vault.feeRecipient:mm', 'morpho')"
+    ],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any', 'ent')",
+     "('ent', 'morpho')"
+    ]
+   },
+   "exits": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset', 'asset:expr:47d57da7')",
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "52eeaa13d213422481b1dee3b6b143514bfef94bb56f9e7deac6044cb56b4055",
+    "sample": 1,
+    "response_sha256": "92d3b35fcc7cdd9adf3f4d86fcb6279976c11e12990ed316d62ab09867687df4",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 58,
+    "accepted": 58,
+    "rejected": [],
+    "context_chars": 88305
+   }
+  },
+  "combined+checked@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11,
+    "by_support": {
+     "rule": [
+      7,
+      7
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations_missing": [],
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "call",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.5,
+    "recall": 0.333,
+    "missed": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "extra": [
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": []
+   },
+   "exits": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "52eeaa13d213422481b1dee3b6b143514bfef94bb56f9e7deac6044cb56b4055",
+    "sample": 1,
+    "response_sha256": "92d3b35fcc7cdd9adf3f4d86fcb6279976c11e12990ed316d62ab09867687df4",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 58,
+    "accepted": 58,
+    "rejected": [],
+    "context_chars": 88305
+   }
+  },
+  "combined@3": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11,
+    "by_support": {
+     "rule": [
+      7,
+      7
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations_missing": [],
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "call",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.5,
+    "recall": 0.333,
+    "missed": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "extra": [
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 2,
+    "fp": 4,
+    "fn": 0,
+    "precision": 0.333,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any:mm', 'allocator_role')",
+     "('any:mm', 'ent:expr:eea19e27')",
+     "('any:mm', 'morpho:asset:expr:47d57da7')",
+     "('ent:vault.feeRecipient:mm', 'morpho')"
+    ],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.4,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any', 'allocator_role')",
+     "('any', 'ent')",
+     "('ent', 'morpho')"
+    ]
+   },
+   "exits": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset', 'asset:expr:47d57da7')",
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "6e4e949b9e26945ff47f9df1eaae3e7ed6d7381f6197c733ac617fb1f4603e13",
+    "sample": 2,
+    "response_sha256": "49628d94f4c2102aec9f8c57658ccd69c0fd384b8b9676cc86c9e01f35cce614",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 56,
+    "accepted": 56,
+    "rejected": [],
+    "context_chars": 88305
+   }
+  },
+  "combined+checked@3": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 11,
+    "by_support": {
+     "rule": [
+      7,
+      7
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 11
+   },
+   "operations_missing": [],
+   "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+     "kind": "allocate",
+     "caller": "allocator_role",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.skim(address)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "MetaMorpho.setFee(uint256)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+     "kind": "fee",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "MetaMorpho.multicall(bytes[])": {
+     "kind": "call",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.5,
+    "recall": 0.333,
+    "missed": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "extra": [
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "_truth": [
+     "('any:mm', 'mm:asset')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ]
+   },
+   "dependencies": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": []
+   },
+   "exits": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.4,
+    "missed": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "extra": [],
+    "_truth": [
+     "('any:mm', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('any:mm', 'MetaMorpho.withdraw(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "6e4e949b9e26945ff47f9df1eaae3e7ed6d7381f6197c733ac617fb1f4603e13",
+    "sample": 2,
+    "response_sha256": "49628d94f4c2102aec9f8c57658ccd69c0fd384b8b9676cc86c9e01f35cce614",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 56,
+    "accepted": 56,
+    "rejected": [],
+    "context_chars": 88305
+   }
+  }
+ },
+ "contribution": {
+  "llm-only": {
+   "claims": {
+    "added_correct": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "added_wrong": [],
+    "lost_correct": [
+     "('any:mm', 'mm:asset')"
+    ]
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:mm', 'allocator_role')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('any:mm', 'owner')",
+     "('mm:supply:morpho', 'allocator_role')",
+     "('mm:supply:morpho', 'morpho')"
+    ],
+    "lost_correct": [
+     "('mm', 'morpho')"
+    ]
+   },
+   "exits": {
+    "added_correct": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "added_wrong": [
+     "('mm:asset', 'MetaMorpho.skim(address)')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('Are supply positions in different Morpho Blue markets (same loan token but different collateral, oracle, IRM, LLTV) one fungible asset or distinct assets with different risk?', 'supply:morpho')",
+     "('Is the ERC4626 _asset a plain ERC20, or could it be fee-on-transfer/rebasing so that amounts credited by Morpho and the vault differ from amounts moved?', 'asset')",
+     "('mm:asset', 'skim(address) accepts any token: can it be the vault asset or the mm share token itself, and is any idle vault asset balance meant to belong to share holders rather than the skim recipient?')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "llm-only@2": {
+   "claims": {
+    "added_correct": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "added_wrong": [],
+    "lost_correct": [
+     "('any:mm', 'mm:asset')"
+    ]
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:mm', 'allocator_role')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('any:mm', 'owner')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "lost_correct": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "exits": {
+    "added_correct": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "added_wrong": [
+     "('mm:asset', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:asset', 'MetaMorpho.skim(address)')",
+     "('mm:asset', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "(\"MetaMorpho supplies to several Morpho Blue markets (different collateral, oracle, IRM, LLTV) that only share the loan token; is supply:morpho one fungible asset, or should each market's supply position be treated as a separate asset with its own risk and liquidity?\", 'supply:morpho')",
+     "('Fee shares are minted as mm to feeRecipient during fee accrual; it cannot be settled from this code whether feeRecipient is an independent party or one of the owner/curator roles, which affects who absorbs the dilution.', 'mm')",
+     "('The vault asset is an arbitrary ERC20 chosen at construction; the code cannot settle whether it is a standard token (no fee-on-transfer, rebasing or callback behavior), which affects whether deposited, supplied and withdrawn amounts match.', 'asset')",
+     "('asset', \"skim(address token) sends the vault's entire balance of an arbitrary token to skimRecipient; the code does not exclude the vault asset itself, so it cannot be settled whether idle vault asset (donations, or asset held mid-operation) is meant to belong to share holders or to the skim recipient.\")"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "llm-only@3": {
+   "claims": {
+    "added_correct": [
+     "('any:mm', 'mm:supply:morpho')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "added_wrong": [],
+    "lost_correct": [
+     "('any:mm', 'mm:asset')"
+    ]
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:mm', 'allocator_role')",
+     "('any:mm', 'mm:supply:morpho')",
+     "('any:mm', 'owner')",
+     "('mm:supply:morpho', 'morpho:asset')"
+    ],
+    "lost_correct": [
+     "('any:mm', 'morpho')",
+     "('mm', 'morpho')"
+    ]
+   },
+   "exits": {
+    "added_correct": [
+     "('mm:supply:morpho', 'MetaMorpho.reallocate(MarketAllocation[])')",
+     "('mm:supply:morpho', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:supply:morpho', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "added_wrong": [
+     "('mm:asset', 'MetaMorpho.redeem(uint256,address,address)')",
+     "('mm:asset', 'MetaMorpho.skim(address)')",
+     "('mm:asset', 'MetaMorpho.withdraw(uint256,address,address)')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "(\"Markets removed from the withdraw queue via submitMarketRemoval/updateWithdrawQueue may still hold a MetaMorpho supply position that no longer counts in totalAssets; is that leftover position still part of the shareholders' claim?\", 'supply:morpho')",
+     "('Each Morpho Blue market Id is a separate supply position with its own collateral token, oracle, IRM and LLTV; the code sums them in totalAssets as one value, but whether they should be treated as one asset or one asset per market (with different risk) cannot be settled from this code.', 'supply:morpho')",
+     "('The vault asset is an arbitrary ERC20 set at construction; whether it is fee-on-transfer, rebasing or otherwise non-standard (which would break the asset/share accounting and Morpho supply amounts) cannot be determined from the code.', 'asset')",
+     "('asset', \"skim(address) sends the vault's whole balance of an arbitrary token to skimRecipient with no check that the token is not the vault asset (or the mm share itself); idle asset held by MetaMorpho is not counted in totalAssets, so is idle asset owned by shareholders or by the skim recipient?\")"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:mm', 'morpho:asset:expr:47d57da7')",
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:mm', 'ent:expr:eea19e27')",
+     "('any:mm', 'morpho:asset:expr:47d57da7')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset', 'asset:expr:47d57da7')",
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined+checked": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined@2": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:mm', 'morpho:asset:expr:47d57da7')",
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:mm', 'ent:expr:eea19e27')",
+     "('any:mm', 'morpho:asset:expr:47d57da7')",
+     "('ent:vault.feeRecipient:mm', 'morpho')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset', 'asset:expr:47d57da7')",
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined+checked@2": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined@3": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:mm', 'allocator_role')",
+     "('any:mm', 'ent:expr:eea19e27')",
+     "('any:mm', 'morpho:asset:expr:47d57da7')",
+     "('ent:vault.feeRecipient:mm', 'morpho')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset', 'asset:expr:47d57da7')",
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined+checked@3": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [
+     "('ent:vault.feeRecipient:mm', 'mm:asset')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset', 'asset:vault.skim(address).token')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  }
+ },
+ "summary": {
+  "rules": {
+   "runs": 1,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "caller": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "claims_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "claims_recall": {
+    "mean": 0.333,
+    "min": 0.333,
+    "max": 0.333,
+    "n": 1
+   },
+   "dependencies_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "dependencies_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "exits_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "exits_recall": {
+    "mean": 0.4,
+    "min": 0.4,
+    "max": 0.4,
+    "n": 1
+   },
+   "identity_questions_precision": {
+    "mean": null
+   },
+   "identity_questions_recall": {
+    "mean": null
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   }
+  },
+  "llm-only": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 0.667,
+    "min": 0.667,
+    "max": 0.667,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 0.056,
+    "min": 0.0,
+    "max": 0.167,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 0.167,
+    "min": 0.0,
+    "max": 0.5,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 0.694,
+    "min": 0.625,
+    "max": 0.833,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": null
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.278,
+    "min": 0.25,
+    "max": 0.333,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 0.667,
+    "min": 0.5,
+    "max": 1.0,
+    "n": 3
+   }
+  },
+  "combined": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 0.389,
+    "min": 0.333,
+    "max": 0.5,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 0.333,
+    "min": 0.333,
+    "max": 0.333,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 0.411,
+    "min": 0.333,
+    "max": 0.5,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 0.4,
+    "min": 0.4,
+    "max": 0.4,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": null
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.522,
+    "min": 0.4,
+    "max": 0.667,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   }
+  },
+  "combined+checked": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 0.5,
+    "min": 0.5,
+    "max": 0.5,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 0.333,
+    "min": 0.333,
+    "max": 0.333,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 0.4,
+    "min": 0.4,
+    "max": 0.4,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": null
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   }
+  }
+ }
+}

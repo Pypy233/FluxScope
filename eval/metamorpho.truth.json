@@ -1,0 +1,163 @@
+{
+  "project": "corpus/metamorpho",
+  "annotated_by": "manual reading of MetaMorpho.sol at f5faa9c (the MetaMorpho revision pinned by the Kaia yield aggregator's foundry.lock) (AssetLens authors)",
+  "annotated_at": "2026-10-20, before the first analyzer or LLM run on this project; held-out: the analyzer was not changed for it",
+  "notes": [
+    "Operations: entry points that move assets or mint/burn shares (directly or through Morpho Blue); role and queue setters without asset effects are not listed.",
+    "Morpho Blue is a single external contract (interface only); MetaMorpho's supply in its markets is a non-tokenized position recorded by Morpho ('supply:morpho').",
+    "Annotated by the tool authors: an independent annotation is needed before reporting numbers in a paper.",
+    "Aliases (naming only) added after the first rules-only run; annotation unchanged from the frozen copy (sha256 a91ad626\u2026)."
+  ],
+  "vocabulary": {
+    "roles": {
+      "any": "any account",
+      "owner": "Ownable owner",
+      "allocator_role": "isAllocator member, curator or owner"
+    },
+    "assets": {
+      "mm": "MetaMorpho share token",
+      "asset": "the vault asset (ERC4626 _asset)",
+      "supply:morpho": "MetaMorpho's supply position in Morpho Blue markets"
+    },
+    "holders": {
+      "any": "any account",
+      "mm": "MetaMorpho",
+      "morpho": "Morpho Blue (external)"
+    }
+  },
+  "sources": [
+    "src/MetaMorpho.sol",
+    "src/interfaces/*.sol",
+    "src/libraries/*.sol"
+  ],
+  "operations": {
+    "MetaMorpho.deposit(uint256,address)": {
+      "kind": [
+        "deposit"
+      ],
+      "caller": "any"
+    },
+    "MetaMorpho.mint(uint256,address)": {
+      "kind": [
+        "deposit",
+        "mint"
+      ],
+      "caller": "any"
+    },
+    "MetaMorpho.withdraw(uint256,address,address)": {
+      "kind": [
+        "withdraw",
+        "redeem"
+      ],
+      "caller": "any"
+    },
+    "MetaMorpho.redeem(uint256,address,address)": {
+      "kind": [
+        "redeem",
+        "withdraw"
+      ],
+      "caller": "any"
+    },
+    "MetaMorpho.reallocate(MarketAllocation[])": {
+      "kind": [
+        "allocate",
+        "deallocate",
+        "other"
+      ],
+      "caller": "allocator_role"
+    },
+    "MetaMorpho.skim(address)": {
+      "kind": [
+        "transfer",
+        "withdraw"
+      ],
+      "caller": "any"
+    },
+    "MetaMorpho.transfer(address,uint256)": {
+      "kind": [
+        "transfer"
+      ],
+      "caller": "any"
+    },
+    "MetaMorpho.transferFrom(address,address,uint256)": {
+      "kind": [
+        "transfer"
+      ],
+      "caller": "any"
+    },
+    "MetaMorpho.setFee(uint256)": {
+      "kind": [
+        "fee",
+        "mint",
+        "other"
+      ],
+      "caller": "owner"
+    },
+    "MetaMorpho.setFeeRecipient(address)": {
+      "kind": [
+        "fee",
+        "mint",
+        "other"
+      ],
+      "caller": "owner"
+    },
+    "MetaMorpho.multicall(bytes[])": {
+      "kind": [
+        "call",
+        "other"
+      ],
+      "caller": "any"
+    }
+  },
+  "claims": [
+    [
+      "any:mm",
+      "mm:asset"
+    ],
+    [
+      "any:mm",
+      "mm:supply:morpho"
+    ],
+    [
+      "mm:supply:morpho",
+      "morpho:asset"
+    ]
+  ],
+  "dependencies": [
+    [
+      "any:mm",
+      "morpho"
+    ],
+    [
+      "mm",
+      "morpho"
+    ]
+  ],
+  "exits": {
+    "any:mm": [
+      "MetaMorpho.withdraw(uint256,address,address)",
+      "MetaMorpho.redeem(uint256,address,address)"
+    ],
+    "mm:supply:morpho": [
+      "MetaMorpho.withdraw(uint256,address,address)",
+      "MetaMorpho.redeem(uint256,address,address)",
+      "MetaMorpho.reallocate(MarketAllocation[])"
+    ]
+  },
+  "identity_questions": [],
+  "aliases": {
+    "assets": {
+      "asset:vault": "mm",
+      "asset:vault._asset": "asset"
+    },
+    "entities": {
+      "ent:any": "any",
+      "ent:vault": "mm",
+      "ent:vault.MORPHO": "morpho",
+      "ent:vault._owner": "owner"
+    },
+    "entity_labels": {
+      "member of MetaMorpho.isAllocator": "allocator_role"
+    }
+  }
+}

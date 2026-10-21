@@ -1,0 +1,2344 @@
+{
+  "$defs": {
+    "Amount": {
+      "additionalProperties": false,
+      "description": "A quantity of exactly one asset. ``value`` / ``raw`` may be unknown.",
+      "properties": {
+        "asset": {
+          "description": "Asset id the amount is denominated in",
+          "title": "Asset",
+          "type": "string"
+        },
+        "unit": {
+          "default": "unknown",
+          "description": "raw = integer base units, decimal = decimal-adjusted token units",
+          "enum": [
+            "raw",
+            "decimal",
+            "unknown"
+          ],
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Numeric value as a string; null when unknown",
+          "title": "Value"
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Symbolic expression, e.g. a source expression",
+          "title": "Expression"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "asset"
+      ],
+      "title": "Amount",
+      "type": "object"
+    },
+    "Asset": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "symbol": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Display only; never used to relate assets",
+          "title": "Symbol"
+        },
+        "kind": {
+          "$ref": "#/$defs/AssetKind"
+        },
+        "standard": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Standard"
+        },
+        "identity": {
+          "$ref": "#/$defs/AssetIdentity"
+        },
+        "issuer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Entity id that issues / accounts for this asset",
+          "title": "Issuer"
+        },
+        "decimals": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Decimals"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "kind",
+        "identity",
+        "status"
+      ],
+      "title": "Asset",
+      "type": "object"
+    },
+    "AssetIdentity": {
+      "additionalProperties": false,
+      "description": "How the asset is identified. Display names are never used for identity.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "address",
+            "scoped_expression",
+            "contract_self",
+            "native",
+            "example"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "chain_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chain Id"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Address"
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "e.g. StrategyERC4626.want",
+          "title": "Expression"
+        },
+        "contract": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contract"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "AssetIdentity",
+      "type": "object"
+    },
+    "AssetKind": {
+      "enum": [
+        "token",
+        "share",
+        "lp_token",
+        "debt_token",
+        "native",
+        "accounting",
+        "nft_position",
+        "unknown"
+      ],
+      "title": "AssetKind",
+      "type": "string"
+    },
+    "Assumption": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "config",
+            "standard",
+            "user",
+            "example"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "source"
+      ],
+      "title": "Assumption",
+      "type": "object"
+    },
+    "Basis": {
+      "description": "Where a fact comes from. ``static`` facts are candidate behaviour that\nthe code supports; ``observed`` facts were seen in a concrete execution.",
+      "enum": [
+        "example",
+        "static",
+        "observed",
+        "config"
+      ],
+      "title": "Basis",
+      "type": "string"
+    },
+    "Boundary": {
+      "additionalProperties": false,
+      "description": "A place where the analysis stops (e.g. only an interface is available).",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "target",
+        "reason"
+      ],
+      "title": "Boundary",
+      "type": "object"
+    },
+    "ChainInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "chain_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chain Id"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "block": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Block"
+        }
+      },
+      "title": "ChainInfo",
+      "type": "object"
+    },
+    "Check": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/CheckResult"
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detail"
+        },
+        "evidence": {
+          "description": "Evidence ids",
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "result"
+      ],
+      "title": "Check",
+      "type": "object"
+    },
+    "CheckResult": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown"
+      ],
+      "title": "CheckResult",
+      "type": "string"
+    },
+    "Component": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        },
+        "role": {
+          "description": "e.g. compiler, static-analysis, adapter, llm",
+          "title": "Role",
+          "type": "string"
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detail"
+        }
+      },
+      "required": [
+        "name",
+        "role"
+      ],
+      "title": "Component",
+      "type": "object"
+    },
+    "Condition": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ConditionKind"
+        },
+        "text": {
+          "description": "Human-readable condition",
+          "title": "Text",
+          "type": "string"
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Source expression, if any",
+          "title": "Expression"
+        },
+        "negated": {
+          "default": false,
+          "description": "True if the guarded step runs when the expression is false",
+          "title": "Negated",
+          "type": "boolean"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Status"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "text"
+      ],
+      "title": "Condition",
+      "type": "object"
+    },
+    "ConditionKind": {
+      "enum": [
+        "require",
+        "modifier",
+        "branch",
+        "access_control",
+        "state",
+        "external",
+        "loop",
+        "timing",
+        "assumption",
+        "other"
+      ],
+      "title": "ConditionKind",
+      "type": "string"
+    },
+    "ContractRef": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "file": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Address"
+        },
+        "chain_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chain Id"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ContractRef",
+      "type": "object"
+    },
+    "Entity": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EntityKind"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "parent": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Grouping entity id (e.g. protocol)",
+          "title": "Parent"
+        },
+        "contract": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ContractRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Address expression this entity stands for",
+          "title": "Expression"
+        },
+        "in_scope": {
+          "default": true,
+          "title": "In Scope",
+          "type": "boolean"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Status"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "kind"
+      ],
+      "title": "Entity",
+      "type": "object"
+    },
+    "EntityKind": {
+      "enum": [
+        "account",
+        "role",
+        "contract",
+        "protocol",
+        "external_contract",
+        "unknown"
+      ],
+      "title": "EntityKind",
+      "type": "string"
+    },
+    "EntryPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "contract": {
+          "title": "Contract",
+          "type": "string"
+        },
+        "function": {
+          "title": "Function",
+          "type": "string"
+        },
+        "signature": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature"
+        },
+        "visibility": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Visibility"
+        }
+      },
+      "required": [
+        "contract",
+        "function"
+      ],
+      "title": "EntryPoint",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "synthetic": {
+          "default": false,
+          "title": "Synthetic",
+          "type": "boolean"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceLocation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "execution": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExecutionRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "URL or document reference (standards, configs)",
+          "title": "Reference"
+        },
+        "llm": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "model, prompt_version, call_id",
+          "title": "Llm"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "EvidenceKind": {
+      "enum": [
+        "source",
+        "transaction",
+        "log",
+        "trace",
+        "config",
+        "standard",
+        "rule",
+        "llm"
+      ],
+      "title": "EvidenceKind",
+      "type": "string"
+    },
+    "ExecutionRef": {
+      "additionalProperties": false,
+      "properties": {
+        "chain_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chain Id"
+        },
+        "tx_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tx Hash"
+        },
+        "block": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Block"
+        },
+        "log_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Log Index"
+        },
+        "call_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Call Path"
+        },
+        "data": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data"
+        }
+      },
+      "title": "ExecutionRef",
+      "type": "object"
+    },
+    "ExitPath": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "position": {
+          "description": "Position id that is exited",
+          "title": "Position",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/ExitStep"
+          },
+          "title": "Steps",
+          "type": "array"
+        },
+        "consumes": {
+          "items": {
+            "$ref": "#/$defs/Flow"
+          },
+          "title": "Consumes",
+          "type": "array"
+        },
+        "returns": {
+          "items": {
+            "$ref": "#/$defs/Flow"
+          },
+          "title": "Returns",
+          "type": "array"
+        },
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/Condition"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "unresolved": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position",
+        "label",
+        "steps",
+        "status"
+      ],
+      "title": "ExitPath",
+      "type": "object"
+    },
+    "ExitStep": {
+      "additionalProperties": false,
+      "properties": {
+        "order": {
+          "title": "Order",
+          "type": "integer"
+        },
+        "operation": {
+          "description": "Operation id",
+          "title": "Operation",
+          "type": "string"
+        },
+        "actor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Entity that must perform / trigger the step",
+          "title": "Actor"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "transaction": {
+          "anyOf": [
+            {
+              "enum": [
+                "same",
+                "separate"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Transaction"
+        },
+        "optional": {
+          "default": false,
+          "description": "Step only runs under a branch condition",
+          "title": "Optional",
+          "type": "boolean"
+        },
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/Condition"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "order",
+        "operation"
+      ],
+      "title": "ExitStep",
+      "type": "object"
+    },
+    "Flow": {
+      "additionalProperties": false,
+      "description": "One asset movement inside an operation. ``from_``/``to`` may be null for\nmint (no payer) and burn (no recipient).",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "asset": {
+          "title": "Asset",
+          "type": "string"
+        },
+        "from": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Payer entity id; null for mint",
+          "title": "From"
+        },
+        "to": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Recipient entity id; null for burn",
+          "title": "To"
+        },
+        "amount": {
+          "$ref": "#/$defs/Amount"
+        },
+        "mechanism": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "transfer, transferFrom, mint, burn, native, adapter ...",
+          "title": "Mechanism"
+        },
+        "conditions": {
+          "description": "Condition ids of the parent operation",
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Status"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "asset",
+        "amount"
+      ],
+      "title": "Flow",
+      "type": "object"
+    },
+    "Generator": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "Generator",
+      "type": "object"
+    },
+    "Meta": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "synthetic": {
+          "description": "True for example / synthetic data",
+          "title": "Synthetic",
+          "type": "boolean"
+        },
+        "created_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Created At"
+        },
+        "generator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Generator"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "synthetic"
+      ],
+      "title": "Meta",
+      "type": "object"
+    },
+    "Operation": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/OperationKind"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "parent": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Enclosing operation id",
+          "title": "Parent"
+        },
+        "order": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Position within the parent operation",
+          "title": "Order"
+        },
+        "transaction": {
+          "anyOf": [
+            {
+              "enum": [
+                "same",
+                "separate"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Relation to the parent: executed in the same transaction or a separate one",
+          "title": "Transaction"
+        },
+        "entrypoint": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EntryPoint"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "initiator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Entity that calls / triggers the operation",
+          "title": "Initiator"
+        },
+        "executor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Contract entity that executes it",
+          "title": "Executor"
+        },
+        "participants": {
+          "items": {
+            "$ref": "#/$defs/Participant"
+          },
+          "title": "Participants",
+          "type": "array"
+        },
+        "inputs": {
+          "items": {
+            "$ref": "#/$defs/Flow"
+          },
+          "title": "Inputs",
+          "type": "array"
+        },
+        "outputs": {
+          "items": {
+            "$ref": "#/$defs/Flow"
+          },
+          "title": "Outputs",
+          "type": "array"
+        },
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/Condition"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "unresolved": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "status"
+      ],
+      "title": "Operation",
+      "type": "object"
+    },
+    "OperationKind": {
+      "enum": [
+        "transfer",
+        "swap",
+        "deposit",
+        "withdraw",
+        "mint",
+        "burn",
+        "redeem",
+        "borrow",
+        "repay",
+        "add_liquidity",
+        "remove_liquidity",
+        "stake",
+        "unstake",
+        "allocate",
+        "deallocate",
+        "harvest",
+        "claim",
+        "approve",
+        "liquidate",
+        "fee",
+        "call",
+        "other"
+      ],
+      "title": "OperationKind",
+      "type": "string"
+    },
+    "Participant": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "description": "caller, payer, receiver, owner, share_receiver, keeper, ...",
+          "title": "Role",
+          "type": "string"
+        },
+        "entity": {
+          "title": "Entity",
+          "type": "string"
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expression"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "role",
+        "entity"
+      ],
+      "title": "Participant",
+      "type": "object"
+    },
+    "Position": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "holder": {
+          "description": "Entity id",
+          "title": "Holder",
+          "type": "string"
+        },
+        "asset": {
+          "description": "Asset id",
+          "title": "Asset",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/PositionKind"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Amount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "counterparty": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "For debt / collateral: the entity owed to",
+          "title": "Counterparty"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "holder",
+        "asset",
+        "kind",
+        "status"
+      ],
+      "title": "Position",
+      "type": "object"
+    },
+    "PositionKind": {
+      "enum": [
+        "share",
+        "custody",
+        "lp",
+        "debt",
+        "collateral",
+        "claim",
+        "reward"
+      ],
+      "title": "PositionKind",
+      "type": "string"
+    },
+    "ProjectInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repository"
+        },
+        "commit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Commit"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        },
+        "entry_contracts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Entry Contracts",
+          "type": "array"
+        },
+        "files": {
+          "description": "Files in the analysed snapshot",
+          "items": {
+            "type": "string"
+          },
+          "title": "Files",
+          "type": "array"
+        },
+        "snapshot_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Hash over the analysed files",
+          "title": "Snapshot Sha256"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "ProjectInfo",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "description": "Pipeline record so a wrong relation can be traced to its stage.",
+      "properties": {
+        "stages": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Stages",
+          "type": "array"
+        },
+        "llm_calls": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Llm Calls",
+          "type": "array"
+        }
+      },
+      "title": "Provenance",
+      "type": "object"
+    },
+    "Relation": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/RelationKind"
+        },
+        "source": {
+          "description": "Node id (entity, asset, position or operation)",
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "asset": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Asset"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Amount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "operation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Operation"
+        },
+        "basis_detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "e.g. 'pro-rata of Vault.balance()'",
+          "title": "Basis Detail"
+        },
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/Condition"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "source",
+        "target",
+        "status"
+      ],
+      "title": "Relation",
+      "type": "object"
+    },
+    "RelationKind": {
+      "enum": [
+        "asset_flow",
+        "holds",
+        "claim",
+        "depends_on",
+        "exit",
+        "debt",
+        "collateral",
+        "binding",
+        "calls",
+        "identity"
+      ],
+      "title": "RelationKind",
+      "type": "string"
+    },
+    "Scope": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/ScopeKind"
+        },
+        "project": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProjectInfo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "chain": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ChainInfo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "build": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Build"
+        },
+        "components": {
+          "items": {
+            "$ref": "#/$defs/Component"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "boundaries": {
+          "items": {
+            "$ref": "#/$defs/Boundary"
+          },
+          "title": "Boundaries",
+          "type": "array"
+        },
+        "assumptions": {
+          "items": {
+            "$ref": "#/$defs/Assumption"
+          },
+          "title": "Assumptions",
+          "type": "array"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "Scope",
+      "type": "object"
+    },
+    "ScopeKind": {
+      "enum": [
+        "example",
+        "static_analysis",
+        "execution_observation",
+        "mixed"
+      ],
+      "title": "ScopeKind",
+      "type": "string"
+    },
+    "SourceFile": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sha256"
+        },
+        "language": {
+          "default": "solidity",
+          "title": "Language",
+          "type": "string"
+        },
+        "synthetic": {
+          "default": false,
+          "title": "Synthetic",
+          "type": "boolean"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "content"
+      ],
+      "title": "SourceFile",
+      "type": "object"
+    },
+    "SourceLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "contract": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contract"
+        },
+        "function": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Function"
+        },
+        "start_line": {
+          "title": "Start Line",
+          "type": "integer"
+        },
+        "end_line": {
+          "title": "End Line",
+          "type": "integer"
+        },
+        "snippet": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snippet"
+        }
+      },
+      "required": [
+        "file",
+        "start_line",
+        "end_line"
+      ],
+      "title": "SourceLocation",
+      "type": "object"
+    },
+    "Status": {
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "$ref": "#/$defs/Basis"
+        },
+        "support": {
+          "$ref": "#/$defs/Support"
+        },
+        "verification": {
+          "$ref": "#/$defs/Verification"
+        },
+        "rule": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Rule or adapter id that produced this item",
+          "title": "Rule"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/Check"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "basis",
+        "support",
+        "verification"
+      ],
+      "title": "Status",
+      "type": "object"
+    },
+    "Support": {
+      "description": "What produced the interpretation.",
+      "enum": [
+        "rule",
+        "adapter",
+        "llm",
+        "config",
+        "manual",
+        "derived"
+      ],
+      "title": "Support",
+      "type": "string"
+    },
+    "Task": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "focus": {
+          "description": "Node ids to select / highlight",
+          "items": {
+            "type": "string"
+          },
+          "title": "Focus",
+          "type": "array"
+        },
+        "view": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Suggested view: flows, holdings, dependencies, all",
+          "title": "View"
+        },
+        "answer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Expected answer, for checking the interaction",
+          "title": "Answer"
+        }
+      },
+      "required": [
+        "id",
+        "question"
+      ],
+      "title": "Task",
+      "type": "object"
+    },
+    "Unresolved": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/UnresolvedKind"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "subjects": {
+          "description": "Ids of affected nodes",
+          "items": {
+            "type": "string"
+          },
+          "title": "Subjects",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "suggestion": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Suggestion"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "text"
+      ],
+      "title": "Unresolved",
+      "type": "object"
+    },
+    "UnresolvedKind": {
+      "enum": [
+        "external_implementation",
+        "unbound_address",
+        "identity",
+        "missing_exit",
+        "ambiguous_semantics",
+        "dynamic_dispatch",
+        "llm_question",
+        "other"
+      ],
+      "title": "UnresolvedKind",
+      "type": "string"
+    },
+    "Verification": {
+      "enum": [
+        "supported",
+        "partially_supported",
+        "pending",
+        "contradicted",
+        "unresolved"
+      ],
+      "title": "Verification",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "fluxscope/analysis",
+      "default": "fluxscope/analysis",
+      "title": "Schema",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "meta": {
+      "$ref": "#/$defs/Meta"
+    },
+    "scope": {
+      "$ref": "#/$defs/Scope"
+    },
+    "assets": {
+      "items": {
+        "$ref": "#/$defs/Asset"
+      },
+      "title": "Assets",
+      "type": "array"
+    },
+    "entities": {
+      "items": {
+        "$ref": "#/$defs/Entity"
+      },
+      "title": "Entities",
+      "type": "array"
+    },
+    "operations": {
+      "items": {
+        "$ref": "#/$defs/Operation"
+      },
+      "title": "Operations",
+      "type": "array"
+    },
+    "positions": {
+      "items": {
+        "$ref": "#/$defs/Position"
+      },
+      "title": "Positions",
+      "type": "array"
+    },
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/Relation"
+      },
+      "title": "Relations",
+      "type": "array"
+    },
+    "exits": {
+      "items": {
+        "$ref": "#/$defs/ExitPath"
+      },
+      "title": "Exits",
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceFile"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "unresolved": {
+      "items": {
+        "$ref": "#/$defs/Unresolved"
+      },
+      "title": "Unresolved",
+      "type": "array"
+    },
+    "tasks": {
+      "items": {
+        "$ref": "#/$defs/Task"
+      },
+      "title": "Tasks",
+      "type": "array"
+    },
+    "provenance": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Provenance"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "meta",
+    "scope"
+  ],
+  "title": "FluxScope analysis result",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fluxscope.dev/schema/analysis-0.1.0.json"
+}

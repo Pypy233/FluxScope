@@ -1,0 +1,469 @@
+{
+  "project": "corpus/kaia-yield",
+  "annotated_by": "manual reading of CooldownVault.sol, BaseCooldownStrategy.sol, CustomYearnStrategy.sol, BaseStrategy.sol (vendored Yearn), CustomVault.sol and CustomStrategy.sol at ddbfd27 plus the upstream README (AssetLens authors)",
+  "annotated_at": "2026-10-20, before the first analyzer or LLM run on this project",
+  "notes": [
+    "Kaia local-yield path only: CooldownVault -> (Yearn V2 vault, Vyper, not in the repository) -> CustomYearnStrategy -> CustomVault -> CustomStrategy. The cross-chain OriginVault/RemoteVault path and the router are out of scope.",
+    "Kinds list every acceptable label; callers use the role vocabulary below. Positions are holder:asset.",
+    "CooldownVault shares can only be held by addresses in _authorizedAddresses (_beforeTokenTransfer checks both sides), hence the 'authorized' holder class.",
+    "withdraw/redeem burn shares and create a RedeemRequest owned by 'receiver'; claim(requestId) pays the stored receiver. With cooldownPeriod == 0 the claim happens inside withdraw/redeem.",
+    "predeposit mints CooldownVault shares to a registered strategy against a debt (strategyDebtOutstanding / predepositRequests); retrieveDebt makes the strategy repay underlying to the CooldownVault.",
+    "Deployment facts used for the configuration (DEPLOYED_CONTRACTS.md / constructors): the Yearn vault's token is the CooldownVault; CustomYearnStrategy.customVault and externalShareToken are the CustomVault; CustomVault registers CustomStrategy, whose remoteVault is the CustomVault.",
+    "Annotated by the tool authors: an independent annotation is needed before reporting numbers in a paper.",
+    "Aliases (naming only: analyzer ids -> the vocabulary above) were added after the first rules-only run; the annotation itself is unchanged from the frozen copy (sha256 0beec1a4\u2026, written before any run)."
+  ],
+  "vocabulary": {
+    "roles": {
+      "any": "any account",
+      "authorized": "member of CooldownVault._authorizedAddresses (router, Yearn vault, strategies)",
+      "request_receiver": "receiver stored in the redeem request",
+      "request_strategy": "strategy stored in the predeposit request",
+      "cv_strategy": "member of CooldownVault._strategiesSet (registered strategy)",
+      "cv_keepers": "CooldownVault management/governance or the strategy's keeper()/strategist() (strategy must be registered)",
+      "cv_governance": "CooldownVault.governance",
+      "yearn_vault": "the Yearn V2 vault bound to CustomYearnStrategy.vault",
+      "st_keepers": "strategy keeper, strategist, yVault governance/guardian/management",
+      "st_governance": "yVault.governance()",
+      "st_emergency": "strategist, yVault governance/guardian/management",
+      "cooldown": "CooldownVault instance",
+      "strategy": "CustomYearnStrategy instance",
+      "customVault": "CustomVault instance",
+      "cvault_operator": "CustomVault operator or governance",
+      "cvault_governance": "CustomVault.governance",
+      "cs_strategist": "CustomStrategy strategist or governance"
+    },
+    "assets": {
+      "cv": "CooldownVault share token (CooldownVault itself)",
+      "usdt": "underlying token (CooldownVault._underlying = CustomVault asset = strategy.externalUnderlyingToken)",
+      "cvshare": "CustomVault share token",
+      "request": "redeem request recorded in CooldownVault.redeemRequests (non-tokenized claim)",
+      "claim:strategy": "Yearn vault's non-tokenized claim on CustomYearnStrategy",
+      "claim:customStrategy": "CustomVault's non-tokenized claim on CustomStrategy",
+      "claim:predeposit": "CooldownVault's receivable from a strategy's predeposit debt",
+      "debt:predeposit": "strategy's predeposit debt to the CooldownVault"
+    },
+    "holders": {
+      "authorized": "authorized CooldownVault share holder",
+      "receiver": "redeem-request receiver",
+      "cooldown": "CooldownVault",
+      "yvault": "Yearn V2 vault (external)",
+      "strategy": "CustomYearnStrategy",
+      "customVault": "CustomVault",
+      "customStrategy": "CustomStrategy"
+    }
+  },
+  "sources": [
+    "src/**/*.sol"
+  ],
+  "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+      "kind": [
+        "deposit"
+      ],
+      "caller": "authorized"
+    },
+    "CooldownVault.mint(uint256,address)": {
+      "kind": [
+        "deposit",
+        "mint"
+      ],
+      "caller": "authorized"
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+      "kind": [
+        "deposit"
+      ],
+      "caller": "authorized"
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+      "kind": [
+        "redeem",
+        "withdraw"
+      ],
+      "caller": "authorized"
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+      "kind": [
+        "redeem",
+        "withdraw"
+      ],
+      "caller": "authorized"
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+      "kind": [
+        "redeem",
+        "withdraw"
+      ],
+      "caller": "authorized"
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+      "kind": [
+        "claim",
+        "withdraw"
+      ],
+      "caller": "any"
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+      "kind": [
+        "transfer",
+        "other"
+      ],
+      "caller": "request_receiver"
+    },
+    "CooldownVault.predeposit(uint256)": {
+      "kind": [
+        "borrow",
+        "mint"
+      ],
+      "caller": "cv_strategy"
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+      "kind": [
+        "repay"
+      ],
+      "caller": "cv_keepers"
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+      "kind": [
+        "redeem",
+        "withdraw"
+      ],
+      "caller": "cv_strategy"
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+      "kind": [
+        "repay"
+      ],
+      "caller": "cv_strategy"
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+      "kind": [
+        "other"
+      ],
+      "caller": "request_strategy"
+    },
+    "CooldownVault.recover()": {
+      "kind": [
+        "transfer",
+        "withdraw"
+      ],
+      "caller": "cv_governance"
+    },
+    "CooldownVault.recoverClaimLoss()": {
+      "kind": [
+        "mint",
+        "other"
+      ],
+      "caller": "cv_governance"
+    },
+    "CooldownVault.transfer(address,uint256)": {
+      "kind": [
+        "transfer"
+      ],
+      "caller": "authorized"
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+      "kind": [
+        "transfer"
+      ],
+      "caller": "authorized"
+    },
+    "CustomYearnStrategy.harvest()": {
+      "kind": [
+        "harvest",
+        "allocate",
+        "other"
+      ],
+      "caller": "st_keepers"
+    },
+    "CustomYearnStrategy.tend()": {
+      "kind": [
+        "allocate"
+      ],
+      "caller": "st_keepers"
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+      "kind": [
+        "withdraw",
+        "deallocate"
+      ],
+      "caller": "yearn_vault"
+    },
+    "CustomYearnStrategy.migrate(address)": {
+      "kind": [
+        "transfer",
+        "deallocate",
+        "other"
+      ],
+      "caller": "yearn_vault"
+    },
+    "CustomYearnStrategy.sweep(address)": {
+      "kind": [
+        "transfer",
+        "withdraw"
+      ],
+      "caller": "st_governance"
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+      "kind": [
+        "repay"
+      ],
+      "caller": "cooldown"
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+      "kind": [
+        "redeem",
+        "withdraw",
+        "deallocate"
+      ],
+      "caller": "st_keepers"
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+      "kind": [
+        "repay"
+      ],
+      "caller": "st_governance"
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+      "kind": [
+        "call",
+        "other"
+      ],
+      "caller": "st_governance"
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+      "kind": [
+        "other"
+      ],
+      "caller": "st_emergency"
+    },
+    "CustomVault.deposit(uint256,address)": {
+      "kind": [
+        "deposit"
+      ],
+      "caller": "strategy"
+    },
+    "CustomVault.mint(uint256,address)": {
+      "kind": [
+        "deposit",
+        "mint"
+      ],
+      "caller": "strategy"
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+      "kind": [
+        "withdraw",
+        "redeem"
+      ],
+      "caller": "strategy"
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+      "kind": [
+        "redeem",
+        "withdraw"
+      ],
+      "caller": "strategy"
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+      "kind": [
+        "allocate"
+      ],
+      "caller": "cvault_operator"
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+      "kind": [
+        "deallocate"
+      ],
+      "caller": "cvault_operator"
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+      "kind": [
+        "other"
+      ],
+      "caller": "strategy"
+    },
+    "CustomVault.addCustomStrategy(address)": {
+      "kind": [
+        "other"
+      ],
+      "caller": "cvault_governance"
+    },
+    "CustomVault.transfer(address,uint256)": {
+      "kind": [
+        "transfer"
+      ],
+      "caller": "any"
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+      "kind": [
+        "deposit",
+        "allocate"
+      ],
+      "caller": "customVault"
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+      "kind": [
+        "withdraw",
+        "deallocate"
+      ],
+      "caller": "customVault"
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+      "kind": [
+        "call",
+        "other"
+      ],
+      "caller": "cs_strategist"
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+      "kind": [
+        "call",
+        "other"
+      ],
+      "caller": "cs_strategist"
+    }
+  },
+  "claims": [
+    [
+      "authorized:cv",
+      "cooldown:usdt"
+    ],
+    [
+      "authorized:cv",
+      "cooldown:claim:predeposit"
+    ],
+    [
+      "receiver:request",
+      "cooldown:usdt"
+    ],
+    [
+      "cooldown:claim:predeposit",
+      "strategy:usdt"
+    ],
+    [
+      "yvault:claim:strategy",
+      "strategy:cv"
+    ],
+    [
+      "strategy:cvshare",
+      "customVault:usdt"
+    ],
+    [
+      "strategy:cvshare",
+      "customVault:claim:customStrategy"
+    ],
+    [
+      "customVault:claim:customStrategy",
+      "customStrategy:usdt"
+    ]
+  ],
+  "dependencies": [
+    [
+      "authorized:cv",
+      "strategy"
+    ],
+    [
+      "strategy",
+      "yvault"
+    ],
+    [
+      "strategy:cvshare",
+      "customStrategy"
+    ],
+    [
+      "customStrategy",
+      "provider"
+    ],
+    [
+      "customStrategy",
+      "targets"
+    ],
+    [
+      "strategy",
+      "targets"
+    ],
+    [
+      "cooldown",
+      "healthcheck"
+    ],
+    [
+      "strategy",
+      "healthcheck"
+    ]
+  ],
+  "exits": {
+    "authorized:cv": [
+      "CooldownVault.withdraw(uint256,address,address)",
+      "CooldownVault.redeem(uint256,address,address)",
+      "CooldownVault.withdrawTo(address,uint256)"
+    ],
+    "strategy:cv": [
+      "CooldownVault.instantRedeem(uint256)"
+    ],
+    "receiver:request": [
+      "CooldownVault.claim(uint256,uint256)"
+    ],
+    "cooldown:claim:predeposit": [
+      "CooldownVault.retrieveDebt(uint256)"
+    ],
+    "yvault:claim:strategy": [
+      "CustomYearnStrategy.withdraw(uint256)"
+    ],
+    "strategy:cvshare": [
+      "CustomVault.withdraw(uint256,address,address)",
+      "CustomVault.redeem(uint256,address,address)",
+      "CustomYearnStrategy.withdrawFromCustomVault(uint256)"
+    ],
+    "customVault:claim:customStrategy": [
+      "CustomStrategy.withdraw(address,uint256)",
+      "CustomVault.withdrawFromCustomStrategy(address,address,uint256)"
+    ]
+  },
+  "identity_questions": [],
+  "aliases": {
+    "assets": {
+      "asset:cooldown": "cv",
+      "asset:strategy.externalUnderlyingToken": "usdt",
+      "asset:customVault": "cvshare",
+      "asset:cooldown._pendingReceiverAssets": "request",
+      "asset:cooldown.strategyDebtOutstanding": "debt:predeposit",
+      "asset:claim:customStrategy": "claim:customStrategy"
+    },
+    "positions": {
+      "pos:cooldown:claim:strategy": "cooldown:claim:predeposit",
+      "pos:strategy.vault:claim:strategy": "yvault:claim:strategy",
+      "pos:members:cooldown._strategiesSet:cooldown": "strategy:cv",
+      "pos:any:cooldown._pendingReceiverAssets": "receiver:request"
+    },
+    "entities": {
+      "ent:any": "any",
+      "ent:cooldown": "cooldown",
+      "ent:strategy": "strategy",
+      "ent:customVault": "customVault",
+      "ent:customStrategy": "customStrategy",
+      "ent:members:cooldown._authorizedAddresses": "authorized",
+      "ent:members:cooldown._strategiesSet": "cv_strategy",
+      "ent:members:customVault.customStrategies": "customStrategy",
+      "ent:strategy.vault": "yvault",
+      "ent:cooldown.governance": "cv_governance",
+      "ent:customVault.governance": "cvault_governance",
+      "ent:cooldown.healthCheck": "healthcheck",
+      "ent:strategy.healthCheck": "healthcheck",
+      "ent:customStrategy.externalAssetsProvider": "provider"
+    },
+    "callers": {
+      "ent:strategy.vault": "yearn_vault"
+    },
+    "entity_labels": {
+      "management of CooldownVault or governance of CooldownVault or": "cv_keepers",
+      "keeper of CustomYearnStrategy or strategist of CustomYearnStrategy": "st_keepers",
+      "strategist of CustomYearnStrategy or vault.governance() or vault.guardian()": "st_emergency",
+      "member of CustomVault.operators": "cvault_operator",
+      "strategist of CustomStrategy or governance of CustomStrategy": "cs_strategist",
+      "redeemRequests[requestId].receiver": "request_receiver",
+      "predepositRequests[predepositId].strategy": "request_strategy",
+      "targets": "targets",
+      "vault.governance()": "st_governance"
+    }
+  }
+}

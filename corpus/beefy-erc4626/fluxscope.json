@@ -1,0 +1,36 @@
+{
+  "name": "Beefy Vault V7 + StrategyERC4626",
+  "description": "Beefy yield vault (BeefyVaultV7) whose strategy (StrategyERC4626) deploys the vault's want token into an external ERC-4626 vault. Snapshot of beefy-contracts pinned to a fixed commit; the external ERC-4626 vault, swapper, fee config, factory and Merkl claimer are outside the analysed scope.",
+  "repository": "https://github.com/beefyfinance/beefy-contracts",
+  "commit": "e33f868e2d995c2db9219029c26d31cd8e7d5cb2",
+  "build": {"framework": "foundry", "target": "."},
+  "instances": [
+    {"id": "vault", "contract": "BeefyVaultV7", "label": "BeefyVaultV7", "group": "beefy",
+     "description": "User-facing vault; issues the vault share token (mooToken)."},
+    {"id": "strategy", "contract": "StrategyERC4626", "label": "StrategyERC4626", "group": "beefy",
+     "description": "Strategy attached to the vault; deposits want into an external ERC-4626 vault."}
+  ],
+  "bindings": [
+    {"instance": "vault", "variable": "strategy", "target": "strategy",
+     "note": "Deployment wires the vault to this strategy via initialize(_strategy, ...)."},
+    {"instance": "strategy", "variable": "vault", "target": "vault",
+     "note": "Deployment wires the strategy back to the vault via initialize(..., Addresses{vault: ...})."}
+  ],
+  "assets": [
+    {"expression": "vault", "label": "mooToken (vault share)", "description": "ERC-20 share token implemented by BeefyVaultV7 itself."},
+    {"expression": "strategy.want", "label": "want", "description": "Token stored in StrategyERC4626.want; the vault reads it through strategy.want()."},
+    {"expression": "strategy.erc4626", "label": "ERC-4626 share", "description": "Shares of the external ERC-4626 vault stored in StrategyERC4626.erc4626."},
+    {"expression": "strategy.native", "label": "native (wrapped)", "description": "Token stored in StrategyERC4626.native (factory.native())."}
+  ],
+  "groups": [
+    {"id": "beefy", "label": "Beefy vault system", "members": ["vault", "strategy"]}
+  ],
+  "dependencies": [
+    {"path": "lib/openzeppelin-contracts-upgradeable-4.9.6", "package": "@openzeppelin/contracts-upgradeable", "version": "4.9.6"},
+    {"path": "lib/openzeppelin-contracts-5.4.0", "package": "@openzeppelin/contracts", "version": "5.4.0"}
+  ],
+  "notes": [
+    "Only BeefyVaultV7.sol, StrategyERC4626.sol and their transitive imports are part of the snapshot.",
+    "No deployment addresses are configured: assets and external contracts are identified by scoped expressions."
+  ]
+}

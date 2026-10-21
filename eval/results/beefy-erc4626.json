@@ -1,0 +1,3313 @@
+{
+ "truth": "eval/beefy-erc4626.truth.json",
+ "project": "corpus/beefy-erc4626",
+ "configs": {
+  "rules": {
+   "operation_kind": {
+    "accuracy": 0.833,
+    "n": 18,
+    "by_support": {
+     "rule": [
+      15,
+      18
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations_missing": [],
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "allocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "other",
+     "caller": "vault",
+     "kind_ok": false,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "other",
+     "caller": "any",
+     "kind_ok": false,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "other",
+     "caller": "any",
+     "kind_ok": false,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "other",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 4,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.667,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent:strategy.claimer')",
+     "('strategy', 'ent:strategy.native')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 4,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.8,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   }
+  },
+  "llm-only": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "deallocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "deallocate",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "deallocate",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 1,
+    "fp": 6,
+    "fn": 3,
+    "precision": 0.143,
+    "recall": 0.25,
+    "missed": [
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ],
+    "extra": [
+     "('any:moo', 'vault')",
+     "('strategy:erc4626share', 'erc4626')",
+     "('strategy:erc4626share', 'manager')",
+     "('vault:claim:strategy', 'manager')",
+     "('vault:claim:strategy', 'owner')",
+     "('vault:claim:strategy', 'strategy')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 5,
+    "fn": 2,
+    "precision": 0.286,
+    "recall": 0.5,
+    "missed": [
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ],
+    "extra": [
+     "('any', 'vault')",
+     "('strategy', 'manager')",
+     "('vault', 'manager')",
+     "('vault', 'owner')",
+     "('vault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 9,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy:erc4626share', 'BeefyVaultV7.upgradeStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.beforeDeposit()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest(address)')",
+     "('strategy:want', 'StrategyERC4626.retireStrat()')",
+     "('strategy:want', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.upgradeStrat()')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdrawAll()')"
+    ],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "544c418166525be6bfc82519a874500306ecd7af111906a2b832954af9a9adc0",
+    "sample": 0,
+    "response_sha256": "125706c561948381c692933cf0996f5740b45b134bf22c20906528a9caa6e207",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "llm-only@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "deallocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "deallocate",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "deallocate",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 1,
+    "fp": 7,
+    "fn": 3,
+    "precision": 0.125,
+    "recall": 0.25,
+    "missed": [
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ],
+    "extra": [
+     "('any:moo', 'owner')",
+     "('any:moo', 'vault')",
+     "('strategy:erc4626share', 'erc4626')",
+     "('strategy:erc4626share', 'manager')",
+     "('vault:claim:strategy', 'erc4626')",
+     "('vault:claim:strategy', 'manager')",
+     "('vault:claim:strategy', 'strategy')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 2,
+    "fp": 6,
+    "fn": 2,
+    "precision": 0.25,
+    "recall": 0.5,
+    "missed": [
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ],
+    "extra": [
+     "('any', 'owner')",
+     "('any', 'vault')",
+     "('strategy', 'manager')",
+     "('vault', 'erc4626')",
+     "('vault', 'manager')",
+     "('vault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 16,
+    "fn": 0,
+    "precision": 0.36,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy:erc4626share', 'BeefyVaultV7.deposit(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.depositAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.upgradeStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.beforeDeposit()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest(address)')",
+     "('strategy:want', 'BeefyVaultV7.upgradeStrat()')",
+     "('strategy:want', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:want', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:want', 'StrategyERC4626.retireStrat()')",
+     "('strategy:want', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.upgradeStrat()')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdrawAll()')",
+     "('vault:want', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:want', 'BeefyVaultV7.withdrawAll()')"
+    ],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "0d263e9a97300b608490527ca434dcf28d099cbe3ae185c62fba7ee5ff5eb492",
+    "sample": 1,
+    "response_sha256": "0adfee235d98d531fb63080a68d2a0785bff6d398a6bff7897ab36c79c992be3",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "llm-only@3": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "withdraw",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "deallocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 0,
+    "fp": 5,
+    "fn": 4,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ],
+    "extra": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 1,
+    "fp": 2,
+    "fn": 3,
+    "precision": 0.333,
+    "recall": 0.25,
+    "missed": [
+     "('any', 'strategy')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ],
+    "extra": [
+     "('any', 'vault')",
+     "('vault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 11,
+    "fn": 0,
+    "precision": 0.45,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy:erc4626share', 'BeefyVaultV7.upgradeStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.beforeDeposit()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest(address)')",
+     "('strategy:want', 'StrategyERC4626.retireStrat()')",
+     "('strategy:want', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.upgradeStrat()')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdrawAll()')",
+     "('vault:want', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:want', 'BeefyVaultV7.withdrawAll()')"
+    ],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "3e4e4e27727cf7fefa3d0ade1847c4d14f2c1a1739a0f17a5fed139f40d83da8",
+    "sample": 2,
+    "response_sha256": "610c6c37f7ff88dac7460aa9312fd571da64a04ddc21114b99eebe3ed36f8001",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "combined": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18,
+    "by_support": {
+     "rule": [
+      14,
+      14
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations_missing": [],
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "allocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 4,
+    "fp": 7,
+    "fn": 0,
+    "precision": 0.364,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any:moo', 'ent:get:09f8b1a2')",
+     "('any:moo', 'manager')",
+     "('any:moo', 'owner')",
+     "('strategy', 'ent:strategy.claimer')",
+     "('strategy', 'ent:strategy.native')",
+     "('vault:claim:strategy', 'ent:strategy._owner')",
+     "('vault:claim:strategy', 'erc4626')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 4,
+    "fp": 6,
+    "fn": 0,
+    "precision": 0.4,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any', 'ent')",
+     "('any', 'manager')",
+     "('any', 'owner')",
+     "('strategy', 'ent')",
+     "('vault', 'ent')",
+     "('vault', 'erc4626')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('asset:strategy.native', 'want')"
+    ],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "85497c20c1eeb2c8a591ffb1f4ae5bcb6e17a10317c7d65b8478231198d7d965",
+    "sample": 0,
+    "response_sha256": "23ee25db13b821ebeff428a82df199a71880e43a45724dc018c78495302192a7",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 72,
+    "accepted": 72,
+    "rejected": [],
+    "context_chars": 128185
+   }
+  },
+  "combined+checked": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18,
+    "by_support": {
+     "rule": [
+      14,
+      14
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations_missing": [],
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "allocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 4,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.667,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent:strategy.claimer')",
+     "('strategy', 'ent:strategy.native')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 4,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.8,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('asset:strategy.native', 'want')"
+    ],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "85497c20c1eeb2c8a591ffb1f4ae5bcb6e17a10317c7d65b8478231198d7d965",
+    "sample": 0,
+    "response_sha256": "23ee25db13b821ebeff428a82df199a71880e43a45724dc018c78495302192a7",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 72,
+    "accepted": 72,
+    "rejected": [],
+    "context_chars": 128185
+   }
+  },
+  "combined@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18,
+    "by_support": {
+     "rule": [
+      14,
+      14
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations_missing": [],
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "allocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 4,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.444,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any:moo', 'factory')",
+     "('strategy', 'ent:get:09f8b1a2')",
+     "('strategy', 'ent:strategy.claimer')",
+     "('strategy', 'ent:strategy.native')",
+     "('vault:claim:strategy', 'strategy:erc4626share')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 4,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.571,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('any', 'factory')",
+     "('strategy', 'ent')",
+     "('vault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('asset:native', 'asset:strategy.native')"
+    ],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "50d044a1ec7cd724a366b5b767c95bbdcf56d5f0575619fa83e997df1952fa4b",
+    "sample": 1,
+    "response_sha256": "78000d1fbc26164a466deb633c65366686ad7f3885872bdff22ccae2ea59a735",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 71,
+    "accepted": 70,
+    "rejected": [
+     {
+      "what": "explanation",
+      "reason": "unknown subject",
+      "item": {
+       "subject": "op:strategy.harvest()",
+       "text": "Harvested want is added to totalLocked and released linearly over lockDuration (1 day by default, 0 with harvestOnDeposit), so the share price rises gradually after a harvest; yield that has not been harvested yet is not in the price, so deposits made just before a harvest share in it.",
+       "fact_refs": [
+        "op:strategy.harvest()>strategy.deposit()",
+        "op:strategy.setLockDuration(uint256)#c:7c08c3b0",
+        "op:strategy.setHarvestOnDeposit(bool)#c:7c08c3b0"
+       ]
+      }
+     }
+    ],
+    "context_chars": 128185
+   }
+  },
+  "combined+checked@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18,
+    "by_support": {
+     "rule": [
+      14,
+      14
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations_missing": [],
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "allocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 4,
+    "fp": 4,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent:get:09f8b1a2')",
+     "('strategy', 'ent:strategy.claimer')",
+     "('strategy', 'ent:strategy.native')",
+     "('vault:claim:strategy', 'strategy:erc4626share')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 4,
+    "fp": 2,
+    "fn": 0,
+    "precision": 0.667,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent')",
+     "('vault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('asset:native', 'asset:strategy.native')"
+    ],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "50d044a1ec7cd724a366b5b767c95bbdcf56d5f0575619fa83e997df1952fa4b",
+    "sample": 1,
+    "response_sha256": "78000d1fbc26164a466deb633c65366686ad7f3885872bdff22ccae2ea59a735",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 71,
+    "accepted": 70,
+    "rejected": [
+     {
+      "what": "explanation",
+      "reason": "unknown subject",
+      "item": {
+       "subject": "op:strategy.harvest()",
+       "text": "Harvested want is added to totalLocked and released linearly over lockDuration (1 day by default, 0 with harvestOnDeposit), so the share price rises gradually after a harvest; yield that has not been harvested yet is not in the price, so deposits made just before a harvest share in it.",
+       "fact_refs": [
+        "op:strategy.harvest()>strategy.deposit()",
+        "op:strategy.setLockDuration(uint256)#c:7c08c3b0",
+        "op:strategy.setHarvestOnDeposit(bool)#c:7c08c3b0"
+       ]
+      }
+     }
+    ],
+    "context_chars": 128185
+   }
+  },
+  "combined@3": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18,
+    "by_support": {
+     "rule": [
+      14,
+      14
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations_missing": [],
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "allocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 4,
+    "fp": 5,
+    "fn": 0,
+    "precision": 0.444,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent:get:09f8b1a2')",
+     "('strategy', 'ent:strategy.claimer')",
+     "('strategy', 'ent:strategy.native')",
+     "('vault', 'factory')",
+     "('vault:claim:strategy', 'erc4626')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 4,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.571,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent')",
+     "('vault', 'erc4626')",
+     "('vault', 'factory')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('asset:native', 'asset:strategy.native')"
+    ],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "1e2c5ccb8d3bda1d7303ad76896616c3038ea78f89dae88f0ce021b9643ead15",
+    "sample": 2,
+    "response_sha256": "fc25f2fccf9c600441cca291a68d66c8b92f2f5292f5795e1593de1ba8b78f80",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 70,
+    "accepted": 70,
+    "rejected": [],
+    "context_chars": 128185
+   }
+  },
+  "combined+checked@3": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 18,
+    "by_support": {
+     "rule": [
+      14,
+      14
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 1.0,
+    "n": 18
+   },
+   "operations_missing": [],
+   "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.depositAll()": {
+     "kind": "deposit",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.earn()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.withdrawAll()": {
+     "kind": "redeem",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+     "kind": "allocate",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+     "kind": "transfer",
+     "caller": "owner",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.deposit()": {
+     "kind": "allocate",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": "harvest",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": "harvest",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "StrategyERC4626.panic()": {
+     "kind": "deallocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.retireStrat()": {
+     "kind": "withdraw",
+     "caller": "vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.unpause()": {
+     "kind": "allocate",
+     "caller": "manager",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ]
+   },
+   "dependencies": {
+    "tp": 4,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.571,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent:get:09f8b1a2')",
+     "('strategy', 'ent:strategy.claimer')",
+     "('strategy', 'ent:strategy.native')"
+    ],
+    "_truth": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 4,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.8,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('strategy', 'ent')"
+    ]
+   },
+   "exits": {
+    "tp": 9,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [],
+    "_truth": [
+     "('any:moo', 'BeefyVaultV7.withdraw(uint256)')",
+     "('any:moo', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:erc4626share', 'StrategyERC4626.panic()')",
+     "('strategy:erc4626share', 'StrategyERC4626.retireStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'StrategyERC4626.retireStrat()')",
+     "('vault:claim:strategy', 'StrategyERC4626.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('asset:native', 'asset:strategy.native')"
+    ],
+    "_truth": [
+     "('erc4626asset', 'want')"
+    ]
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "1e2c5ccb8d3bda1d7303ad76896616c3038ea78f89dae88f0ce021b9643ead15",
+    "sample": 2,
+    "response_sha256": "fc25f2fccf9c600441cca291a68d66c8b92f2f5292f5795e1593de1ba8b78f80",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 70,
+    "accepted": 70,
+    "rejected": [],
+    "context_chars": 128185
+   }
+  }
+ },
+ "contribution": {
+  "llm-only": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:moo', 'vault')",
+     "('strategy:erc4626share', 'erc4626')",
+     "('strategy:erc4626share', 'manager')",
+     "('vault:claim:strategy', 'manager')",
+     "('vault:claim:strategy', 'owner')",
+     "('vault:claim:strategy', 'strategy')"
+    ],
+    "lost_correct": [
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [
+     "('strategy:erc4626share', 'BeefyVaultV7.upgradeStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.beforeDeposit()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest(address)')",
+     "('strategy:want', 'StrategyERC4626.retireStrat()')",
+     "('strategy:want', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.upgradeStrat()')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdrawAll()')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  },
+  "llm-only@2": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:moo', 'owner')",
+     "('any:moo', 'vault')",
+     "('strategy:erc4626share', 'erc4626')",
+     "('strategy:erc4626share', 'manager')",
+     "('vault:claim:strategy', 'erc4626')",
+     "('vault:claim:strategy', 'manager')",
+     "('vault:claim:strategy', 'strategy')"
+    ],
+    "lost_correct": [
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [
+     "('strategy:erc4626share', 'BeefyVaultV7.deposit(uint256)')",
+     "('strategy:erc4626share', 'BeefyVaultV7.depositAll()')",
+     "('strategy:erc4626share', 'BeefyVaultV7.upgradeStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.beforeDeposit()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest(address)')",
+     "('strategy:want', 'BeefyVaultV7.upgradeStrat()')",
+     "('strategy:want', 'BeefyVaultV7.withdraw(uint256)')",
+     "('strategy:want', 'BeefyVaultV7.withdrawAll()')",
+     "('strategy:want', 'StrategyERC4626.retireStrat()')",
+     "('strategy:want', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.upgradeStrat()')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdrawAll()')",
+     "('vault:want', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:want', 'BeefyVaultV7.withdrawAll()')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  },
+  "llm-only@3": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:moo', 'vault:claim:strategy')",
+     "('any:moo', 'vault:want')",
+     "('strategy:erc4626share', 'erc4626:erc4626asset')",
+     "('vault:claim:strategy', 'strategy:erc4626share')",
+     "('vault:claim:strategy', 'strategy:want')"
+    ],
+    "lost_correct": [
+     "('any:moo', 'strategy')",
+     "('strategy', 'erc4626')",
+     "('strategy', 'factory')",
+     "('strategy', 'swapper')"
+    ]
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [
+     "('strategy:erc4626share', 'BeefyVaultV7.upgradeStrat()')",
+     "('strategy:erc4626share', 'StrategyERC4626.beforeDeposit()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest()')",
+     "('strategy:erc4626share', 'StrategyERC4626.harvest(address)')",
+     "('strategy:want', 'StrategyERC4626.retireStrat()')",
+     "('strategy:want', 'StrategyERC4626.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.upgradeStrat()')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:claim:strategy', 'BeefyVaultV7.withdrawAll()')",
+     "('vault:want', 'BeefyVaultV7.withdraw(uint256)')",
+     "('vault:want', 'BeefyVaultV7.withdrawAll()')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  },
+  "combined": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:moo', 'ent:get:09f8b1a2')",
+     "('any:moo', 'manager')",
+     "('any:moo', 'owner')",
+     "('vault:claim:strategy', 'ent:strategy._owner')",
+     "('vault:claim:strategy', 'erc4626')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:strategy.native', 'want')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  },
+  "combined+checked": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:strategy.native', 'want')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  },
+  "combined@2": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('any:moo', 'factory')",
+     "('strategy', 'ent:get:09f8b1a2')",
+     "('vault:claim:strategy', 'strategy:erc4626share')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:native', 'asset:strategy.native')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  },
+  "combined+checked@2": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('strategy', 'ent:get:09f8b1a2')",
+     "('vault:claim:strategy', 'strategy:erc4626share')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:native', 'asset:strategy.native')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  },
+  "combined@3": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('strategy', 'ent:get:09f8b1a2')",
+     "('vault', 'factory')",
+     "('vault:claim:strategy', 'erc4626')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:native', 'asset:strategy.native')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  },
+  "combined+checked@3": {
+   "claims": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('strategy', 'ent:get:09f8b1a2')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:native', 'asset:strategy.native')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {
+    "StrategyERC4626.beforeDeposit()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest()": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    },
+    "StrategyERC4626.harvest(address)": {
+     "kind": {
+      "rules": "other",
+      "this": "harvest",
+      "now_correct": true
+     }
+    }
+   }
+  }
+ },
+ "summary": {
+  "rules": {
+   "runs": 1,
+   "op_kind": {
+    "mean": 0.833,
+    "min": 0.833,
+    "max": 0.833,
+    "n": 1
+   },
+   "caller": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "claims_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "claims_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "dependencies_precision": {
+    "mean": 0.667,
+    "min": 0.667,
+    "max": 0.667,
+    "n": 1
+   },
+   "dependencies_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "exits_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "exits_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "identity_questions_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "identity_questions_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.8,
+    "min": 0.8,
+    "max": 0.8,
+    "n": 1
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   }
+  },
+  "llm-only": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 0.089,
+    "min": 0.0,
+    "max": 0.143,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 0.167,
+    "min": 0.0,
+    "max": 0.25,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 0.437,
+    "min": 0.36,
+    "max": 0.5,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.29,
+    "min": 0.25,
+    "max": 0.333,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 0.417,
+    "min": 0.25,
+    "max": 0.5,
+    "n": 3
+   }
+  },
+  "combined": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 0.417,
+    "min": 0.364,
+    "max": 0.444,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 0.5,
+    "min": 0.5,
+    "max": 0.5,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.514,
+    "min": 0.4,
+    "max": 0.571,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   }
+  },
+  "combined+checked": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 0.579,
+    "min": 0.5,
+    "max": 0.667,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 0.5,
+    "min": 0.5,
+    "max": 0.5,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.756,
+    "min": 0.667,
+    "max": 0.8,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   }
+  }
+ }
+}

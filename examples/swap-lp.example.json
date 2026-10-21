@@ -1,0 +1,1863 @@
+{
+  "schema": "fluxscope/analysis",
+  "schema_version": "0.1.0",
+  "meta": {
+    "id": "example-swap-lp",
+    "title": "Example B — Swap branches and multi-asset liquidity (synthetic)",
+    "description": "A zap contract splits the user's Token X into two swap branches (X→Y in pool XY, X→Z in pool XZ), merges Y and Z into pool YZ to mint LP-YZ for the user, and lets the user stake the LP in a farm. Exiting the LP returns both Y and Z.",
+    "synthetic": true,
+    "created_at": "2026-10-20T00:00:00Z",
+    "generator": {
+      "name": "examples/generate.py",
+      "version": "0.1.0"
+    },
+    "tags": [
+      "example",
+      "swap",
+      "liquidity",
+      "multi-asset"
+    ]
+  },
+  "scope": {
+    "kind": "example",
+    "project": {
+      "name": "Example zap & AMM (synthetic)",
+      "version": "example-1",
+      "entry_contracts": [
+        "ExampleZap",
+        "ExamplePair",
+        "ExampleFarm"
+      ],
+      "files": [
+        "example/ExampleZap.sol",
+        "example/ExamplePair.sol",
+        "example/ExampleFarm.sol"
+      ]
+    },
+    "chain": {
+      "chain_id": 31337,
+      "name": "local test chain (synthetic)",
+      "block": 2400
+    },
+    "components": [
+      {
+        "name": "hand-written example",
+        "role": "example"
+      }
+    ],
+    "boundaries": [
+      {
+        "id": "bnd:b:reward",
+        "target": "Farm reward token",
+        "reason": "Reward emission is not modelled in this example.",
+        "evidence": [
+          "ev:b:farm"
+        ]
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "asm:b:pairs",
+        "text": "All three pools run the same ExamplePair code (constant-product AMM).",
+        "source": "example"
+      }
+    ],
+    "notes": [
+      "Synthetic example data for exercising the viewer. Names, code, addresses and transactions are invented."
+    ]
+  },
+  "assets": [
+    {
+      "id": "asset:X",
+      "label": "Token X (example)",
+      "symbol": "X",
+      "kind": "token",
+      "standard": "ERC20",
+      "identity": {
+        "kind": "example",
+        "expression": "ExampleZap.tokenX",
+        "chain_id": 31337
+      },
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:zap"
+      ]
+    },
+    {
+      "id": "asset:Y",
+      "label": "Token Y (example)",
+      "symbol": "Y",
+      "kind": "token",
+      "standard": "ERC20",
+      "identity": {
+        "kind": "example",
+        "expression": "ExampleZap.tokenY",
+        "chain_id": 31337
+      },
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:zap"
+      ]
+    },
+    {
+      "id": "asset:Z",
+      "label": "Token Z (example)",
+      "symbol": "Z",
+      "kind": "token",
+      "standard": "ERC20",
+      "identity": {
+        "kind": "example",
+        "expression": "ExampleZap.tokenZ",
+        "chain_id": 31337
+      },
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:zap"
+      ]
+    },
+    {
+      "id": "asset:LP",
+      "label": "LP-YZ pool share",
+      "symbol": "LP-YZ",
+      "kind": "lp_token",
+      "identity": {
+        "kind": "contract_self",
+        "contract": "ExamplePair (pair YZ)",
+        "expression": "pairYZ.balanceOf"
+      },
+      "issuer": "ent:pairYZ",
+      "description": "Pro-rata claim on both reserves of pair YZ.",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported",
+        "rule": "share-ledger"
+      },
+      "evidence": [
+        "ev:b:pair-ledger",
+        "ev:b:pair-mint"
+      ]
+    },
+    {
+      "id": "asset:stake",
+      "label": "Farm stake record",
+      "kind": "accounting",
+      "identity": {
+        "kind": "contract_self",
+        "contract": "ExampleFarm",
+        "expression": "ExampleFarm.staked"
+      },
+      "issuer": "ent:farm",
+      "description": "Internal, non-transferable ledger of staked LP-YZ.",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:farm"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "ent:b:user",
+      "label": "User (any account)",
+      "kind": "account",
+      "expression": "msg.sender",
+      "evidence": [
+        "ev:b:pull"
+      ]
+    },
+    {
+      "id": "ent:zap",
+      "label": "ExampleZap",
+      "kind": "contract",
+      "contract": {
+        "name": "ExampleZap",
+        "file": "example/ExampleZap.sol"
+      },
+      "evidence": [
+        "ev:b:zap"
+      ]
+    },
+    {
+      "id": "ent:amm",
+      "label": "Example AMM",
+      "kind": "protocol",
+      "description": "Three instances of ExamplePair."
+    },
+    {
+      "id": "ent:pairXY",
+      "label": "Pair XY",
+      "kind": "contract",
+      "parent": "ent:amm",
+      "contract": {
+        "name": "ExamplePair",
+        "file": "example/ExamplePair.sol"
+      },
+      "evidence": [
+        "ev:b:pair-swap"
+      ]
+    },
+    {
+      "id": "ent:pairXZ",
+      "label": "Pair XZ",
+      "kind": "contract",
+      "parent": "ent:amm",
+      "contract": {
+        "name": "ExamplePair",
+        "file": "example/ExamplePair.sol"
+      },
+      "evidence": [
+        "ev:b:pair-swap"
+      ]
+    },
+    {
+      "id": "ent:pairYZ",
+      "label": "Pair YZ (LP issuer)",
+      "kind": "contract",
+      "parent": "ent:amm",
+      "contract": {
+        "name": "ExamplePair",
+        "file": "example/ExamplePair.sol"
+      },
+      "evidence": [
+        "ev:b:pair-mint"
+      ]
+    },
+    {
+      "id": "ent:farm",
+      "label": "ExampleFarm",
+      "kind": "contract",
+      "contract": {
+        "name": "ExampleFarm",
+        "file": "example/ExampleFarm.sol"
+      },
+      "evidence": [
+        "ev:b:farm"
+      ]
+    },
+    {
+      "id": "ent:xyLPs",
+      "label": "Liquidity providers of pairs XY / XZ",
+      "kind": "role",
+      "description": "Owners of the swap pools' reserves; not modelled in detail."
+    }
+  ],
+  "operations": [
+    {
+      "id": "op:zap",
+      "kind": "add_liquidity",
+      "label": "ExampleZap.zapIn(amountX, minLp)",
+      "description": "Single transaction: pull X, two swap branches, merge into pair YZ, mint LP to the caller, refund dust.",
+      "entrypoint": {
+        "contract": "ExampleZap",
+        "function": "zapIn",
+        "signature": "zapIn(uint256,uint256)",
+        "visibility": "external"
+      },
+      "initiator": "ent:b:user",
+      "executor": "ent:zap",
+      "participants": [
+        {
+          "role": "caller",
+          "entity": "ent:b:user",
+          "expression": "msg.sender"
+        },
+        {
+          "role": "payer",
+          "entity": "ent:b:user",
+          "expression": "msg.sender",
+          "evidence": [
+            "ev:b:pull"
+          ]
+        },
+        {
+          "role": "lp_receiver",
+          "entity": "ent:b:user",
+          "expression": "msg.sender",
+          "evidence": [
+            "ev:b:lp-mint-call"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "id": "c:b:slip",
+          "kind": "require",
+          "text": "Minted LP ≥ minLp (slippage bound)",
+          "expression": "lp >= minLp",
+          "evidence": [
+            "ev:b:slippage"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:zap",
+        "ev:b:tx-zap"
+      ]
+    },
+    {
+      "id": "op:zap.pull",
+      "kind": "transfer",
+      "label": "transferFrom X: user → zap",
+      "parent": "op:zap",
+      "order": 1,
+      "transaction": "same",
+      "executor": "ent:zap",
+      "inputs": [
+        {
+          "id": "f:b:pull",
+          "asset": "asset:X",
+          "from": "ent:b:user",
+          "to": "ent:zap",
+          "amount": {
+            "asset": "asset:X",
+            "unit": "decimal",
+            "value": "100",
+            "expression": "amountX"
+          },
+          "mechanism": "transferFrom",
+          "evidence": [
+            "ev:b:pull"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic zapIn trace."
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:pull"
+      ]
+    },
+    {
+      "id": "op:zap.swapY",
+      "kind": "swap",
+      "label": "swap X → Y (pair XY)",
+      "parent": "op:zap",
+      "order": 2,
+      "transaction": "same",
+      "initiator": "ent:zap",
+      "executor": "ent:pairXY",
+      "description": "Branch 1 of the split.",
+      "inputs": [
+        {
+          "id": "f:b:s1in",
+          "asset": "asset:X",
+          "from": "ent:zap",
+          "to": "ent:pairXY",
+          "amount": {
+            "asset": "asset:X",
+            "unit": "decimal",
+            "value": "50",
+            "expression": "half = amountX / 2"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:br1",
+            "ev:b:log-swap1"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic zapIn trace."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:b:s1out",
+          "asset": "asset:Y",
+          "from": "ent:pairXY",
+          "to": "ent:zap",
+          "amount": {
+            "asset": "asset:Y",
+            "unit": "decimal",
+            "value": "49.1",
+            "expression": "outY (constant-product formula)"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:pair-swap",
+            "ev:b:log-swap1"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic zapIn trace."
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:br1",
+        "ev:b:pair-swap",
+        "ev:b:log-swap1"
+      ]
+    },
+    {
+      "id": "op:zap.swapZ",
+      "kind": "swap",
+      "label": "swap X → Z (pair XZ)",
+      "parent": "op:zap",
+      "order": 3,
+      "transaction": "same",
+      "initiator": "ent:zap",
+      "executor": "ent:pairXZ",
+      "description": "Branch 2 of the split.",
+      "inputs": [
+        {
+          "id": "f:b:s2in",
+          "asset": "asset:X",
+          "from": "ent:zap",
+          "to": "ent:pairXZ",
+          "amount": {
+            "asset": "asset:X",
+            "unit": "decimal",
+            "value": "50",
+            "expression": "amountX - half"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:br2",
+            "ev:b:log-swap2"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic zapIn trace."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:b:s2out",
+          "asset": "asset:Z",
+          "from": "ent:pairXZ",
+          "to": "ent:zap",
+          "amount": {
+            "asset": "asset:Z",
+            "unit": "decimal",
+            "value": "24.3",
+            "expression": "outZ (constant-product formula)"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:pair-swap",
+            "ev:b:log-swap2"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic zapIn trace."
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:br2",
+        "ev:b:pair-swap",
+        "ev:b:log-swap2"
+      ]
+    },
+    {
+      "id": "op:zap.addliq",
+      "kind": "add_liquidity",
+      "label": "add Y + Z to pair YZ, mint LP",
+      "parent": "op:zap",
+      "order": 4,
+      "transaction": "same",
+      "initiator": "ent:zap",
+      "executor": "ent:pairYZ",
+      "description": "Merge of both branches: two input assets, one LP output.",
+      "inputs": [
+        {
+          "id": "f:b:al-y",
+          "asset": "asset:Y",
+          "from": "ent:zap",
+          "to": "ent:pairYZ",
+          "amount": {
+            "asset": "asset:Y",
+            "unit": "decimal",
+            "value": "49.1",
+            "expression": "outY"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:merge"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic zapIn trace."
+          }
+        },
+        {
+          "id": "f:b:al-z",
+          "asset": "asset:Z",
+          "from": "ent:zap",
+          "to": "ent:pairYZ",
+          "amount": {
+            "asset": "asset:Z",
+            "unit": "decimal",
+            "value": "24.3",
+            "expression": "outZ"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:merge"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic zapIn trace."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:b:al-lp",
+          "asset": "asset:LP",
+          "from": null,
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:LP",
+            "unit": "decimal",
+            "value": "34.5",
+            "expression": "min(a0 * totalSupply / reserve0, a1 * totalSupply / reserve1)"
+          },
+          "mechanism": "mint",
+          "evidence": [
+            "ev:b:pair-mint",
+            "ev:b:lp-mint-call",
+            "ev:b:log-mint"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic zapIn trace."
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:merge",
+        "ev:b:pair-mint",
+        "ev:b:log-mint"
+      ]
+    },
+    {
+      "id": "op:zap.refund",
+      "kind": "transfer",
+      "label": "refund leftover Y / Z",
+      "parent": "op:zap",
+      "order": 5,
+      "transaction": "same",
+      "executor": "ent:zap",
+      "conditions": [
+        {
+          "id": "c:b:dust",
+          "kind": "branch",
+          "text": "Only if the zap holds a non-zero balance",
+          "expression": "dust > 0",
+          "evidence": [
+            "ev:b:refund"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:b:rf-y",
+          "asset": "asset:Y",
+          "from": "ent:zap",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:Y",
+            "unit": "unknown",
+            "expression": "dust"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:refund"
+          ],
+          "conditions": [
+            "c:b:dust"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        },
+        {
+          "id": "f:b:rf-z",
+          "asset": "asset:Z",
+          "from": "ent:zap",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:Z",
+            "unit": "unknown",
+            "expression": "dust"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:refund"
+          ],
+          "conditions": [
+            "c:b:dust"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:refund"
+      ]
+    },
+    {
+      "id": "op:stake",
+      "kind": "stake",
+      "label": "ExampleFarm.stake(amount)",
+      "initiator": "ent:b:user",
+      "executor": "ent:farm",
+      "description": "Separate, optional transaction: LP-YZ moves into the farm, the user gets an internal stake record.",
+      "entrypoint": {
+        "contract": "ExampleFarm",
+        "function": "stake",
+        "signature": "stake(uint256)",
+        "visibility": "external"
+      },
+      "participants": [
+        {
+          "role": "caller",
+          "entity": "ent:b:user",
+          "expression": "msg.sender"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "f:b:st-in",
+          "asset": "asset:LP",
+          "from": "ent:b:user",
+          "to": "ent:farm",
+          "amount": {
+            "asset": "asset:LP",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "transferFrom",
+          "evidence": [
+            "ev:b:stake"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:b:st-rec",
+          "asset": "asset:stake",
+          "from": null,
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:stake",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "ledger-credit",
+          "evidence": [
+            "ev:b:stake"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:stake"
+      ]
+    },
+    {
+      "id": "op:unstake",
+      "kind": "unstake",
+      "label": "ExampleFarm.unstake(amount)",
+      "initiator": "ent:b:user",
+      "executor": "ent:farm",
+      "entrypoint": {
+        "contract": "ExampleFarm",
+        "function": "unstake",
+        "signature": "unstake(uint256)",
+        "visibility": "external"
+      },
+      "conditions": [
+        {
+          "id": "c:b:unst",
+          "kind": "require",
+          "text": "Caller has at least `amount` staked (underflow check)",
+          "expression": "staked[msg.sender] >= amount",
+          "evidence": [
+            "ev:b:unstake"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "id": "f:b:un-rec",
+          "asset": "asset:stake",
+          "from": "ent:b:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:stake",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "ledger-debit",
+          "evidence": [
+            "ev:b:unstake"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:b:un-out",
+          "asset": "asset:LP",
+          "from": "ent:farm",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:LP",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:unstake"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:unstake"
+      ]
+    },
+    {
+      "id": "op:removeliq",
+      "kind": "remove_liquidity",
+      "label": "PairYZ.burn(to) — remove liquidity",
+      "description": "User sends LP-YZ to the pair and calls burn; the pair returns Y and Z pro rata (two outputs).",
+      "initiator": "ent:b:user",
+      "executor": "ent:pairYZ",
+      "entrypoint": {
+        "contract": "ExamplePair",
+        "function": "burn",
+        "signature": "burn(address)",
+        "visibility": "external"
+      },
+      "participants": [
+        {
+          "role": "caller",
+          "entity": "ent:b:user",
+          "expression": "msg.sender"
+        },
+        {
+          "role": "asset_receiver",
+          "entity": "ent:b:user",
+          "expression": "to"
+        }
+      ],
+      "conditions": [
+        {
+          "id": "c:b:burn-pre",
+          "kind": "state",
+          "text": "LP must first be transferred to the pair (separate call in the same or an earlier transaction)",
+          "expression": "balanceOf[address(this)]",
+          "evidence": [
+            "ev:b:pair-burn"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "id": "f:b:rl-lp",
+          "asset": "asset:LP",
+          "from": "ent:b:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:LP",
+            "unit": "unknown",
+            "expression": "liquidity"
+          },
+          "mechanism": "burn",
+          "evidence": [
+            "ev:b:pair-burn"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:b:rl-y",
+          "asset": "asset:Y",
+          "from": "ent:pairYZ",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:Y",
+            "unit": "unknown",
+            "expression": "liquidity * reserve0 / totalSupply"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:pair-burn-amt"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        },
+        {
+          "id": "f:b:rl-z",
+          "asset": "asset:Z",
+          "from": "ent:pairYZ",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:Z",
+            "unit": "unknown",
+            "expression": "liquidity * reserve1 / totalSupply"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:pair-burn-amt"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:pair-burn"
+      ]
+    }
+  ],
+  "positions": [
+    {
+      "id": "pos:b:user-LP",
+      "holder": "ent:b:user",
+      "asset": "asset:LP",
+      "kind": "lp",
+      "label": "LP-YZ held by user",
+      "amount": {
+        "asset": "asset:LP",
+        "unit": "decimal",
+        "value": "34.5",
+        "expression": "pairYZ.balanceOf[user]"
+      },
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:log-mint"
+      ]
+    },
+    {
+      "id": "pos:b:user-stake",
+      "holder": "ent:b:user",
+      "asset": "asset:stake",
+      "kind": "claim",
+      "label": "Stake record of user",
+      "amount": {
+        "asset": "asset:stake",
+        "unit": "unknown",
+        "expression": "staked[user]"
+      },
+      "description": "Exists only if the user staked; replaces the wallet LP position.",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:stake"
+      ]
+    },
+    {
+      "id": "pos:b:farm-LP",
+      "holder": "ent:farm",
+      "asset": "asset:LP",
+      "kind": "custody",
+      "label": "LP-YZ held by farm",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:stake"
+      ]
+    },
+    {
+      "id": "pos:b:yz-Y",
+      "holder": "ent:pairYZ",
+      "asset": "asset:Y",
+      "kind": "custody",
+      "label": "Y reserve of pair YZ",
+      "amount": {
+        "asset": "asset:Y",
+        "unit": "unknown",
+        "expression": "reserve0"
+      },
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:pair-reserves"
+      ]
+    },
+    {
+      "id": "pos:b:yz-Z",
+      "holder": "ent:pairYZ",
+      "asset": "asset:Z",
+      "kind": "custody",
+      "label": "Z reserve of pair YZ",
+      "amount": {
+        "asset": "asset:Z",
+        "unit": "unknown",
+        "expression": "reserve1"
+      },
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:pair-reserves"
+      ]
+    },
+    {
+      "id": "pos:b:xy-X",
+      "holder": "ent:pairXY",
+      "asset": "asset:X",
+      "kind": "custody",
+      "label": "X reserve of pair XY",
+      "description": "The X paid into branch 1 now belongs to pair XY's reserves (its LPs), not to the user.",
+      "amount": {
+        "asset": "asset:X",
+        "unit": "unknown",
+        "expression": "reserve of X"
+      },
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:log-swap1"
+      ]
+    },
+    {
+      "id": "pos:b:xz-X",
+      "holder": "ent:pairXZ",
+      "asset": "asset:X",
+      "kind": "custody",
+      "label": "X reserve of pair XZ",
+      "amount": {
+        "asset": "asset:X",
+        "unit": "unknown",
+        "expression": "reserve of X"
+      },
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:log-swap2"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel:b:claim-Y",
+      "kind": "claim",
+      "source": "pos:b:user-LP",
+      "target": "pos:b:yz-Y",
+      "label": "pro-rata claim",
+      "basis_detail": "burn: amount0 = liquidity * reserve0 / totalSupply",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported",
+        "rule": "share-redeem-pro-rata"
+      },
+      "evidence": [
+        "ev:b:pair-burn-amt"
+      ]
+    },
+    {
+      "id": "rel:b:claim-Z",
+      "kind": "claim",
+      "source": "pos:b:user-LP",
+      "target": "pos:b:yz-Z",
+      "label": "pro-rata claim",
+      "basis_detail": "burn: amount1 = liquidity * reserve1 / totalSupply",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported",
+        "rule": "share-redeem-pro-rata"
+      },
+      "evidence": [
+        "ev:b:pair-burn-amt"
+      ]
+    },
+    {
+      "id": "rel:b:claim-stake",
+      "kind": "claim",
+      "source": "pos:b:user-stake",
+      "target": "pos:b:farm-LP",
+      "label": "1:1 claim on staked LP",
+      "basis_detail": "unstake transfers back exactly `amount`",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:unstake"
+      ]
+    },
+    {
+      "id": "rel:b:claim-farmLP-Y",
+      "kind": "claim",
+      "source": "pos:b:farm-LP",
+      "target": "pos:b:yz-Y",
+      "label": "pro-rata claim",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:pair-burn-amt"
+      ]
+    },
+    {
+      "id": "rel:b:claim-farmLP-Z",
+      "kind": "claim",
+      "source": "pos:b:farm-LP",
+      "target": "pos:b:yz-Z",
+      "label": "pro-rata claim",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:pair-burn-amt"
+      ]
+    },
+    {
+      "id": "rel:b:dep-lp",
+      "kind": "depends_on",
+      "source": "asset:LP",
+      "target": "ent:pairYZ",
+      "label": "reserves and price of pair YZ",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:pair-reserves"
+      ]
+    },
+    {
+      "id": "rel:b:dep-y",
+      "kind": "depends_on",
+      "source": "op:zap.addliq",
+      "target": "op:zap.swapY",
+      "label": "uses Y output of branch 1",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:merge"
+      ]
+    },
+    {
+      "id": "rel:b:dep-z",
+      "kind": "depends_on",
+      "source": "op:zap.addliq",
+      "target": "op:zap.swapZ",
+      "label": "uses Z output of branch 2",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:merge"
+      ]
+    },
+    {
+      "id": "rel:b:dep-xyreserve",
+      "kind": "depends_on",
+      "source": "pos:b:xy-X",
+      "target": "ent:xyLPs",
+      "label": "owned by pool LPs",
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "pending",
+        "note": "LP ownership of pairs XY/XZ not modelled."
+      },
+      "evidence": []
+    },
+    {
+      "id": "rel:b:exit-lp",
+      "kind": "exit",
+      "source": "pos:b:user-LP",
+      "target": "op:removeliq",
+      "label": "remove liquidity",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:pair-burn"
+      ]
+    },
+    {
+      "id": "rel:b:exit-stake",
+      "kind": "exit",
+      "source": "pos:b:user-stake",
+      "target": "op:unstake",
+      "label": "unstake",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:unstake"
+      ]
+    },
+    {
+      "id": "rel:b:flow-swap-reserve",
+      "kind": "asset_flow",
+      "source": "ent:zap",
+      "target": "pos:b:xy-X",
+      "asset": "asset:X",
+      "amount": {
+        "asset": "asset:X",
+        "unit": "decimal",
+        "value": "50",
+        "expression": "half"
+      },
+      "operation": "op:zap.swapY",
+      "label": "X added to reserve",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic zapIn trace."
+      },
+      "evidence": [
+        "ev:b:log-swap1"
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "exit:b:lp",
+      "position": "pos:b:user-LP",
+      "label": "Remove liquidity → Y + Z",
+      "steps": [
+        {
+          "order": 1,
+          "operation": "op:removeliq",
+          "actor": "ent:b:user",
+          "transaction": "same",
+          "description": "Transfer LP-YZ to the pair, then call burn(to); both happen in one transaction when called through a router, otherwise in two calls.",
+          "conditions": [
+            {
+              "id": "c:b:x1",
+              "kind": "state",
+              "text": "LP balance of the pair equals the LP being removed",
+              "expression": "balanceOf[address(this)]",
+              "evidence": [
+                "ev:b:pair-burn"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:b:pair-burn"
+          ]
+        }
+      ],
+      "consumes": [
+        {
+          "id": "f:b:x-c",
+          "asset": "asset:LP",
+          "from": "ent:b:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:LP",
+            "unit": "unknown",
+            "expression": "liquidity"
+          },
+          "mechanism": "burn",
+          "evidence": [
+            "ev:b:pair-burn"
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "id": "f:b:x-ry",
+          "asset": "asset:Y",
+          "from": "ent:pairYZ",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:Y",
+            "unit": "unknown",
+            "expression": "liquidity * reserve0 / totalSupply"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:pair-burn-amt"
+          ]
+        },
+        {
+          "id": "f:b:x-rz",
+          "asset": "asset:Z",
+          "from": "ent:pairYZ",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:Z",
+            "unit": "unknown",
+            "expression": "liquidity * reserve1 / totalSupply"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:pair-burn-amt"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:pair-burn"
+      ]
+    },
+    {
+      "id": "exit:b:stake",
+      "position": "pos:b:user-stake",
+      "label": "Unstake, then remove liquidity",
+      "steps": [
+        {
+          "order": 1,
+          "operation": "op:unstake",
+          "actor": "ent:b:user",
+          "transaction": "separate",
+          "conditions": [
+            {
+              "id": "c:b:xs1",
+              "kind": "require",
+              "text": "staked[msg.sender] >= amount",
+              "expression": "staked[msg.sender] >= amount",
+              "evidence": [
+                "ev:b:unstake"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:b:unstake"
+          ]
+        },
+        {
+          "order": 2,
+          "operation": "op:removeliq",
+          "actor": "ent:b:user",
+          "transaction": "separate",
+          "description": "Same as the LP exit once the LP is back in the user's wallet.",
+          "evidence": [
+            "ev:b:pair-burn"
+          ]
+        }
+      ],
+      "consumes": [
+        {
+          "id": "f:b:xs-c",
+          "asset": "asset:stake",
+          "from": "ent:b:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:stake",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "ledger-debit",
+          "evidence": [
+            "ev:b:unstake"
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "id": "f:b:xs-ry",
+          "asset": "asset:Y",
+          "from": "ent:pairYZ",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:Y",
+            "unit": "unknown",
+            "expression": "pro rata"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:pair-burn-amt"
+          ]
+        },
+        {
+          "id": "f:b:xs-rz",
+          "asset": "asset:Z",
+          "from": "ent:pairYZ",
+          "to": "ent:b:user",
+          "amount": {
+            "asset": "asset:Z",
+            "unit": "unknown",
+            "expression": "pro rata"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:b:pair-burn-amt"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:b:unstake",
+        "ev:b:pair-burn"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev:b:zap",
+      "kind": "source",
+      "title": "ExampleZap.zapIn()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 17,
+        "end_line": 36,
+        "snippet": "    function zapIn(uint256 amountX, uint256 minLp) external returns (uint256 lp) {\n        tokenX.transferFrom(msg.sender, address(this), amountX);\n        uint256 half = amountX / 2;\n\n        // branch 1: X -> Y\n        tokenX.transfer(address(pairXY), half);\n        uint256 outY = pairXY.swap(address(tokenX), address(this));\n\n        // branch 2: X -> Z\n        tokenX.transfer(address(pairXZ), amountX - half);\n        uint256 outZ = pairXZ.swap(address(tokenX), address(this));\n\n        // merge: Y + Z -> LP-YZ, minted directly to the caller\n        tokenY.transfer(address(pairYZ), outY);\n        tokenZ.transfer(address(pairYZ), outZ);\n        lp = pairYZ.mint(msg.sender);\n        require(lp >= minLp, \"slippage\");\n\n        _refund(tokenY, msg.sender);\n        _refund(tokenZ, msg.sender);",
+        "contract": "ExampleZap",
+        "function": "zapIn(uint256,uint256)"
+      }
+    },
+    {
+      "id": "ev:b:pull",
+      "kind": "source",
+      "title": "tokenX.transferFrom(msg.sender, zap, amountX)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 18,
+        "end_line": 18,
+        "snippet": "        tokenX.transferFrom(msg.sender, address(this), amountX);",
+        "contract": "ExampleZap",
+        "function": "zapIn(uint256,uint256)"
+      }
+    },
+    {
+      "id": "ev:b:half",
+      "kind": "source",
+      "title": "split amountX in two branches",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 19,
+        "end_line": 19,
+        "snippet": "        uint256 half = amountX / 2;",
+        "contract": "ExampleZap",
+        "function": "zapIn(uint256,uint256)"
+      }
+    },
+    {
+      "id": "ev:b:br1",
+      "kind": "source",
+      "title": "branch 1: X → Y via pair XY",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 21,
+        "end_line": 23,
+        "snippet": "        // branch 1: X -> Y\n        tokenX.transfer(address(pairXY), half);\n        uint256 outY = pairXY.swap(address(tokenX), address(this));",
+        "contract": "ExampleZap",
+        "function": "zapIn(uint256,uint256)"
+      }
+    },
+    {
+      "id": "ev:b:br2",
+      "kind": "source",
+      "title": "branch 2: X → Z via pair XZ",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 25,
+        "end_line": 27,
+        "snippet": "        // branch 2: X -> Z\n        tokenX.transfer(address(pairXZ), amountX - half);\n        uint256 outZ = pairXZ.swap(address(tokenX), address(this));",
+        "contract": "ExampleZap",
+        "function": "zapIn(uint256,uint256)"
+      }
+    },
+    {
+      "id": "ev:b:merge",
+      "kind": "source",
+      "title": "merge: Y + Z → pair YZ, LP minted to caller",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 29,
+        "end_line": 32,
+        "snippet": "        // merge: Y + Z -> LP-YZ, minted directly to the caller\n        tokenY.transfer(address(pairYZ), outY);\n        tokenZ.transfer(address(pairYZ), outZ);\n        lp = pairYZ.mint(msg.sender);",
+        "contract": "ExampleZap",
+        "function": "zapIn(uint256,uint256)"
+      }
+    },
+    {
+      "id": "ev:b:lp-mint-call",
+      "kind": "source",
+      "title": "pairYZ.mint(msg.sender)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 32,
+        "end_line": 32,
+        "snippet": "        lp = pairYZ.mint(msg.sender);",
+        "contract": "ExampleZap",
+        "function": "zapIn(uint256,uint256)"
+      }
+    },
+    {
+      "id": "ev:b:slippage",
+      "kind": "source",
+      "title": "require(lp >= minLp)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 33,
+        "end_line": 33,
+        "snippet": "        require(lp >= minLp, \"slippage\");",
+        "contract": "ExampleZap",
+        "function": "zapIn(uint256,uint256)"
+      }
+    },
+    {
+      "id": "ev:b:refund",
+      "kind": "source",
+      "title": "_refund leftovers to caller",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleZap.sol",
+        "start_line": 39,
+        "end_line": 43,
+        "snippet": "    function _refund(IERC20 token, address to) internal {\n        uint256 dust = token.balanceOf(address(this));\n        if (dust > 0) {\n            token.transfer(to, dust);\n        }",
+        "contract": "ExampleZap",
+        "function": "_refund(address,address)"
+      }
+    },
+    {
+      "id": "ev:b:pair-ledger",
+      "kind": "source",
+      "title": "LP ledger in ExamplePair",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExamplePair.sol",
+        "start_line": 13,
+        "end_line": 14,
+        "snippet": "    mapping(address => uint256) public balanceOf;   // LP shares\n    uint256 public totalSupply;",
+        "contract": "ExamplePair"
+      }
+    },
+    {
+      "id": "ev:b:pair-swap",
+      "kind": "source",
+      "title": "ExamplePair.swap()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExamplePair.sol",
+        "start_line": 17,
+        "end_line": 24,
+        "snippet": "    function swap(address tokenIn, address to) external returns (uint256 out) {\n        bool zeroIn = tokenIn == address(token0);\n        uint256 amountIn = (zeroIn ? token0 : token1).balanceOf(address(this)) - (zeroIn ? reserve0 : reserve1);\n        uint256 rIn = zeroIn ? reserve0 : reserve1;\n        uint256 rOut = zeroIn ? reserve1 : reserve0;\n        out = amountIn * 997 * rOut / (rIn * 1000 + amountIn * 997);\n        (zeroIn ? token1 : token0).transfer(to, out);\n        _sync();",
+        "contract": "ExamplePair",
+        "function": "swap(address,address)"
+      }
+    },
+    {
+      "id": "ev:b:pair-mint",
+      "kind": "source",
+      "title": "ExamplePair.mint()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExamplePair.sol",
+        "start_line": 28,
+        "end_line": 34,
+        "snippet": "    function mint(address to) external returns (uint256 liquidity) {\n        uint256 a0 = token0.balanceOf(address(this)) - reserve0;\n        uint256 a1 = token1.balanceOf(address(this)) - reserve1;\n        liquidity = _min(a0 * totalSupply / reserve0, a1 * totalSupply / reserve1);\n        totalSupply += liquidity;\n        balanceOf[to] += liquidity;\n        _sync();",
+        "contract": "ExamplePair",
+        "function": "mint(address)"
+      }
+    },
+    {
+      "id": "ev:b:pair-burn",
+      "kind": "source",
+      "title": "ExamplePair.burn()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExamplePair.sol",
+        "start_line": 38,
+        "end_line": 47,
+        "snippet": "    function burn(address to) external returns (uint256 amount0, uint256 amount1) {\n        uint256 liquidity = balanceOf[address(this)];\n        amount0 = liquidity * reserve0 / totalSupply;\n        amount1 = liquidity * reserve1 / totalSupply;\n        balanceOf[address(this)] -= liquidity;\n        totalSupply -= liquidity;\n        token0.transfer(to, amount0);\n        token1.transfer(to, amount1);\n        _sync();\n    }",
+        "contract": "ExamplePair",
+        "function": "burn(address)"
+      }
+    },
+    {
+      "id": "ev:b:pair-burn-amt",
+      "kind": "source",
+      "title": "amounts pro rata to LP burned",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExamplePair.sol",
+        "start_line": 40,
+        "end_line": 41,
+        "snippet": "        amount0 = liquidity * reserve0 / totalSupply;\n        amount1 = liquidity * reserve1 / totalSupply;",
+        "contract": "ExamplePair",
+        "function": "burn(address)"
+      }
+    },
+    {
+      "id": "ev:b:pair-reserves",
+      "kind": "source",
+      "title": "reserves",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExamplePair.sol",
+        "start_line": 11,
+        "end_line": 12,
+        "snippet": "    uint256 public reserve0;\n    uint256 public reserve1;",
+        "contract": "ExamplePair"
+      }
+    },
+    {
+      "id": "ev:b:farm",
+      "kind": "source",
+      "title": "ExampleFarm",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleFarm.sol",
+        "start_line": 8,
+        "end_line": 10,
+        "snippet": "contract ExampleFarm {\n    IERC20 public immutable lpToken;              // LP-YZ\n    mapping(address => uint256) public staked;    // internal accounting, not transferable",
+        "contract": "ExampleFarm"
+      }
+    },
+    {
+      "id": "ev:b:stake",
+      "kind": "source",
+      "title": "ExampleFarm.stake()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleFarm.sol",
+        "start_line": 12,
+        "end_line": 15,
+        "snippet": "    function stake(uint256 amount) external {\n        lpToken.transferFrom(msg.sender, address(this), amount);\n        staked[msg.sender] += amount;\n    }",
+        "contract": "ExampleFarm",
+        "function": "stake(uint256)"
+      }
+    },
+    {
+      "id": "ev:b:unstake",
+      "kind": "source",
+      "title": "ExampleFarm.unstake()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleFarm.sol",
+        "start_line": 17,
+        "end_line": 20,
+        "snippet": "    function unstake(uint256 amount) external {\n        staked[msg.sender] -= amount;\n        lpToken.transfer(msg.sender, amount);\n    }",
+        "contract": "ExampleFarm",
+        "function": "unstake(uint256)"
+      }
+    },
+    {
+      "id": "ev:b:tx-zap",
+      "kind": "trace",
+      "title": "zapIn trace (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xexample000000000000000000000000000000000000000000000000000000b001",
+        "block": 2301,
+        "call_path": "User → ExampleZap.zapIn(100e18, 1) → PairXY.swap → PairXZ.swap → PairYZ.mint(user)",
+        "data": {
+          "amountX": "100000000000000000000",
+          "outY": "49100000000000000000",
+          "outZ": "24300000000000000000",
+          "lp": "34500000000000000000"
+        }
+      }
+    },
+    {
+      "id": "ev:b:log-swap1",
+      "kind": "log",
+      "title": "Swap(X→Y) log at pair XY (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xexample000000000000000000000000000000000000000000000000000000b001",
+        "block": 2301,
+        "log_index": 3,
+        "data": {
+          "event": "Swap",
+          "in": "50 X",
+          "out": "49.1 Y"
+        }
+      }
+    },
+    {
+      "id": "ev:b:log-swap2",
+      "kind": "log",
+      "title": "Swap(X→Z) log at pair XZ (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xexample000000000000000000000000000000000000000000000000000000b001",
+        "block": 2301,
+        "log_index": 6,
+        "data": {
+          "event": "Swap",
+          "in": "50 X",
+          "out": "24.3 Z"
+        }
+      }
+    },
+    {
+      "id": "ev:b:log-mint",
+      "kind": "log",
+      "title": "Mint(LP-YZ → user) log (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xexample000000000000000000000000000000000000000000000000000000b001",
+        "block": 2301,
+        "log_index": 9,
+        "data": {
+          "event": "Mint",
+          "to": "user",
+          "liquidity": "34.5"
+        }
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "example/ExampleZap.sol",
+      "language": "solidity",
+      "synthetic": true,
+      "sha256": "b89a4f4a1b4776ba29ce4a6a4fcd527af7da4013f44ec270235e8e9c23581c5f",
+      "content": "// SYNTHETIC EXAMPLE CODE — not from a real project\n// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport {IERC20} from \"./IERC20.sol\";\nimport {ExamplePair} from \"./ExamplePair.sol\";\n\n/// Example zap: turns Token X into LP-YZ in one transaction.\ncontract ExampleZap {\n    IERC20 public immutable tokenX;\n    IERC20 public immutable tokenY;\n    IERC20 public immutable tokenZ;\n    ExamplePair public immutable pairXY;   // swaps X <-> Y\n    ExamplePair public immutable pairXZ;   // swaps X <-> Z\n    ExamplePair public immutable pairYZ;   // liquidity pool, issues LP-YZ\n\n    function zapIn(uint256 amountX, uint256 minLp) external returns (uint256 lp) {\n        tokenX.transferFrom(msg.sender, address(this), amountX);\n        uint256 half = amountX / 2;\n\n        // branch 1: X -> Y\n        tokenX.transfer(address(pairXY), half);\n        uint256 outY = pairXY.swap(address(tokenX), address(this));\n\n        // branch 2: X -> Z\n        tokenX.transfer(address(pairXZ), amountX - half);\n        uint256 outZ = pairXZ.swap(address(tokenX), address(this));\n\n        // merge: Y + Z -> LP-YZ, minted directly to the caller\n        tokenY.transfer(address(pairYZ), outY);\n        tokenZ.transfer(address(pairYZ), outZ);\n        lp = pairYZ.mint(msg.sender);\n        require(lp >= minLp, \"slippage\");\n\n        _refund(tokenY, msg.sender);\n        _refund(tokenZ, msg.sender);\n    }\n\n    function _refund(IERC20 token, address to) internal {\n        uint256 dust = token.balanceOf(address(this));\n        if (dust > 0) {\n            token.transfer(to, dust);\n        }\n    }\n}\n"
+    },
+    {
+      "path": "example/ExamplePair.sol",
+      "language": "solidity",
+      "synthetic": true,
+      "sha256": "2f35a3770753c6dbbfda1475e346eee81a15812e804b56c9fd7e6a94177cf273",
+      "content": "// SYNTHETIC EXAMPLE CODE — not from a real project\n// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport {IERC20} from \"./IERC20.sol\";\n\n/// Example constant-product pair. The pair's own ERC-20 balance ledger is the LP token.\ncontract ExamplePair {\n    IERC20 public immutable token0;\n    IERC20 public immutable token1;\n    uint256 public reserve0;\n    uint256 public reserve1;\n    mapping(address => uint256) public balanceOf;   // LP shares\n    uint256 public totalSupply;\n\n    /// Swaps whatever amount of `tokenIn` was sent to the pair; sends the output to `to`.\n    function swap(address tokenIn, address to) external returns (uint256 out) {\n        bool zeroIn = tokenIn == address(token0);\n        uint256 amountIn = (zeroIn ? token0 : token1).balanceOf(address(this)) - (zeroIn ? reserve0 : reserve1);\n        uint256 rIn = zeroIn ? reserve0 : reserve1;\n        uint256 rOut = zeroIn ? reserve1 : reserve0;\n        out = amountIn * 997 * rOut / (rIn * 1000 + amountIn * 997);\n        (zeroIn ? token1 : token0).transfer(to, out);\n        _sync();\n    }\n\n    /// Mints LP for the tokens sent since the last sync.\n    function mint(address to) external returns (uint256 liquidity) {\n        uint256 a0 = token0.balanceOf(address(this)) - reserve0;\n        uint256 a1 = token1.balanceOf(address(this)) - reserve1;\n        liquidity = _min(a0 * totalSupply / reserve0, a1 * totalSupply / reserve1);\n        totalSupply += liquidity;\n        balanceOf[to] += liquidity;\n        _sync();\n    }\n\n    /// Burns LP sent to the pair and returns both tokens pro rata.\n    function burn(address to) external returns (uint256 amount0, uint256 amount1) {\n        uint256 liquidity = balanceOf[address(this)];\n        amount0 = liquidity * reserve0 / totalSupply;\n        amount1 = liquidity * reserve1 / totalSupply;\n        balanceOf[address(this)] -= liquidity;\n        totalSupply -= liquidity;\n        token0.transfer(to, amount0);\n        token1.transfer(to, amount1);\n        _sync();\n    }\n\n    function transfer(address to, uint256 amount) external returns (bool) {\n        balanceOf[msg.sender] -= amount;\n        balanceOf[to] += amount;\n        return true;\n    }\n\n    function _sync() internal {\n        reserve0 = token0.balanceOf(address(this));\n        reserve1 = token1.balanceOf(address(this));\n    }\n\n    function _min(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a < b ? a : b;\n    }\n}\n"
+    },
+    {
+      "path": "example/ExampleFarm.sol",
+      "language": "solidity",
+      "synthetic": true,
+      "sha256": "25a7ecedc2c57ee87693daea7150417b9e9077ced4d7d09082298c54eb08d240",
+      "content": "// SYNTHETIC EXAMPLE CODE — not from a real project\n// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport {IERC20} from \"./IERC20.sol\";\n\n/// Example farm: records staked LP-YZ in an internal ledger (not a token).\ncontract ExampleFarm {\n    IERC20 public immutable lpToken;              // LP-YZ\n    mapping(address => uint256) public staked;    // internal accounting, not transferable\n\n    function stake(uint256 amount) external {\n        lpToken.transferFrom(msg.sender, address(this), amount);\n        staked[msg.sender] += amount;\n    }\n\n    function unstake(uint256 amount) external {\n        staked[msg.sender] -= amount;\n        lpToken.transfer(msg.sender, amount);\n    }\n}\n"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "unr:b:price",
+      "kind": "ambiguous_semantics",
+      "text": "Swap outputs depend on pool reserves at execution time. Only the final LP amount is bounded (minLp); each branch has no own slippage limit.",
+      "subjects": [
+        "op:zap.swapY",
+        "op:zap.swapZ"
+      ],
+      "evidence": [
+        "ev:b:slippage"
+      ]
+    },
+    {
+      "id": "unr:b:reward",
+      "kind": "other",
+      "text": "Farm rewards are not modelled; the stake record is treated as a claim on the staked LP only.",
+      "subjects": [
+        "pos:b:user-stake",
+        "ent:farm"
+      ],
+      "evidence": [
+        "ev:b:farm"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task:b:branches",
+      "question": "Into which branches is the user's Token X split, and where do they merge?",
+      "focus": [
+        "op:zap"
+      ],
+      "view": "flows",
+      "answer": "Half goes X→Y through pair XY, the rest X→Z through pair XZ; Y and Z merge in pair YZ, which mints LP-YZ to the user."
+    },
+    {
+      "id": "task:b:lp",
+      "question": "Which assets does the LP-YZ position give a claim on, and who holds them?",
+      "focus": [
+        "pos:b:user-LP"
+      ],
+      "view": "holdings",
+      "answer": "Pro-rata claims on the Y and Z reserves held by pair YZ. The LP is not counted in addition to those reserves."
+    },
+    {
+      "id": "task:b:xholder",
+      "question": "Who holds the Token X the user paid in?",
+      "focus": [
+        "asset:X"
+      ],
+      "view": "holdings",
+      "answer": "Pairs XY and XZ (their reserves). The user no longer has a claim on that X."
+    },
+    {
+      "id": "task:b:exit",
+      "question": "What does exiting the staked position return, and how many steps does it take?",
+      "focus": [
+        "exit:b:stake"
+      ],
+      "view": "exits",
+      "answer": "Two separate calls: unstake (returns LP-YZ), then remove liquidity (returns Y and Z)."
+    }
+  ]
+}

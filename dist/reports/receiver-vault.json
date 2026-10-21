@@ -1,0 +1,3608 @@
+{
+ "schema": "fluxscope/analysis",
+ "schema_version": "0.1.0",
+ "meta": {
+  "id": "analysis:receiver-vault-synthetic-fixture:a5a9507248",
+  "title": "Receiver vault (synthetic fixture)",
+  "description": "SYNTHETIC TEST FIXTURE: a vault with separate caller / receiver / owner roles, a keeper-only allocation into a tokenized strategy, and a lending pool that is only available as an interface.",
+  "synthetic": false,
+  "created_at": "2026-10-21T19:59:42+00:00",
+  "generator": {
+   "name": "fluxscope",
+   "version": "0.1.0"
+  },
+  "tags": [
+   "static-analysis"
+  ]
+ },
+ "scope": {
+  "kind": "static_analysis",
+  "project": {
+   "name": "Receiver vault (synthetic fixture)",
+   "entry_contracts": [
+    "Vault",
+    "Strategy"
+   ],
+   "files": [
+    "src/ReceiverVault.sol"
+   ],
+   "snapshot_sha256": "a5a950724891df9d597f8e73e14c0aceb0c16356b2af1e389a53c80c5a8e32e9"
+  },
+  "build": {
+   "framework": "foundry",
+   "target": "."
+  },
+  "components": [
+   {
+    "name": "slither-analyzer",
+    "version": "0.11.6",
+    "role": "static-analysis"
+   },
+   {
+    "name": "crytic-compile",
+    "version": "0.4.2",
+    "role": "build"
+   },
+   {
+    "name": "solc",
+    "version": "0.8.23",
+    "role": "compiler"
+   },
+   {
+    "name": "fluxscope.rules",
+    "version": "0.1.0",
+    "role": "adapter",
+    "detail": {
+     "rules": [
+      "oz.erc20.internal",
+      "structural.token-accounting",
+      "oz.safeerc20",
+      "erc20.call",
+      "erc4626.call",
+      "claim.share-redemption",
+      "claim.exclusive-withdrawal",
+      "claim.erc4626",
+      "identity.approve-before-pull",
+      "kind.structural"
+     ]
+    }
+   }
+  ],
+  "boundaries": [
+   {
+    "id": "bnd:strategy.pool",
+    "target": "pool (ILendingPool)",
+    "reason": "Only the interface ILendingPool is available; the implementation behind Strategy.pool is not part of the snapshot.",
+    "evidence": [
+     "ev:src:src_ReceiverVault.sol:68-68"
+    ]
+   }
+  ],
+  "assumptions": [
+   {
+    "id": "asm:bind:vault.strategy",
+    "text": "vault.strategy is bound to strategy (deployment)",
+    "source": "config",
+    "evidence": [
+     "ev:cfg:bind:vault.strategy"
+    ]
+   },
+   {
+    "id": "asm:bind:strategy.vault",
+    "text": "strategy.vault is bound to vault (deployment)",
+    "source": "config",
+    "evidence": [
+     "ev:cfg:bind:strategy.vault"
+    ]
+   },
+   {
+    "id": "asm:identity:0",
+    "text": "Same token: vault.asset = strategy.asset (deployment): Both constructors receive the same token address.",
+    "source": "config",
+    "evidence": []
+   }
+  ],
+  "notes": [
+   "Synthetic fixture used by the FluxScope test-suite.",
+   "Static analysis: relations describe behaviour the code supports (candidates), not observed executions. Amounts are symbolic expressions."
+  ]
+ },
+ "assets": [
+  {
+   "id": "asset:vault",
+   "label": "vU (vault share)",
+   "symbol": "vU",
+   "kind": "share",
+   "standard": "ERC20",
+   "identity": {
+    "kind": "contract_self",
+    "contract": "Vault",
+    "note": "Token implemented by the analysed contract itself"
+   },
+   "issuer": "ent:vault",
+   "description": "Token minted and burned by Vault. Transferable: holders can move vU (vault share) to other accounts via Vault.transfer(to, amount); the holder of a position may differ from the original depositor. Transferable: holders can move vU (vault share) to other accounts via Vault.transferFrom(from, to, amount); the holder of a position may differ from the original depositor.",
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "asset.identity",
+    "checks": []
+   },
+   "evidence": [
+    "ev:cfg:asset:vault",
+    "ev:src:src_ReceiverVault.sol:34-34",
+    "ev:src:src_ReceiverVault.sol:40-40"
+   ]
+  },
+  {
+   "id": "asset:vault.asset",
+   "label": "USDT (example label)",
+   "symbol": "USDT",
+   "kind": "token",
+   "identity": {
+    "kind": "scoped_expression",
+    "expression": "Vault.asset",
+    "note": "Identified by the state variable that stores the token address"
+   },
+   "description": "Token whose address is stored in Vault.asset.",
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "asset.identity",
+    "checks": []
+   },
+   "evidence": [
+    "ev:cfg:asset:vault.asset"
+   ]
+  },
+  {
+   "id": "asset:strategy",
+   "label": "sU (strategy share)",
+   "symbol": "sU",
+   "kind": "share",
+   "standard": "ERC20",
+   "identity": {
+    "kind": "contract_self",
+    "contract": "Strategy",
+    "note": "Token implemented by the analysed contract itself"
+   },
+   "issuer": "ent:strategy",
+   "description": "Token minted and burned by Strategy. Transferable: holders can move sU (strategy share) to other accounts via Strategy.transfer(to, amount); the holder of a position may differ from the original depositor. Transferable: holders can move sU (strategy share) to other accounts via Strategy.transferFrom(from, to, amount); the holder of a position may differ from the original depositor.",
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "asset.identity",
+    "checks": []
+   },
+   "evidence": [
+    "ev:cfg:asset:strategy",
+    "ev:src:src_ReceiverVault.sol:34-34",
+    "ev:src:src_ReceiverVault.sol:40-40"
+   ]
+  }
+ ],
+ "entities": [
+  {
+   "id": "ent:group:system",
+   "label": "Fixture system",
+   "kind": "protocol",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "config",
+    "verification": "supported",
+    "checks": []
+   },
+   "evidence": [
+    "ev:cfg:group:system"
+   ]
+  },
+  {
+   "id": "ent:vault",
+   "label": "Vault",
+   "kind": "contract",
+   "parent": "ent:group:system",
+   "contract": {
+    "name": "Vault",
+    "file": "src/ReceiverVault.sol"
+   },
+   "expression": "address(Vault)",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "config",
+    "verification": "supported",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:96-140"
+   ]
+  },
+  {
+   "id": "ent:strategy",
+   "label": "Strategy",
+   "kind": "contract",
+   "parent": "ent:group:system",
+   "contract": {
+    "name": "Strategy",
+    "file": "src/ReceiverVault.sol"
+   },
+   "expression": "address(Strategy)",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "config",
+    "verification": "supported",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:65-94"
+   ]
+  },
+  {
+   "id": "ent:any",
+   "label": "Any account",
+   "kind": "account",
+   "description": "Any externally owned account or contract that calls an entry point without access restriction.",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "caller.unrestricted",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.transfer(address_uint256).to",
+   "label": "`to` argument of transfer()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.transfer(address,uint256).",
+   "expression": "to",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.transferFrom(address_address_uint256).from",
+   "label": "`from` argument of transferFrom()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.transferFrom(address,address,uint256).",
+   "expression": "from",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.transferFrom(address_address_uint256).to",
+   "label": "`to` argument of transferFrom()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.transferFrom(address,address,uint256).",
+   "expression": "to",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:vault.keeper",
+   "label": "keeper of Vault",
+   "kind": "role",
+   "description": "Address stored in Vault.keeper; not bound by the configuration.",
+   "expression": "Vault.keeper",
+   "in_scope": false,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.state-address",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:99-99"
+   ]
+  },
+  {
+   "id": "ent:param:vault.enter(uint256_address).receiver",
+   "label": "`receiver` argument of enter()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.enter(uint256,address).",
+   "expression": "receiver",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:strategy.pool",
+   "label": "pool (ILendingPool)",
+   "kind": "external_contract",
+   "description": "Address stored in Strategy.pool of type ILendingPool. Not bound to an analysed instance; its code is outside the analysis scope.",
+   "parent": "ent:group:external",
+   "contract": {
+    "name": "ILendingPool"
+   },
+   "expression": "Strategy.pool",
+   "in_scope": false,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.state-address",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:68-68"
+   ]
+  },
+  {
+   "id": "ent:param:vault.exit(uint256_address_address).owner",
+   "label": "`owner` argument of exit()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.exit(uint256,address,address).",
+   "expression": "owner",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.exit(uint256_address_address).receiver",
+   "label": "`receiver` argument of exit()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.exit(uint256,address,address).",
+   "expression": "receiver",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:strategy.transfer(address_uint256).to",
+   "label": "`to` argument of transfer()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Strategy.transfer(address,uint256).",
+   "expression": "to",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:strategy.transferFrom(address_address_uint256).from",
+   "label": "`from` argument of transferFrom()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Strategy.transferFrom(address,address,uint256).",
+   "expression": "from",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:strategy.transferFrom(address_address_uint256).to",
+   "label": "`to` argument of transferFrom()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Strategy.transferFrom(address,address,uint256).",
+   "expression": "to",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:strategy.withdraw(uint256_address).to",
+   "label": "`to` argument of withdraw()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Strategy.withdraw(uint256,address).",
+   "expression": "to",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:group:external",
+   "label": "Outside analysis scope",
+   "kind": "protocol",
+   "description": "Contracts whose implementation is not part of the analysed snapshot (interfaces only).",
+   "in_scope": false,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "scope.boundary",
+    "checks": []
+   },
+   "evidence": []
+  }
+ ],
+ "operations": [
+  {
+   "id": "op:vault.transfer(address,uint256)",
+   "kind": "transfer",
+   "label": "Vault.transfer(to, amount)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "transfer",
+    "signature": "transfer(address,uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:any",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:34-34"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:vault.transfer(address_uint256).to",
+     "expression": "to",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:34-34"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.transfer(address,uint256)#f1",
+     "asset": "asset:vault",
+     "from": "ent:any",
+     "to": "ent:param:vault.transfer(address_uint256).to",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "amount"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._move moves balances `balanceOf` between two addresses"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:34-34",
+      "ev:rule:structural.token-accounting:6b432938c4"
+     ]
+    }
+   ],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:transfer",
+    "checks": [],
+    "note": "Kind 'transfer': moves a single asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:33-36"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.transferFrom(address,address,uint256)",
+   "kind": "transfer",
+   "label": "Vault.transferFrom(from, to, amount)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "transferFrom",
+    "signature": "transferFrom(address,address,uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:param:vault.transferFrom(address_address_uint256).from",
+     "expression": "from",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:40-40"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:vault.transferFrom(address_address_uint256).to",
+     "expression": "to",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:40-40"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.transferFrom(address,address,uint256)#f1",
+     "asset": "asset:vault",
+     "from": "ent:param:vault.transferFrom(address_address_uint256).from",
+     "to": "ent:param:vault.transferFrom(address_address_uint256).to",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "amount"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._move moves balances `balanceOf` between two addresses"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:40-40",
+      "ev:rule:structural.token-accounting:6b432938c4"
+     ]
+    }
+   ],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:transfer",
+    "checks": [],
+    "note": "Kind 'transfer': moves a single asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:38-42"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.setStrategy(Strategy)",
+   "kind": "other",
+   "label": "Vault.setStrategy(strategy_)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "setStrategy",
+    "signature": "setStrategy(Strategy)",
+    "visibility": "external"
+   },
+   "initiator": "ent:vault.keeper",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "authorized_caller",
+     "entity": "ent:vault.keeper",
+     "expression": "Vault.keeper",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:107-107"
+     ]
+    }
+   ],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [
+    {
+     "id": "op:vault.setStrategy(Strategy)#c:38077663",
+     "kind": "access_control",
+     "text": "requires msg.sender == keeper",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:107-107"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:other",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:106-109"
+   ],
+   "unresolved": [
+    "unr:rebind:vault.setStrategy(Strategy).strategy"
+   ]
+  },
+  {
+   "id": "op:vault.enter(uint256,address)",
+   "kind": "deposit",
+   "label": "Vault.enter(amount, receiver)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "enter",
+    "signature": "enter(uint256,address)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:any",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:118-118"
+     ]
+    },
+    {
+     "role": "share_receiver",
+     "entity": "ent:param:vault.enter(uint256_address).receiver",
+     "expression": "receiver",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:119-119"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.enter(uint256,address)#f1",
+     "asset": "asset:vault.asset",
+     "from": "ent:any",
+     "to": "ent:vault",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount"
+     },
+     "mechanism": "transferFrom",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transferFrom on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:118-118",
+      "ev:rule:erc20.call:75acc45f13"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:vault.enter(uint256,address)#f2",
+     "asset": "asset:vault",
+     "to": "ent:param:vault.enter(uint256_address).receiver",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares",
+      "note": "shares = amount * supply / totalAssets() | amount; in terms of the entry call: amount * totalSupply / (asset.balanceOf(address(Vault)) + balanceOf) | amount"
+     },
+     "mechanism": "mint",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._issue updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:119-119",
+      "ev:rule:structural.token-accounting:8627e373e1"
+     ]
+    }
+   ],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:deposit",
+    "checks": [],
+    "note": "Kind 'deposit': issues the executor's own token and receives another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:115-120"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.allocate(uint256)",
+   "kind": "allocate",
+   "label": "Vault.allocate(amount)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "allocate",
+    "signature": "allocate(uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:vault.keeper",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "authorized_caller",
+     "entity": "ent:vault.keeper",
+     "expression": "Vault.keeper",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:123-123"
+     ]
+    },
+    {
+     "role": "spender",
+     "entity": "ent:strategy",
+     "expression": "strategy",
+     "evidence": []
+    }
+   ],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [
+    {
+     "id": "op:vault.allocate(uint256)#c:21ee5492",
+     "kind": "access_control",
+     "text": "requires msg.sender == keeper",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:123-123"
+     ]
+    },
+    {
+     "id": "op:vault.allocate(uint256)#c:edde4784",
+     "kind": "state",
+     "text": "Vault approves Strategy to spend USDT (example label) (amount)",
+     "expression": "asset",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:124-124",
+      "ev:rule:erc20.call:9de2ba249c"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:allocate",
+    "checks": [],
+    "note": "Kind 'allocate': moves the executor's assets into a downstream contract (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:122-126"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.allocate(uint256)>strategy.deposit(uint256)",
+   "kind": "deposit",
+   "label": "Strategy.deposit(amount)",
+   "parent": "op:vault.allocate(uint256)",
+   "order": 1,
+   "transaction": "same",
+   "entrypoint": {
+    "contract": "Strategy",
+    "function": "deposit",
+    "signature": "deposit(uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:vault",
+   "executor": "ent:strategy",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:vault",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:78-78"
+     ]
+    },
+    {
+     "role": "share_receiver",
+     "entity": "ent:vault",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:80-80"
+     ]
+    },
+    {
+     "role": "spender",
+     "entity": "ent:strategy.pool",
+     "expression": "pool",
+     "evidence": []
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.allocate(uint256)>strategy.deposit(uint256)#f1",
+     "asset": "asset:vault.asset",
+     "from": "ent:vault",
+     "to": "ent:strategy",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount"
+     },
+     "mechanism": "transferFrom",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transferFrom on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:78-78",
+      "ev:src:src_ReceiverVault.sol:125-125",
+      "ev:rule:erc20.call:75acc45f13"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:vault.allocate(uint256)>strategy.deposit(uint256)#f2",
+     "asset": "asset:strategy",
+     "to": "ent:vault",
+     "amount": {
+      "asset": "asset:strategy",
+      "unit": "raw",
+      "expression": "shares",
+      "note": "shares = amount"
+     },
+     "mechanism": "mint",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._issue updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:80-80",
+      "ev:src:src_ReceiverVault.sol:125-125",
+      "ev:rule:structural.token-accounting:8627e373e1"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:vault.allocate(uint256)>strategy.deposit(uint256)#c:39725941",
+     "kind": "access_control",
+     "text": "requires msg.sender == vault",
+     "expression": "address(Vault) == address(Vault)",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:77-77"
+     ],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "condition.evaluate",
+      "checks": [],
+      "note": "Holds in this call context (caller rebound to the calling instance; registry members from the configuration)"
+     }
+    },
+    {
+     "id": "op:vault.allocate(uint256)>strategy.deposit(uint256)#c:08e8ba8a",
+     "kind": "state",
+     "text": "Strategy approves pool (ILendingPool) to spend USDT (example label) (amount)",
+     "expression": "asset",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:81-81",
+      "ev:src:src_ReceiverVault.sol:125-125",
+      "ev:rule:erc20.call:9de2ba249c"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:deposit",
+    "checks": [],
+    "note": "Kind 'deposit': issues the executor's own token and receives another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:125-125",
+    "ev:src:src_ReceiverVault.sol:76-83"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.allocate(uint256)>strategy.deposit(uint256)>pool.supply",
+   "kind": "call",
+   "label": "pool (ILendingPool).supply(asset, amount, address(Strategy))",
+   "description": "External call outside the analysed scope; asset effects unknown.",
+   "parent": "op:vault.allocate(uint256)>strategy.deposit(uint256)",
+   "order": 1,
+   "transaction": "same",
+   "initiator": "ent:strategy",
+   "executor": "ent:strategy.pool",
+   "participants": [],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "unresolved",
+    "rule": "call.external",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:82-82"
+   ],
+   "unresolved": [
+    "unr:ext:5fc065ab"
+   ]
+  },
+  {
+   "id": "op:vault.exit(uint256,address,address)",
+   "kind": "redeem",
+   "label": "Vault.exit(shares, receiver, owner)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "exit",
+    "signature": "exit(uint256,address,address)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "share_owner",
+     "entity": "ent:param:vault.exit(uint256_address_address).owner",
+     "expression": "owner",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:133-133"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:vault.exit(uint256_address_address).receiver",
+     "expression": "receiver",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:138-138"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.exit(uint256,address,address)#f1",
+     "asset": "asset:vault",
+     "from": "ent:param:vault.exit(uint256_address_address).owner",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._destroy updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:133-133",
+      "ev:rule:structural.token-accounting:c39daa78c7"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:vault.exit(uint256,address,address)#f2",
+     "asset": "asset:vault.asset",
+     "from": "ent:vault",
+     "to": "ent:param:vault.exit(uint256_address_address).receiver",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount",
+      "note": "amount = shares * totalAssets() / totalSupply; in terms of the entry call: shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transfer on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:138-138",
+      "ev:rule:erc20.call:ff437317c8"
+     ]
+    }
+   ],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:redeem",
+    "checks": [],
+    "note": "Kind 'redeem': burns the executor's own token and pays out another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:128-139"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)",
+   "kind": "redeem",
+   "label": "Strategy.withdraw(shares, to)",
+   "parent": "op:vault.exit(uint256,address,address)",
+   "order": 1,
+   "transaction": "same",
+   "entrypoint": {
+    "contract": "Strategy",
+    "function": "withdraw",
+    "signature": "withdraw(uint256,address)",
+    "visibility": "external"
+   },
+   "initiator": "ent:vault",
+   "executor": "ent:strategy",
+   "participants": [
+    {
+     "role": "share_owner",
+     "entity": "ent:vault",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:86-86"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:vault",
+     "expression": "to",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:88-88"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)#f1",
+     "asset": "asset:strategy",
+     "from": "ent:vault",
+     "amount": {
+      "asset": "asset:strategy",
+      "unit": "raw",
+      "expression": "shares",
+      "note": "in terms of the entry call: shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply - asset.balanceOf(address(Vault))"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._destroy updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:86-86",
+      "ev:src:src_ReceiverVault.sol:136-136",
+      "ev:rule:structural.token-accounting:c39daa78c7"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)#f2",
+     "asset": "asset:vault.asset",
+     "from": "ent:strategy",
+     "to": "ent:vault",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount",
+      "note": "amount = pool.withdraw(asset, shares, address(Strategy)); in terms of the entry call: pool.withdraw(asset, shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply - asset.balanceOf(address(Vault)), address(Strategy))"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transfer on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:88-88",
+      "ev:src:src_ReceiverVault.sol:136-136",
+      "ev:rule:erc20.call:ff437317c8"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)#c:358f54ca",
+     "kind": "branch",
+     "text": "only if idle < amount",
+     "expression": "asset.balanceOf(address(Vault)) < shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:135-135"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:redeem",
+    "checks": [],
+    "note": "Kind 'redeem': burns the executor's own token and pays out another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:136-136",
+    "ev:src:src_ReceiverVault.sol:85-89"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)>pool.withdraw",
+   "kind": "call",
+   "label": "pool (ILendingPool).withdraw(asset, shares, address(Strategy))",
+   "description": "External call outside the analysed scope; asset effects unknown.",
+   "parent": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)",
+   "order": 1,
+   "transaction": "same",
+   "initiator": "ent:strategy",
+   "executor": "ent:strategy.pool",
+   "participants": [],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "unresolved",
+    "rule": "call.external",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:87-87"
+   ],
+   "unresolved": [
+    "unr:ext:43a5c458"
+   ]
+  },
+  {
+   "id": "op:strategy.transfer(address,uint256)",
+   "kind": "transfer",
+   "label": "Strategy.transfer(to, amount)",
+   "entrypoint": {
+    "contract": "Strategy",
+    "function": "transfer",
+    "signature": "transfer(address,uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:strategy",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:any",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:34-34"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:strategy.transfer(address_uint256).to",
+     "expression": "to",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:34-34"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:strategy.transfer(address,uint256)#f1",
+     "asset": "asset:strategy",
+     "from": "ent:any",
+     "to": "ent:param:strategy.transfer(address_uint256).to",
+     "amount": {
+      "asset": "asset:strategy",
+      "unit": "raw",
+      "expression": "amount"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._move moves balances `balanceOf` between two addresses"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:34-34",
+      "ev:rule:structural.token-accounting:6b432938c4"
+     ]
+    }
+   ],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:transfer",
+    "checks": [],
+    "note": "Kind 'transfer': moves a single asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:33-36"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:strategy.transferFrom(address,address,uint256)",
+   "kind": "transfer",
+   "label": "Strategy.transferFrom(from, to, amount)",
+   "entrypoint": {
+    "contract": "Strategy",
+    "function": "transferFrom",
+    "signature": "transferFrom(address,address,uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:strategy",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:param:strategy.transferFrom(address_address_uint256).from",
+     "expression": "from",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:40-40"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:strategy.transferFrom(address_address_uint256).to",
+     "expression": "to",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:40-40"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:strategy.transferFrom(address,address,uint256)#f1",
+     "asset": "asset:strategy",
+     "from": "ent:param:strategy.transferFrom(address_address_uint256).from",
+     "to": "ent:param:strategy.transferFrom(address_address_uint256).to",
+     "amount": {
+      "asset": "asset:strategy",
+      "unit": "raw",
+      "expression": "amount"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._move moves balances `balanceOf` between two addresses"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:40-40",
+      "ev:rule:structural.token-accounting:6b432938c4"
+     ]
+    }
+   ],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:transfer",
+    "checks": [],
+    "note": "Kind 'transfer': moves a single asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:38-42"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:strategy.deposit(uint256)",
+   "kind": "deposit",
+   "label": "Strategy.deposit(amount)",
+   "entrypoint": {
+    "contract": "Strategy",
+    "function": "deposit",
+    "signature": "deposit(uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:vault",
+   "executor": "ent:strategy",
+   "participants": [
+    {
+     "role": "authorized_caller",
+     "entity": "ent:vault",
+     "expression": "address(Vault)",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:77-77"
+     ]
+    },
+    {
+     "role": "payer",
+     "entity": "ent:vault",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:78-78"
+     ]
+    },
+    {
+     "role": "share_receiver",
+     "entity": "ent:vault",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:80-80"
+     ]
+    },
+    {
+     "role": "spender",
+     "entity": "ent:strategy.pool",
+     "expression": "pool",
+     "evidence": []
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:strategy.deposit(uint256)#f1",
+     "asset": "asset:vault.asset",
+     "from": "ent:vault",
+     "to": "ent:strategy",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount"
+     },
+     "mechanism": "transferFrom",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transferFrom on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:78-78",
+      "ev:rule:erc20.call:75acc45f13"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:strategy.deposit(uint256)#f2",
+     "asset": "asset:strategy",
+     "to": "ent:vault",
+     "amount": {
+      "asset": "asset:strategy",
+      "unit": "raw",
+      "expression": "shares",
+      "note": "shares = amount"
+     },
+     "mechanism": "mint",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._issue updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:80-80",
+      "ev:rule:structural.token-accounting:8627e373e1"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:strategy.deposit(uint256)#c:39725941",
+     "kind": "access_control",
+     "text": "requires msg.sender == vault",
+     "expression": "msg.sender == address(Vault)",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:77-77"
+     ]
+    },
+    {
+     "id": "op:strategy.deposit(uint256)#c:08e8ba8a",
+     "kind": "state",
+     "text": "Strategy approves pool (ILendingPool) to spend USDT (example label) (amount)",
+     "expression": "asset",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:81-81",
+      "ev:rule:erc20.call:9de2ba249c"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:deposit",
+    "checks": [],
+    "note": "Kind 'deposit': issues the executor's own token and receives another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:76-83"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:strategy.deposit(uint256)>pool.supply",
+   "kind": "call",
+   "label": "pool (ILendingPool).supply(asset, amount, address(Strategy))",
+   "description": "External call outside the analysed scope; asset effects unknown.",
+   "parent": "op:strategy.deposit(uint256)",
+   "order": 1,
+   "transaction": "same",
+   "initiator": "ent:strategy",
+   "executor": "ent:strategy.pool",
+   "participants": [],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "unresolved",
+    "rule": "call.external",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:82-82"
+   ],
+   "unresolved": [
+    "unr:ext:5fc065ab"
+   ]
+  },
+  {
+   "id": "op:strategy.withdraw(uint256,address)",
+   "kind": "redeem",
+   "label": "Strategy.withdraw(shares, to)",
+   "entrypoint": {
+    "contract": "Strategy",
+    "function": "withdraw",
+    "signature": "withdraw(uint256,address)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:strategy",
+   "participants": [
+    {
+     "role": "share_owner",
+     "entity": "ent:any",
+     "expression": "msg.sender",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:86-86"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:strategy.withdraw(uint256_address).to",
+     "expression": "to",
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:88-88"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:strategy.withdraw(uint256,address)#f1",
+     "asset": "asset:strategy",
+     "from": "ent:any",
+     "amount": {
+      "asset": "asset:strategy",
+      "unit": "raw",
+      "expression": "shares"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._destroy updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:86-86",
+      "ev:rule:structural.token-accounting:c39daa78c7"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:strategy.withdraw(uint256,address)#f2",
+     "asset": "asset:vault.asset",
+     "from": "ent:strategy",
+     "to": "ent:param:strategy.withdraw(uint256_address).to",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount",
+      "note": "amount = pool.withdraw(asset, shares, address(Strategy))"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transfer on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:88-88",
+      "ev:rule:erc20.call:ff437317c8"
+     ]
+    }
+   ],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:redeem",
+    "checks": [],
+    "note": "Kind 'redeem': burns the executor's own token and pays out another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:85-89"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:strategy.withdraw(uint256,address)>pool.withdraw",
+   "kind": "call",
+   "label": "pool (ILendingPool).withdraw(asset, shares, address(Strategy))",
+   "description": "External call outside the analysed scope; asset effects unknown.",
+   "parent": "op:strategy.withdraw(uint256,address)",
+   "order": 1,
+   "transaction": "same",
+   "initiator": "ent:strategy",
+   "executor": "ent:strategy.pool",
+   "participants": [],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "unresolved",
+    "rule": "call.external",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:87-87"
+   ],
+   "unresolved": [
+    "unr:ext:43a5c458"
+   ]
+  },
+  {
+   "id": "op:vault.approve(address,uint256)",
+   "kind": "other",
+   "label": "Vault.approve(spender, amount)",
+   "description": "Changes allowance, which the contract's asset-moving entry points read: it changes what accounts can obtain (no asset moves in this call).",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "approve",
+    "signature": "approve(address,uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:other",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:44-47"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:strategy.approve(address,uint256)",
+   "kind": "other",
+   "label": "Strategy.approve(spender, amount)",
+   "description": "Changes allowance, which the contract's asset-moving entry points read: it changes what accounts can obtain (no asset moves in this call).",
+   "entrypoint": {
+    "contract": "Strategy",
+    "function": "approve",
+    "signature": "approve(address,uint256)",
+    "visibility": "external"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:strategy",
+   "participants": [],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:other",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:44-47"
+   ],
+   "unresolved": []
+  }
+ ],
+ "positions": [
+  {
+   "id": "pos:vault:vault.asset",
+   "holder": "ent:vault",
+   "asset": "asset:vault.asset",
+   "kind": "custody",
+   "label": "USDT (example label) held by Vault",
+   "amount": {
+    "asset": "asset:vault.asset",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:118-118",
+    "ev:src:src_ReceiverVault.sol:78-78",
+    "ev:src:src_ReceiverVault.sol:125-125",
+    "ev:src:src_ReceiverVault.sol:88-88",
+    "ev:src:src_ReceiverVault.sol:136-136",
+    "ev:src:src_ReceiverVault.sol:138-138",
+    "ev:src:src_ReceiverVault.sol:112-112",
+    "ev:src:src_ReceiverVault.sol:134-134"
+   ]
+  },
+  {
+   "id": "pos:any:vault.asset",
+   "holder": "ent:any",
+   "asset": "asset:vault.asset",
+   "kind": "custody",
+   "label": "USDT (example label) held by Any account",
+   "amount": {
+    "asset": "asset:vault.asset",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:118-118",
+    "ev:src:src_ReceiverVault.sol:138-138",
+    "ev:src:src_ReceiverVault.sol:88-88"
+   ]
+  },
+  {
+   "id": "pos:any:vault",
+   "holder": "ent:any",
+   "asset": "asset:vault",
+   "kind": "share",
+   "label": "vU (vault share) held by Any account",
+   "amount": {
+    "asset": "asset:vault",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:119-119",
+    "ev:src:src_ReceiverVault.sol:133-133"
+   ]
+  },
+  {
+   "id": "pos:strategy:vault.asset",
+   "holder": "ent:strategy",
+   "asset": "asset:vault.asset",
+   "kind": "custody",
+   "label": "USDT (example label) held by Strategy",
+   "amount": {
+    "asset": "asset:vault.asset",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:78-78",
+    "ev:src:src_ReceiverVault.sol:125-125",
+    "ev:src:src_ReceiverVault.sol:88-88",
+    "ev:src:src_ReceiverVault.sol:136-136"
+   ]
+  },
+  {
+   "id": "pos:vault:strategy",
+   "holder": "ent:vault",
+   "asset": "asset:strategy",
+   "kind": "share",
+   "label": "sU (strategy share) held by Vault",
+   "amount": {
+    "asset": "asset:strategy",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:80-80",
+    "ev:src:src_ReceiverVault.sol:125-125",
+    "ev:src:src_ReceiverVault.sol:86-86",
+    "ev:src:src_ReceiverVault.sol:136-136"
+   ]
+  },
+  {
+   "id": "pos:any:strategy",
+   "holder": "ent:any",
+   "asset": "asset:strategy",
+   "kind": "share",
+   "label": "sU (strategy share) held by Any account",
+   "amount": {
+    "asset": "asset:strategy",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:86-86"
+   ]
+  }
+ ],
+ "relations": [
+  {
+   "id": "rel:holds:pos:vault:vault.asset",
+   "kind": "holds",
+   "source": "ent:vault",
+   "target": "pos:vault:vault.asset",
+   "label": "holds",
+   "asset": "asset:vault.asset",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:118-118",
+    "ev:src:src_ReceiverVault.sol:78-78",
+    "ev:src:src_ReceiverVault.sol:125-125",
+    "ev:src:src_ReceiverVault.sol:88-88",
+    "ev:src:src_ReceiverVault.sol:136-136",
+    "ev:src:src_ReceiverVault.sol:138-138",
+    "ev:src:src_ReceiverVault.sol:112-112",
+    "ev:src:src_ReceiverVault.sol:134-134"
+   ]
+  },
+  {
+   "id": "rel:holds:pos:any:vault.asset",
+   "kind": "holds",
+   "source": "ent:any",
+   "target": "pos:any:vault.asset",
+   "label": "holds",
+   "asset": "asset:vault.asset",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:118-118",
+    "ev:src:src_ReceiverVault.sol:138-138",
+    "ev:src:src_ReceiverVault.sol:88-88"
+   ]
+  },
+  {
+   "id": "rel:holds:pos:any:vault",
+   "kind": "holds",
+   "source": "ent:any",
+   "target": "pos:any:vault",
+   "label": "holds",
+   "asset": "asset:vault",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:119-119",
+    "ev:src:src_ReceiverVault.sol:133-133"
+   ]
+  },
+  {
+   "id": "rel:holds:pos:strategy:vault.asset",
+   "kind": "holds",
+   "source": "ent:strategy",
+   "target": "pos:strategy:vault.asset",
+   "label": "holds",
+   "asset": "asset:vault.asset",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:78-78",
+    "ev:src:src_ReceiverVault.sol:125-125",
+    "ev:src:src_ReceiverVault.sol:88-88",
+    "ev:src:src_ReceiverVault.sol:136-136"
+   ]
+  },
+  {
+   "id": "rel:holds:pos:vault:strategy",
+   "kind": "holds",
+   "source": "ent:vault",
+   "target": "pos:vault:strategy",
+   "label": "holds",
+   "asset": "asset:strategy",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:80-80",
+    "ev:src:src_ReceiverVault.sol:125-125",
+    "ev:src:src_ReceiverVault.sol:86-86",
+    "ev:src:src_ReceiverVault.sol:136-136"
+   ]
+  },
+  {
+   "id": "rel:holds:pos:any:strategy",
+   "kind": "holds",
+   "source": "ent:any",
+   "target": "pos:any:strategy",
+   "label": "holds",
+   "asset": "asset:strategy",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:86-86"
+   ]
+  },
+  {
+   "id": "rel:claim:pos_any_vault->pos_vault_vault.asset",
+   "kind": "claim",
+   "source": "pos:any:vault",
+   "target": "pos:vault:vault.asset",
+   "label": "claims",
+   "asset": "asset:vault.asset",
+   "operation": "op:vault.exit(uint256,address,address)",
+   "basis_detail": "payout amount = shares * totalAssets() / totalSupply; in terms of the entry call: shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "partially_supported",
+    "rule": "claim.share-redemption",
+    "checks": [
+     {
+      "id": "deposit-link",
+      "description": "1 entry point(s) take in USDT (example label) and issue vU (vault share) in the same transaction: Vault.enter(amount, receiver)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:118-118",
+       "ev:src:src_ReceiverVault.sol:119-119"
+      ]
+     },
+     {
+      "id": "deposit-roles",
+      "description": "In Vault.enter(amount, receiver): Any account pays USDT (example label) (amount); `receiver` argument of enter() receives vU (vault share) (shares) — payer and share receiver are different parties",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:118-118",
+       "ev:src:src_ReceiverVault.sol:119-119"
+      ]
+     },
+     {
+      "id": "exit-exists",
+      "description": "Vault.exit(shares, receiver, owner) burns vU (vault share) and pays out USDT (example label)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:133-133",
+       "ev:src:src_ReceiverVault.sol:138-138"
+      ]
+     },
+     {
+      "id": "exit-roles",
+      "description": "Any account calls Vault.exit(shares, receiver, owner); vU (vault share) is burned from `owner` argument of exit(); USDT (example label) is paid to `receiver` argument of exit() — shares are burned from a party other than the caller",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:133-133",
+       "ev:src:src_ReceiverVault.sol:138-138"
+      ]
+     },
+     {
+      "id": "amount-link",
+      "description": "Payout amount (amount) data-depends on the burned amount (shares)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:138-138"
+      ]
+     },
+     {
+      "id": "boundaries",
+      "description": "Exit path contains 1 unresolved item(s)",
+      "result": "unknown",
+      "evidence": []
+     }
+    ]
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:138-138"
+   ]
+  },
+  {
+   "id": "rel:claim:pos_any_vault->pos_vault_strategy",
+   "kind": "claim",
+   "source": "pos:any:vault",
+   "target": "pos:vault:strategy",
+   "label": "claims",
+   "asset": "asset:strategy",
+   "operation": "op:vault.exit(uint256,address,address)",
+   "basis_detail": "payout amount = shares * totalAssets() / totalSupply; in terms of the entry call: shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply; the shortfall is obtained by redeeming sU (strategy share) held by Vault",
+   "conditions": [
+    {
+     "id": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)#c:358f54ca",
+     "kind": "branch",
+     "text": "only if idle < amount",
+     "expression": "asset.balanceOf(address(Vault)) < shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:135-135"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "partially_supported",
+    "rule": "claim.share-redemption",
+    "checks": [
+     {
+      "id": "deposit-link",
+      "description": "No entry point takes in sU (strategy share) and issues vU (vault share) in one transaction",
+      "result": "fail",
+      "evidence": []
+     },
+     {
+      "id": "exit-exists",
+      "description": "Vault.exit(shares, receiver, owner) burns vU (vault share) and pays out USDT (example label)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:133-133",
+       "ev:src:src_ReceiverVault.sol:138-138"
+      ]
+     },
+     {
+      "id": "exit-roles",
+      "description": "Any account calls Vault.exit(shares, receiver, owner); vU (vault share) is burned from `owner` argument of exit(); USDT (example label) is paid to `receiver` argument of exit() — shares are burned from a party other than the caller",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:133-133",
+       "ev:src:src_ReceiverVault.sol:138-138"
+      ]
+     },
+     {
+      "id": "amount-link",
+      "description": "Payout amount (amount) data-depends on the burned amount (shares)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:138-138"
+      ]
+     },
+     {
+      "id": "boundaries",
+      "description": "Exit path contains 1 unresolved item(s)",
+      "result": "unknown",
+      "evidence": []
+     }
+    ]
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:138-138"
+   ]
+  },
+  {
+   "id": "rel:claim:pos_vault_strategy->pos_strategy_vault.asset",
+   "kind": "claim",
+   "source": "pos:vault:strategy",
+   "target": "pos:strategy:vault.asset",
+   "label": "claims",
+   "asset": "asset:vault.asset",
+   "operation": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)",
+   "basis_detail": "payout amount = pool.withdraw(asset, shares, address(Strategy)); in terms of the entry call: pool.withdraw(asset, shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply - asset.balanceOf(address(Vault)), address(Strategy))",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "partially_supported",
+    "rule": "claim.share-redemption",
+    "checks": [
+     {
+      "id": "deposit-link",
+      "description": "2 entry point(s) take in USDT (example label) and issue sU (strategy share) in the same transaction: Vault.allocate(amount), Strategy.deposit(amount)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:78-78",
+       "ev:src:src_ReceiverVault.sol:125-125",
+       "ev:src:src_ReceiverVault.sol:80-80",
+       "ev:src:src_ReceiverVault.sol:125-125"
+      ]
+     },
+     {
+      "id": "deposit-roles",
+      "description": "In Vault.allocate(amount): Vault pays USDT (example label) (amount); Vault receives sU (strategy share) (shares)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:78-78",
+       "ev:src:src_ReceiverVault.sol:125-125",
+       "ev:src:src_ReceiverVault.sol:80-80",
+       "ev:src:src_ReceiverVault.sol:125-125"
+      ]
+     },
+     {
+      "id": "exit-exists",
+      "description": "Strategy.withdraw(shares, to) burns sU (strategy share) and pays out USDT (example label)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:86-86",
+       "ev:src:src_ReceiverVault.sol:136-136",
+       "ev:src:src_ReceiverVault.sol:88-88",
+       "ev:src:src_ReceiverVault.sol:136-136"
+      ]
+     },
+     {
+      "id": "exit-roles",
+      "description": "Vault calls Strategy.withdraw(shares, to); sU (strategy share) is burned from Vault; USDT (example label) is paid to Vault",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:86-86",
+       "ev:src:src_ReceiverVault.sol:136-136",
+       "ev:src:src_ReceiverVault.sol:88-88",
+       "ev:src:src_ReceiverVault.sol:136-136"
+      ]
+     },
+     {
+      "id": "amount-link",
+      "description": "Payout amount (amount) data-depends on the burned amount (shares)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:88-88",
+       "ev:src:src_ReceiverVault.sol:136-136"
+      ]
+     },
+     {
+      "id": "boundaries",
+      "description": "Exit path contains 1 unresolved item(s)",
+      "result": "unknown",
+      "evidence": []
+     }
+    ]
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:88-88",
+    "ev:src:src_ReceiverVault.sol:136-136"
+   ]
+  },
+  {
+   "id": "rel:claim:pos_any_strategy->pos_strategy_vault.asset",
+   "kind": "claim",
+   "source": "pos:any:strategy",
+   "target": "pos:strategy:vault.asset",
+   "label": "claims",
+   "asset": "asset:vault.asset",
+   "operation": "op:strategy.withdraw(uint256,address)",
+   "basis_detail": "payout amount = pool.withdraw(asset, shares, address(Strategy))",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "partially_supported",
+    "rule": "claim.share-redemption",
+    "checks": [
+     {
+      "id": "deposit-link",
+      "description": "2 entry point(s) take in USDT (example label) and issue sU (strategy share) in the same transaction: Vault.allocate(amount), Strategy.deposit(amount)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:78-78",
+       "ev:src:src_ReceiverVault.sol:125-125",
+       "ev:src:src_ReceiverVault.sol:80-80",
+       "ev:src:src_ReceiverVault.sol:125-125"
+      ]
+     },
+     {
+      "id": "deposit-roles",
+      "description": "In Vault.allocate(amount): Vault pays USDT (example label) (amount); Vault receives sU (strategy share) (shares)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:78-78",
+       "ev:src:src_ReceiverVault.sol:125-125",
+       "ev:src:src_ReceiverVault.sol:80-80",
+       "ev:src:src_ReceiverVault.sol:125-125"
+      ]
+     },
+     {
+      "id": "exit-exists",
+      "description": "Strategy.withdraw(shares, to) burns sU (strategy share) and pays out USDT (example label)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:86-86",
+       "ev:src:src_ReceiverVault.sol:88-88"
+      ]
+     },
+     {
+      "id": "exit-roles",
+      "description": "Any account calls Strategy.withdraw(shares, to); sU (strategy share) is burned from Any account; USDT (example label) is paid to `to` argument of withdraw()",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:86-86",
+       "ev:src:src_ReceiverVault.sol:88-88"
+      ]
+     },
+     {
+      "id": "amount-link",
+      "description": "Payout amount (amount) data-depends on the burned amount (shares)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:src_ReceiverVault.sol:88-88"
+      ]
+     },
+     {
+      "id": "boundaries",
+      "description": "Exit path contains 1 unresolved item(s)",
+      "result": "unknown",
+      "evidence": []
+     }
+    ]
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:88-88"
+   ]
+  },
+  {
+   "id": "rel:exit:pos_any_vault->op_vault.exit(uint256_address_address)",
+   "kind": "exit",
+   "source": "pos:any:vault",
+   "target": "op:vault.exit(uint256,address,address)",
+   "label": "exit via",
+   "operation": "op:vault.exit(uint256,address,address)",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "partially_supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:128-139"
+   ]
+  },
+  {
+   "id": "rel:exit:pos_vault_strategy->op_vault.exit(uint256_address_address)",
+   "kind": "exit",
+   "source": "pos:vault:strategy",
+   "target": "op:vault.exit(uint256,address,address)",
+   "label": "exit via",
+   "operation": "op:vault.exit(uint256,address,address)",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "partially_supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:128-139"
+   ]
+  },
+  {
+   "id": "rel:exit:pos_any_strategy->op_strategy.withdraw(uint256_address)",
+   "kind": "exit",
+   "source": "pos:any:strategy",
+   "target": "op:strategy.withdraw(uint256,address)",
+   "label": "exit via",
+   "operation": "op:strategy.withdraw(uint256,address)",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "partially_supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:85-89"
+   ]
+  },
+  {
+   "id": "rel:calls:ent_strategy->ent_strategy.pool",
+   "kind": "calls",
+   "source": "ent:strategy",
+   "target": "ent:strategy.pool",
+   "label": "supply(), withdraw()",
+   "description": "Functions called: supply() (call), withdraw() (call)",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "calls.static",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:82-82",
+    "ev:src:src_ReceiverVault.sol:87-87"
+   ]
+  },
+  {
+   "id": "rel:dep:ent_strategy->ent_strategy.pool",
+   "kind": "depends_on",
+   "source": "ent:strategy",
+   "target": "ent:strategy.pool",
+   "label": "calls supply() outside the analysed scope",
+   "basis_detail": "Strategy.deposit(amount) calls pool (ILendingPool).supply(), whose implementation (and effect on the caller's assets) is not analysed",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "dependency.external-call",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:82-82",
+    "ev:src:src_ReceiverVault.sol:87-87"
+   ]
+  },
+  {
+   "id": "rel:dep:pos_any_strategy->ent_strategy.pool",
+   "kind": "depends_on",
+   "source": "pos:any:strategy",
+   "target": "ent:strategy.pool",
+   "label": "through Strategy",
+   "basis_detail": "sU (strategy share) held by Any account is a claim on USDT (example label) held by Strategy, and Strategy depends on pool (ILendingPool) (calls supply() outside the analysed scope)",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "dependency.through-issuer",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:88-88",
+    "ev:src:src_ReceiverVault.sol:82-82",
+    "ev:src:src_ReceiverVault.sol:87-87"
+   ]
+  },
+  {
+   "id": "rel:binding:vault.strategy",
+   "kind": "binding",
+   "source": "ent:vault",
+   "target": "ent:strategy",
+   "label": "strategy =",
+   "description": "Configuration binds Vault.strategy to Strategy",
+   "conditions": [
+    {
+     "id": "rel:binding:vault.strategy#w:setStrategy(Strategy)",
+     "kind": "state",
+     "text": "Vault.strategy can be changed by keeper of Vault via setStrategy(Strategy)",
+     "negated": false,
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:106-109"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "config",
+    "support": "config",
+    "verification": "supported",
+    "rule": "binding.config",
+    "checks": []
+   },
+   "evidence": [
+    "ev:cfg:bind:vault.strategy",
+    "ev:src:src_ReceiverVault.sol:98-98"
+   ]
+  },
+  {
+   "id": "rel:binding:strategy.vault",
+   "kind": "binding",
+   "source": "ent:strategy",
+   "target": "ent:vault",
+   "label": "vault =",
+   "description": "Configuration binds Strategy.vault to Vault",
+   "conditions": [],
+   "status": {
+    "basis": "config",
+    "support": "config",
+    "verification": "supported",
+    "rule": "binding.config",
+    "checks": []
+   },
+   "evidence": [
+    "ev:cfg:bind:strategy.vault",
+    "ev:src:src_ReceiverVault.sol:67-67"
+   ]
+  }
+ ],
+ "exits": [
+  {
+   "id": "exit:any_vault:vault.exit(uint256_address_address)",
+   "position": "pos:any:vault",
+   "label": "Exit vU (vault share) via Vault.exit(shares, receiver, owner)",
+   "steps": [
+    {
+     "order": 1,
+     "operation": "op:vault.exit(uint256,address,address)",
+     "actor": "ent:any",
+     "description": "Any account calls Vault.exit(shares, receiver, owner)",
+     "optional": false,
+     "conditions": [],
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:128-139"
+     ]
+    },
+    {
+     "order": 2,
+     "operation": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)",
+     "actor": "ent:vault",
+     "description": "Vault triggers Strategy.withdraw(shares, to)",
+     "transaction": "same",
+     "optional": true,
+     "conditions": [
+      {
+       "id": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)#c:358f54ca",
+       "kind": "branch",
+       "text": "only if idle < amount",
+       "expression": "asset.balanceOf(address(Vault)) < shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply",
+       "negated": false,
+       "evidence": [
+        "ev:src:src_ReceiverVault.sol:135-135"
+       ]
+      }
+     ],
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:136-136",
+      "ev:src:src_ReceiverVault.sol:85-89"
+     ]
+    }
+   ],
+   "consumes": [
+    {
+     "id": "exit:any_vault:vault.exit(uint256_address_address)#in0",
+     "asset": "asset:vault",
+     "from": "ent:param:vault.exit(uint256_address_address).owner",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._destroy updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:133-133",
+      "ev:rule:structural.token-accounting:c39daa78c7"
+     ]
+    }
+   ],
+   "returns": [
+    {
+     "id": "exit:any_vault:vault.exit(uint256_address_address)#out0",
+     "asset": "asset:vault.asset",
+     "from": "ent:vault",
+     "to": "ent:param:vault.exit(uint256_address_address).receiver",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount",
+      "note": "amount = shares * totalAssets() / totalSupply; in terms of the entry call: shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transfer on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:138-138",
+      "ev:rule:erc20.call:ff437317c8"
+     ]
+    }
+   ],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "partially_supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:128-139"
+   ],
+   "unresolved": [
+    "unr:ext:43a5c458"
+   ]
+  },
+  {
+   "id": "exit:vault_strategy:vault.exit(uint256_address_address)",
+   "position": "pos:vault:strategy",
+   "label": "Exit sU (strategy share) via Vault.exit(shares, receiver, owner)",
+   "steps": [
+    {
+     "order": 1,
+     "operation": "op:vault.exit(uint256,address,address)",
+     "actor": "ent:any",
+     "description": "Any account calls Vault.exit(shares, receiver, owner)",
+     "optional": false,
+     "conditions": [],
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:128-139"
+     ]
+    },
+    {
+     "order": 2,
+     "operation": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)",
+     "actor": "ent:vault",
+     "description": "Vault triggers Strategy.withdraw(shares, to)",
+     "transaction": "same",
+     "optional": true,
+     "conditions": [
+      {
+       "id": "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)#c:358f54ca",
+       "kind": "branch",
+       "text": "only if idle < amount",
+       "expression": "asset.balanceOf(address(Vault)) < shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply",
+       "negated": false,
+       "evidence": [
+        "ev:src:src_ReceiverVault.sol:135-135"
+       ]
+      }
+     ],
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:136-136",
+      "ev:src:src_ReceiverVault.sol:85-89"
+     ]
+    }
+   ],
+   "consumes": [
+    {
+     "id": "exit:vault_strategy:vault.exit(uint256_address_address)#in0",
+     "asset": "asset:strategy",
+     "from": "ent:vault",
+     "amount": {
+      "asset": "asset:strategy",
+      "unit": "raw",
+      "expression": "shares",
+      "note": "in terms of the entry call: shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply - asset.balanceOf(address(Vault))"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._destroy updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:86-86",
+      "ev:src:src_ReceiverVault.sol:136-136",
+      "ev:rule:structural.token-accounting:c39daa78c7"
+     ]
+    }
+   ],
+   "returns": [
+    {
+     "id": "exit:vault_strategy:vault.exit(uint256_address_address)#out0",
+     "asset": "asset:vault.asset",
+     "from": "ent:strategy",
+     "to": "ent:vault",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount",
+      "note": "amount = pool.withdraw(asset, shares, address(Strategy)); in terms of the entry call: pool.withdraw(asset, shares * (asset.balanceOf(address(Vault)) + balanceOf) / totalSupply - asset.balanceOf(address(Vault)), address(Strategy))"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transfer on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:88-88",
+      "ev:src:src_ReceiverVault.sol:136-136",
+      "ev:rule:erc20.call:ff437317c8"
+     ]
+    }
+   ],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "partially_supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:128-139"
+   ],
+   "unresolved": [
+    "unr:ext:43a5c458"
+   ]
+  },
+  {
+   "id": "exit:any_strategy:strategy.withdraw(uint256_address)",
+   "position": "pos:any:strategy",
+   "label": "Exit sU (strategy share) via Strategy.withdraw(shares, to)",
+   "steps": [
+    {
+     "order": 1,
+     "operation": "op:strategy.withdraw(uint256,address)",
+     "actor": "ent:any",
+     "description": "Any account calls Strategy.withdraw(shares, to)",
+     "optional": false,
+     "conditions": [],
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:85-89"
+     ]
+    }
+   ],
+   "consumes": [
+    {
+     "id": "exit:any_strategy:strategy.withdraw(uint256_address)#in0",
+     "asset": "asset:strategy",
+     "from": "ent:any",
+     "amount": {
+      "asset": "asset:strategy",
+      "unit": "raw",
+      "expression": "shares"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "structural.token-accounting",
+      "checks": [],
+      "note": "Ledger._destroy updates supply `totalSupply` and balances `balanceOf`"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:86-86",
+      "ev:rule:structural.token-accounting:c39daa78c7"
+     ]
+    }
+   ],
+   "returns": [
+    {
+     "id": "exit:any_strategy:strategy.withdraw(uint256_address)#out0",
+     "asset": "asset:vault.asset",
+     "from": "ent:strategy",
+     "to": "ent:param:strategy.withdraw(uint256_address).to",
+     "amount": {
+      "asset": "asset:vault.asset",
+      "unit": "raw",
+      "expression": "amount",
+      "note": "amount = pool.withdraw(asset, shares, address(Strategy))"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "erc20.call",
+      "checks": [],
+      "note": "ERC-20 transfer on IERC20Like; token implementation outside the analysed instances"
+     },
+     "evidence": [
+      "ev:src:src_ReceiverVault.sol:88-88",
+      "ev:rule:erc20.call:ff437317c8"
+     ]
+    }
+   ],
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "partially_supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:85-89"
+   ],
+   "unresolved": [
+    "unr:ext:43a5c458"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "id": "ev:cfg:group:system",
+   "kind": "config",
+   "title": "Group Fixture system",
+   "description": "Configured group of instances vault, strategy",
+   "synthetic": false,
+   "reference": "fluxscope.json"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:96-140",
+   "kind": "source",
+   "title": "Contract Vault",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "start_line": 96,
+    "end_line": 140
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:65-94",
+   "kind": "source",
+   "title": "Contract Strategy",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "start_line": 65,
+    "end_line": 94
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:33-36",
+   "kind": "source",
+   "title": "Entry point Vault.transfer(address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Ledger",
+    "function": "transfer(address,uint256)",
+    "start_line": 33,
+    "end_line": 36,
+    "snippet": "function transfer(address to, uint256 amount) external returns (bool) {\n        _move(msg.sender, to, amount);\n        return true;\n    }"
+   }
+  },
+  {
+   "id": "ev:cfg:asset:vault",
+   "kind": "config",
+   "title": "Asset label for vault",
+   "description": "Display label 'vU (vault share)' from the project configuration (display only).",
+   "synthetic": false,
+   "reference": "fluxscope.json"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:34-34",
+   "kind": "source",
+   "title": "Ledger.transfer(address,uint256): _move(msg.sender, to, amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Ledger",
+    "function": "transfer(address,uint256)",
+    "start_line": 34,
+    "end_line": 34,
+    "snippet": "_move(msg.sender, to, amount)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:49-52",
+   "kind": "source",
+   "title": "Implementation used by rule structural.token-accounting: Ledger._move(address,address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Ledger",
+    "function": "_move(address,address,uint256)",
+    "start_line": 49,
+    "end_line": 52,
+    "snippet": "function _move(address from, address to, uint256 amount) internal {\n        balanceOf[from] -= amount;\n        balanceOf[to] += amount;\n    }"
+   }
+  },
+  {
+   "id": "ev:rule:structural.token-accounting:6b432938c4",
+   "kind": "rule",
+   "title": "Rule structural.token-accounting",
+   "description": "Ledger._move moves balances `balanceOf` between two addresses — implementation at src/ReceiverVault.sol:49-52",
+   "synthetic": false
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:38-42",
+   "kind": "source",
+   "title": "Entry point Vault.transferFrom(address,address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Ledger",
+    "function": "transferFrom(address,address,uint256)",
+    "start_line": 38,
+    "end_line": 42,
+    "snippet": "function transferFrom(address from, address to, uint256 amount) external returns (bool) {\n        allowance[from][msg.sender] -= amount;\n        _move(from, to, amount);\n        return true;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:40-40",
+   "kind": "source",
+   "title": "Ledger.transferFrom(address,address,uint256): _move(from, to, amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Ledger",
+    "function": "transferFrom(address,address,uint256)",
+    "start_line": 40,
+    "end_line": 40,
+    "snippet": "_move(from, to, amount)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:99-99",
+   "kind": "source",
+   "title": "State variable Vault.keeper",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "start_line": 99,
+    "end_line": 99,
+    "snippet": "address public keeper"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:106-109",
+   "kind": "source",
+   "title": "Entry point Vault.setStrategy(Strategy)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "setStrategy(Strategy)",
+    "start_line": 106,
+    "end_line": 109,
+    "snippet": "function setStrategy(Strategy strategy_) external {\n        require(msg.sender == keeper, \"only keeper\");\n        strategy = strategy_;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:107-107",
+   "kind": "source",
+   "title": "Vault.setStrategy(Strategy): require(msg.sender == keeper, \"only keeper\")",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "setStrategy(Strategy)",
+    "start_line": 107,
+    "end_line": 107,
+    "snippet": "require(msg.sender == keeper, \"only keeper\")"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:115-120",
+   "kind": "source",
+   "title": "Entry point Vault.enter(uint256,address)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "enter(uint256,address)",
+    "start_line": 115,
+    "end_line": 120,
+    "snippet": "function enter(uint256 amount, address receiver) external returns (uint256 shares) {\n        uint256 supply = totalSupply;\n        shares = supply == 0 ? amount : amount * supply / totalAssets();\n        asset.transferFrom(msg.sender, address(this), amount);\n        _issue(receiver, shares);\n    }"
+   }
+  },
+  {
+   "id": "ev:cfg:asset:vault.asset",
+   "kind": "config",
+   "title": "Asset label for vault.asset",
+   "description": "Display label 'USDT (example label)' from the project configuration (display only).",
+   "synthetic": false,
+   "reference": "fluxscope.json"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:118-118",
+   "kind": "source",
+   "title": "Vault.enter(uint256,address): asset.transferFrom(msg.sender, address(this), amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "enter(uint256,address)",
+    "start_line": 118,
+    "end_line": 118,
+    "snippet": "asset.transferFrom(msg.sender, address(this), amount)"
+   }
+  },
+  {
+   "id": "ev:rule:erc20.call:75acc45f13",
+   "kind": "rule",
+   "title": "Rule erc20.call",
+   "description": "ERC-20 transferFrom on IERC20Like; token implementation outside the analysed instances",
+   "synthetic": false,
+   "reference": "https://eips.ethereum.org/EIPS/eip-20"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:119-119",
+   "kind": "source",
+   "title": "Vault.enter(uint256,address): _issue(receiver, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "enter(uint256,address)",
+    "start_line": 119,
+    "end_line": 119,
+    "snippet": "_issue(receiver, shares)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:54-57",
+   "kind": "source",
+   "title": "Implementation used by rule structural.token-accounting: Ledger._issue(address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Ledger",
+    "function": "_issue(address,uint256)",
+    "start_line": 54,
+    "end_line": 57,
+    "snippet": "function _issue(address to, uint256 amount) internal {\n        totalSupply += amount;\n        balanceOf[to] += amount;\n    }"
+   }
+  },
+  {
+   "id": "ev:rule:structural.token-accounting:8627e373e1",
+   "kind": "rule",
+   "title": "Rule structural.token-accounting",
+   "description": "Ledger._issue updates supply `totalSupply` and balances `balanceOf` — implementation at src/ReceiverVault.sol:54-57",
+   "synthetic": false
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:122-126",
+   "kind": "source",
+   "title": "Entry point Vault.allocate(uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "allocate(uint256)",
+    "start_line": 122,
+    "end_line": 126,
+    "snippet": "function allocate(uint256 amount) external {\n        require(msg.sender == keeper, \"only keeper\");\n        asset.approve(address(strategy), amount);\n        strategy.deposit(amount);\n    }"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:123-123",
+   "kind": "source",
+   "title": "Vault.allocate(uint256): require(msg.sender == keeper, \"only keeper\")",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "allocate(uint256)",
+    "start_line": 123,
+    "end_line": 123,
+    "snippet": "require(msg.sender == keeper, \"only keeper\")"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:124-124",
+   "kind": "source",
+   "title": "Vault.allocate(uint256): asset.approve(address(strategy), amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "allocate(uint256)",
+    "start_line": 124,
+    "end_line": 124,
+    "snippet": "asset.approve(address(strategy), amount)"
+   }
+  },
+  {
+   "id": "ev:rule:erc20.call:9de2ba249c",
+   "kind": "rule",
+   "title": "Rule erc20.call",
+   "description": "ERC-20 approve on IERC20Like; token implementation outside the analysed instances",
+   "synthetic": false,
+   "reference": "https://eips.ethereum.org/EIPS/eip-20"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:125-125",
+   "kind": "source",
+   "title": "Call to Strategy.deposit(amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "allocate(uint256)",
+    "start_line": 125,
+    "end_line": 125,
+    "snippet": "strategy.deposit(amount)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:76-83",
+   "kind": "source",
+   "title": "Definition of Strategy.deposit(uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "deposit(uint256)",
+    "start_line": 76,
+    "end_line": 83,
+    "snippet": "function deposit(uint256 amount) external returns (uint256 shares) {\n        require(msg.sender == vault, \"only vault\");\n        asset.transferFrom(msg.sender, address(this), amount);\n        shares = amount;\n        _issue(msg.sender, shares);\n        asset.approve(address(pool), amount);\n        pool.supply(address(asset), amount, address(this));\n    }"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:77-77",
+   "kind": "source",
+   "title": "Strategy.deposit(uint256): require(msg.sender == vault, \"only vault\")",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "deposit(uint256)",
+    "start_line": 77,
+    "end_line": 77,
+    "snippet": "require(msg.sender == vault, \"only vault\")"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:78-78",
+   "kind": "source",
+   "title": "Strategy.deposit(uint256): asset.transferFrom(msg.sender, address(this), amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "deposit(uint256)",
+    "start_line": 78,
+    "end_line": 78,
+    "snippet": "asset.transferFrom(msg.sender, address(this), amount)"
+   }
+  },
+  {
+   "id": "ev:cfg:asset:strategy",
+   "kind": "config",
+   "title": "Asset label for strategy",
+   "description": "Display label 'sU (strategy share)' from the project configuration (display only).",
+   "synthetic": false,
+   "reference": "fluxscope.json"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:80-80",
+   "kind": "source",
+   "title": "Strategy.deposit(uint256): _issue(msg.sender, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "deposit(uint256)",
+    "start_line": 80,
+    "end_line": 80,
+    "snippet": "_issue(msg.sender, shares)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:68-68",
+   "kind": "source",
+   "title": "State variable Strategy.pool",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "start_line": 68,
+    "end_line": 68,
+    "snippet": "ILendingPool public pool"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:81-81",
+   "kind": "source",
+   "title": "Strategy.deposit(uint256): asset.approve(address(pool), amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "deposit(uint256)",
+    "start_line": 81,
+    "end_line": 81,
+    "snippet": "asset.approve(address(pool), amount)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:82-82",
+   "kind": "source",
+   "title": "Strategy.deposit(uint256): pool.supply(address(asset), amount, address(this))",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "deposit(uint256)",
+    "start_line": 82,
+    "end_line": 82,
+    "snippet": "pool.supply(address(asset), amount, address(this))"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:128-139",
+   "kind": "source",
+   "title": "Entry point Vault.exit(uint256,address,address)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "exit(uint256,address,address)",
+    "start_line": 128,
+    "end_line": 139,
+    "snippet": "function exit(uint256 shares, address receiver, address owner) external returns (uint256 amount) {\n        if (msg.sender != owner) {\n            allowance[owner][msg.sender] -= shares;\n        }\n        amount = shares * totalAssets() / totalSupply;\n        _destroy(owner, shares);\n        uint256 idle = asset.balanceOf(address(this));\n        if (idle < amount) {\n            strategy.withdraw(amount - idle, address(this));\n        }\n        asset.transfer(receiver, amount);\n    }"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:133-133",
+   "kind": "source",
+   "title": "Vault.exit(uint256,address,address): _destroy(owner, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "exit(uint256,address,address)",
+    "start_line": 133,
+    "end_line": 133,
+    "snippet": "_destroy(owner, shares)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:59-62",
+   "kind": "source",
+   "title": "Implementation used by rule structural.token-accounting: Ledger._destroy(address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Ledger",
+    "function": "_destroy(address,uint256)",
+    "start_line": 59,
+    "end_line": 62,
+    "snippet": "function _destroy(address from, uint256 amount) internal {\n        totalSupply -= amount;\n        balanceOf[from] -= amount;\n    }"
+   }
+  },
+  {
+   "id": "ev:rule:structural.token-accounting:c39daa78c7",
+   "kind": "rule",
+   "title": "Rule structural.token-accounting",
+   "description": "Ledger._destroy updates supply `totalSupply` and balances `balanceOf` — implementation at src/ReceiverVault.sol:59-62",
+   "synthetic": false
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:136-136",
+   "kind": "source",
+   "title": "Call to Strategy.withdraw(shares, to)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "exit(uint256,address,address)",
+    "start_line": 136,
+    "end_line": 136,
+    "snippet": "strategy.withdraw(amount - idle, address(this))"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:85-89",
+   "kind": "source",
+   "title": "Definition of Strategy.withdraw(uint256,address)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "withdraw(uint256,address)",
+    "start_line": 85,
+    "end_line": 89,
+    "snippet": "function withdraw(uint256 shares, address to) external returns (uint256 amount) {\n        _destroy(msg.sender, shares);\n        amount = pool.withdraw(address(asset), shares, address(this));\n        asset.transfer(to, amount);\n    }"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:86-86",
+   "kind": "source",
+   "title": "Strategy.withdraw(uint256,address): _destroy(msg.sender, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "withdraw(uint256,address)",
+    "start_line": 86,
+    "end_line": 86,
+    "snippet": "_destroy(msg.sender, shares)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:87-87",
+   "kind": "source",
+   "title": "Strategy.withdraw(uint256,address): amount = pool.withdraw(address(asset), shares, address(this))",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "withdraw(uint256,address)",
+    "start_line": 87,
+    "end_line": 87,
+    "snippet": "amount = pool.withdraw(address(asset), shares, address(this))"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:88-88",
+   "kind": "source",
+   "title": "Strategy.withdraw(uint256,address): asset.transfer(to, amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "function": "withdraw(uint256,address)",
+    "start_line": 88,
+    "end_line": 88,
+    "snippet": "asset.transfer(to, amount)"
+   }
+  },
+  {
+   "id": "ev:rule:erc20.call:ff437317c8",
+   "kind": "rule",
+   "title": "Rule erc20.call",
+   "description": "ERC-20 transfer on IERC20Like; token implementation outside the analysed instances",
+   "synthetic": false,
+   "reference": "https://eips.ethereum.org/EIPS/eip-20"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:135-135",
+   "kind": "source",
+   "title": "Vault.exit(uint256,address,address): idle < amount",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "exit(uint256,address,address)",
+    "start_line": 135,
+    "end_line": 135,
+    "snippet": "idle < amount"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:138-138",
+   "kind": "source",
+   "title": "Vault.exit(uint256,address,address): asset.transfer(receiver, amount)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "exit(uint256,address,address)",
+    "start_line": 138,
+    "end_line": 138,
+    "snippet": "asset.transfer(receiver, amount)"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:44-47",
+   "kind": "source",
+   "title": "Entry point Vault.approve(address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Ledger",
+    "function": "approve(address,uint256)",
+    "start_line": 44,
+    "end_line": 47,
+    "snippet": "function approve(address spender, uint256 amount) external returns (bool) {\n        allowance[msg.sender][spender] = amount;\n        return true;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:112-112",
+   "kind": "source",
+   "title": "Vault.totalAssets(): return asset.balanceOf(address(this)) + strategy.balanceOf(address(this))",
+   "description": "Balance read used for accounting",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "totalAssets()",
+    "start_line": 112,
+    "end_line": 112,
+    "snippet": "return asset.balanceOf(address(this)) + strategy.balanceOf(address(this))"
+   }
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:134-134",
+   "kind": "source",
+   "title": "Vault.exit(uint256,address,address): uint256 idle = asset.balanceOf(address(this))",
+   "description": "Balance read used for accounting",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "function": "exit(uint256,address,address)",
+    "start_line": 134,
+    "end_line": 134,
+    "snippet": "uint256 idle = asset.balanceOf(address(this))"
+   }
+  },
+  {
+   "id": "ev:cfg:bind:vault.strategy",
+   "kind": "config",
+   "title": "Binding Vault.strategy",
+   "description": "Vault.strategy -> Strategy (deployment)",
+   "synthetic": false,
+   "reference": "fluxscope.json"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:98-98",
+   "kind": "source",
+   "title": "State variable Vault.strategy",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Vault",
+    "start_line": 98,
+    "end_line": 98,
+    "snippet": "Strategy public strategy"
+   }
+  },
+  {
+   "id": "ev:cfg:bind:strategy.vault",
+   "kind": "config",
+   "title": "Binding Strategy.vault",
+   "description": "Strategy.vault -> Vault (deployment)",
+   "synthetic": false,
+   "reference": "fluxscope.json"
+  },
+  {
+   "id": "ev:src:src_ReceiverVault.sol:67-67",
+   "kind": "source",
+   "title": "State variable Strategy.vault",
+   "synthetic": false,
+   "source": {
+    "file": "src/ReceiverVault.sol",
+    "contract": "Strategy",
+    "start_line": 67,
+    "end_line": 67,
+    "snippet": "address public vault"
+   }
+  }
+ ],
+ "sources": [
+  {
+   "path": "src/ReceiverVault.sol",
+   "sha256": "85a2eb10667f994533625cd2a87ed66e40b14fbe6a4d60bd70f9a85673f08478",
+   "language": "solidity",
+   "synthetic": false,
+   "content": "// SPDX-License-Identifier: MIT\n// SYNTHETIC TEST FIXTURE — written for FluxScope tests; not from a real project.\n// Vault/Strategy with separate caller, share receiver and share owner roles.\npragma solidity ^0.8.20;\n\ninterface IERC20Like {\n    function transfer(address to, uint256 amount) external returns (bool);\n    function transferFrom(address from, address to, uint256 amount) external returns (bool);\n    function approve(address spender, uint256 amount) external returns (bool);\n    function balanceOf(address who) external view returns (uint256);\n}\n\ninterface ILendingPool {\n    function supply(address asset, uint256 amount, address onBehalfOf) external;\n    function withdraw(address asset, uint256 amount, address to) external returns (uint256);\n    function balanceOfUnderlying(address who) external view returns (uint256);\n}\n\n/// Minimal transferable ledger. The issue/destroy helpers are intentionally\n/// not called _mint/_burn: FluxScope recognises them by their state updates.\ncontract Ledger {\n    string public name;\n    string public symbol;\n    uint256 public totalSupply;\n    mapping(address => uint256) public balanceOf;\n    mapping(address => mapping(address => uint256)) public allowance;\n\n    constructor(string memory name_, string memory symbol_) {\n        name = name_;\n        symbol = symbol_;\n    }\n\n    function transfer(address to, uint256 amount) external returns (bool) {\n        _move(msg.sender, to, amount);\n        return true;\n    }\n\n    function transferFrom(address from, address to, uint256 amount) external returns (bool) {\n        allowance[from][msg.sender] -= amount;\n        _move(from, to, amount);\n        return true;\n    }\n\n    function approve(address spender, uint256 amount) external returns (bool) {\n        allowance[msg.sender][spender] = amount;\n        return true;\n    }\n\n    function _move(address from, address to, uint256 amount) internal {\n        balanceOf[from] -= amount;\n        balanceOf[to] += amount;\n    }\n\n    function _issue(address to, uint256 amount) internal {\n        totalSupply += amount;\n        balanceOf[to] += amount;\n    }\n\n    function _destroy(address from, uint256 amount) internal {\n        totalSupply -= amount;\n        balanceOf[from] -= amount;\n    }\n}\n\ncontract Strategy is Ledger {\n    IERC20Like public immutable asset;\n    address public vault;\n    ILendingPool public pool;\n\n    constructor(IERC20Like asset_, address vault_, ILendingPool pool_) Ledger(\"Strategy share\", \"sU\") {\n        asset = asset_;\n        vault = vault_;\n        pool = pool_;\n    }\n\n    function deposit(uint256 amount) external returns (uint256 shares) {\n        require(msg.sender == vault, \"only vault\");\n        asset.transferFrom(msg.sender, address(this), amount);\n        shares = amount;\n        _issue(msg.sender, shares);\n        asset.approve(address(pool), amount);\n        pool.supply(address(asset), amount, address(this));\n    }\n\n    function withdraw(uint256 shares, address to) external returns (uint256 amount) {\n        _destroy(msg.sender, shares);\n        amount = pool.withdraw(address(asset), shares, address(this));\n        asset.transfer(to, amount);\n    }\n\n    function totalAssets() public view returns (uint256) {\n        return asset.balanceOf(address(this)) + pool.balanceOfUnderlying(address(this));\n    }\n}\n\ncontract Vault is Ledger {\n    IERC20Like public immutable asset;\n    Strategy public strategy;\n    address public keeper;\n\n    constructor(IERC20Like asset_, address keeper_) Ledger(\"Vault share\", \"vU\") {\n        asset = asset_;\n        keeper = keeper_;\n    }\n\n    function setStrategy(Strategy strategy_) external {\n        require(msg.sender == keeper, \"only keeper\");\n        strategy = strategy_;\n    }\n\n    function totalAssets() public view returns (uint256) {\n        return asset.balanceOf(address(this)) + strategy.balanceOf(address(this));\n    }\n\n    function enter(uint256 amount, address receiver) external returns (uint256 shares) {\n        uint256 supply = totalSupply;\n        shares = supply == 0 ? amount : amount * supply / totalAssets();\n        asset.transferFrom(msg.sender, address(this), amount);\n        _issue(receiver, shares);\n    }\n\n    function allocate(uint256 amount) external {\n        require(msg.sender == keeper, \"only keeper\");\n        asset.approve(address(strategy), amount);\n        strategy.deposit(amount);\n    }\n\n    function exit(uint256 shares, address receiver, address owner) external returns (uint256 amount) {\n        if (msg.sender != owner) {\n            allowance[owner][msg.sender] -= shares;\n        }\n        amount = shares * totalAssets() / totalSupply;\n        _destroy(owner, shares);\n        uint256 idle = asset.balanceOf(address(this));\n        if (idle < amount) {\n            strategy.withdraw(amount - idle, address(this));\n        }\n        asset.transfer(receiver, amount);\n    }\n}\n"
+  }
+ ],
+ "unresolved": [
+  {
+   "id": "unr:rebind:vault.setStrategy(Strategy).strategy",
+   "kind": "unbound_address",
+   "text": "Vault.setStrategy(Strategy) reassigns strategy; calls made through strategy after the assignment are analysed with the configured binding, but at run time they reach the new address.",
+   "subjects": [
+    "op:vault.setStrategy(Strategy)"
+   ],
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:106-109"
+   ],
+   "suggestion": "Analyse the replacement contract separately or bind the candidate address."
+  },
+  {
+   "id": "unr:ext:5fc065ab",
+   "kind": "external_implementation",
+   "text": "pool (ILendingPool).supply() is called but its implementation is outside the analysed scope; which assets it moves (if any) is unknown.",
+   "subjects": [
+    "ent:strategy.pool",
+    "op:vault.allocate(uint256)>strategy.deposit(uint256)>pool.supply",
+    "op:strategy.deposit(uint256)>pool.supply"
+   ],
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:82-82"
+   ],
+   "suggestion": "Add the implementation to the snapshot, bind it to an instance, or add a protocol adapter."
+  },
+  {
+   "id": "unr:ext:43a5c458",
+   "kind": "external_implementation",
+   "text": "pool (ILendingPool).withdraw() is called but its implementation is outside the analysed scope; which assets it moves (if any) is unknown.",
+   "subjects": [
+    "ent:strategy.pool",
+    "op:vault.exit(uint256,address,address)>strategy.withdraw(uint256,address)>pool.withdraw",
+    "op:strategy.withdraw(uint256,address)>pool.withdraw"
+   ],
+   "evidence": [
+    "ev:src:src_ReceiverVault.sol:87-87"
+   ],
+   "suggestion": "Add the implementation to the snapshot, bind it to an instance, or add a protocol adapter."
+  }
+ ],
+ "tasks": [
+  {
+   "id": "task:holders:asset:vault",
+   "question": "Who holds vU (vault share), and who holds the assets it claims?",
+   "description": "Select the share and follow its claim relations to the custody positions.",
+   "focus": [
+    "asset:vault"
+   ],
+   "view": "holdings"
+  },
+  {
+   "id": "task:exit:asset:vault",
+   "question": "Which operations are needed to exit vU (vault share), and under which conditions?",
+   "focus": [
+    "pos:any:vault"
+   ],
+   "view": "exits"
+  },
+  {
+   "id": "task:deps:asset:vault",
+   "question": "Which contracts and external protocols does vU (vault share) depend on?",
+   "focus": [
+    "asset:vault"
+   ],
+   "view": "dependencies"
+  },
+  {
+   "id": "task:holders:asset:strategy",
+   "question": "Who holds sU (strategy share), and who holds the assets it claims?",
+   "description": "Select the share and follow its claim relations to the custody positions.",
+   "focus": [
+    "asset:strategy"
+   ],
+   "view": "holdings"
+  },
+  {
+   "id": "task:exit:asset:strategy",
+   "question": "Which operations are needed to exit sU (strategy share), and under which conditions?",
+   "focus": [
+    "pos:vault:strategy"
+   ],
+   "view": "exits"
+  },
+  {
+   "id": "task:deps:asset:strategy",
+   "question": "Which contracts and external protocols does sU (strategy share) depend on?",
+   "focus": [
+    "asset:strategy"
+   ],
+   "view": "dependencies"
+  },
+  {
+   "id": "task:unresolved",
+   "question": "Which parts of the system could not be resolved by the analysis?",
+   "focus": [
+    "op:vault.setStrategy(Strategy)",
+    "ent:strategy.pool",
+    "ent:strategy.pool"
+   ],
+   "view": "all"
+  }
+ ],
+ "provenance": {
+  "stages": [
+   {
+    "stage": "snapshot",
+    "status": "ok",
+    "seconds": 0.001,
+    "files": 1,
+    "normalized_line_endings": [],
+    "sha256": "a5a950724891df9d597f8e73e14c0aceb0c16356b2af1e389a53c80c5a8e32e9"
+   },
+   {
+    "stage": "compile",
+    "status": "ok",
+    "seconds": 0.131,
+    "contracts": 5,
+    "versions": {
+     "slither-analyzer": "0.11.6",
+     "crytic-compile": "0.4.2",
+     "solc": "0.8.23"
+    }
+   },
+   {
+    "stage": "facts",
+    "status": "ok",
+    "seconds": 0.004,
+    "entry_points": 12,
+    "effects": 32,
+    "skipped_initializers": []
+   },
+   {
+    "stage": "semantics",
+    "status": "ok",
+    "seconds": 0.002,
+    "operations": 18,
+    "positions": 6,
+    "relations": 18
+   },
+   {
+    "stage": "check",
+    "status": "ok",
+    "seconds": 0.0
+   },
+   {
+    "stage": "assemble",
+    "status": "ok",
+    "seconds": 0.0
+   }
+  ],
+  "llm_calls": []
+ }
+}

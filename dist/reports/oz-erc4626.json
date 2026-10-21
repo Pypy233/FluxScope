@@ -1,0 +1,2679 @@
+{
+ "schema": "fluxscope/analysis",
+ "schema_version": "0.1.0",
+ "meta": {
+  "id": "analysis:openzeppelin-erc4626-5-4-0:9512fe111c",
+  "title": "OpenZeppelin ERC4626 (5.4.0)",
+  "description": "OpenZeppelin's ERC4626 implementation behind a minimal constructor wrapper; the underlying token is outside the analysed scope.",
+  "synthetic": false,
+  "created_at": "2026-10-21T19:59:43+00:00",
+  "generator": {
+   "name": "fluxscope",
+   "version": "0.1.0"
+  },
+  "tags": [
+   "static-analysis"
+  ]
+ },
+ "scope": {
+  "kind": "static_analysis",
+  "project": {
+   "name": "OpenZeppelin ERC4626 (5.4.0)",
+   "entry_contracts": [
+    "Vault"
+   ],
+   "files": [
+    "lib/openzeppelin-contracts-5.4.0/access/AccessControl.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/IAccessControl.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/Ownable.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/Ownable2Step.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/extensions/AccessControlDefaultAdminRules.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/extensions/AccessControlEnumerable.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/extensions/IAccessControlDefaultAdminRules.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/extensions/IAccessControlEnumerable.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/manager/AccessManaged.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/manager/AccessManager.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/manager/AuthorityUtils.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/manager/IAccessManaged.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/manager/IAccessManager.sol",
+    "lib/openzeppelin-contracts-5.4.0/access/manager/IAuthority.sol",
+    "lib/openzeppelin-contracts-5.4.0/account/Account.sol",
+    "lib/openzeppelin-contracts-5.4.0/account/extensions/draft-AccountERC7579.sol",
+    "lib/openzeppelin-contracts-5.4.0/account/extensions/draft-AccountERC7579Hooked.sol",
+    "lib/openzeppelin-contracts-5.4.0/account/extensions/draft-ERC7821.sol",
+    "lib/openzeppelin-contracts-5.4.0/account/utils/EIP7702Utils.sol",
+    "lib/openzeppelin-contracts-5.4.0/account/utils/draft-ERC4337Utils.sol",
+    "lib/openzeppelin-contracts-5.4.0/account/utils/draft-ERC7579Utils.sol",
+    "lib/openzeppelin-contracts-5.4.0/finance/VestingWallet.sol",
+    "lib/openzeppelin-contracts-5.4.0/finance/VestingWalletCliff.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/Governor.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/IGovernor.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/TimelockController.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorCountingFractional.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorCountingOverridable.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorCountingSimple.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorNoncesKeyed.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorPreventLateQuorum.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorProposalGuardian.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorSequentialProposalId.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorSettings.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorStorage.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorSuperQuorum.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorTimelockAccess.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorTimelockCompound.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorTimelockControl.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorVotes.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorVotesQuorumFraction.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/extensions/GovernorVotesSuperQuorumFraction.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/utils/IVotes.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/utils/Votes.sol",
+    "lib/openzeppelin-contracts-5.4.0/governance/utils/VotesExtended.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1155.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1155MetadataURI.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1155Receiver.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1271.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1363.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1363Receiver.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1363Spender.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC165.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1820Implementer.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1820Registry.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC1967.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC20.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC20Metadata.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC2309.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC2612.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC2981.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC3156.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC3156FlashBorrower.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC3156FlashLender.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC4626.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC4906.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC5267.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC5313.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC5805.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC6372.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC721.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC721Enumerable.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC721Metadata.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC721Receiver.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC777.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC777Recipient.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC777Sender.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/IERC7913.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/draft-IERC1822.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/draft-IERC4337.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/draft-IERC6093.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/draft-IERC6909.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/draft-IERC7579.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/draft-IERC7674.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/draft-IERC7802.sol",
+    "lib/openzeppelin-contracts-5.4.0/interfaces/draft-IERC7821.sol",
+    "lib/openzeppelin-contracts-5.4.0/metatx/ERC2771Context.sol",
+    "lib/openzeppelin-contracts-5.4.0/metatx/ERC2771Forwarder.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/Clones.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/ERC1967/ERC1967Proxy.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/ERC1967/ERC1967Utils.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/Proxy.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/beacon/BeaconProxy.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/beacon/IBeacon.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/beacon/UpgradeableBeacon.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/transparent/ProxyAdmin.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/transparent/TransparentUpgradeableProxy.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/utils/Initializable.sol",
+    "lib/openzeppelin-contracts-5.4.0/proxy/utils/UUPSUpgradeable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/ERC1155.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/IERC1155.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/IERC1155Receiver.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/extensions/ERC1155Burnable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/extensions/ERC1155Pausable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/extensions/ERC1155Supply.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/extensions/ERC1155URIStorage.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/extensions/IERC1155MetadataURI.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/utils/ERC1155Holder.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC1155/utils/ERC1155Utils.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/IERC20.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC1363.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC20Burnable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC20Capped.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC20FlashMint.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC20Pausable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC20Permit.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC20Votes.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC20Wrapper.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/IERC20Metadata.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/IERC20Permit.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/draft-ERC20Bridgeable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/draft-ERC20TemporaryApproval.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/utils/ERC1363Utils.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC20/utils/SafeERC20.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC6909/draft-ERC6909.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC6909/extensions/draft-ERC6909ContentURI.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC6909/extensions/draft-ERC6909Metadata.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC6909/extensions/draft-ERC6909TokenSupply.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/ERC721.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/IERC721.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/IERC721Receiver.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/ERC721Burnable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/ERC721Consecutive.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/ERC721Enumerable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/ERC721Pausable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/ERC721Royalty.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/ERC721URIStorage.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/ERC721Votes.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/ERC721Wrapper.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/IERC721Enumerable.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/extensions/IERC721Metadata.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/utils/ERC721Holder.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/ERC721/utils/ERC721Utils.sol",
+    "lib/openzeppelin-contracts-5.4.0/token/common/ERC2981.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Address.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Arrays.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Base64.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Blockhash.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Bytes.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/CAIP10.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/CAIP2.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Calldata.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Comparators.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Context.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Create2.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Errors.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Multicall.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Nonces.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/NoncesKeyed.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Packing.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Panic.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Pausable.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/ReentrancyGuard.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/ReentrancyGuardTransient.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/ShortStrings.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/SlotDerivation.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/StorageSlot.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/Strings.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/TransientSlot.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/ECDSA.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/EIP712.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/Hashes.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/MerkleProof.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/MessageHashUtils.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/P256.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/RSA.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/SignatureChecker.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/draft-ERC7739Utils.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/AbstractSigner.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/MultiSignerERC7913.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/MultiSignerERC7913Weighted.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/SignerECDSA.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/SignerERC7702.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/SignerERC7913.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/SignerP256.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/SignerRSA.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/signers/draft-ERC7739.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/verifiers/ERC7913P256Verifier.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/cryptography/verifiers/ERC7913RSAVerifier.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/introspection/ERC165.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/introspection/ERC165Checker.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/introspection/IERC165.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/math/Math.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/math/SafeCast.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/math/SignedMath.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/structs/BitMaps.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/structs/Checkpoints.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/structs/CircularBuffer.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/structs/DoubleEndedQueue.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/structs/EnumerableMap.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/structs/EnumerableSet.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/structs/Heap.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/structs/MerkleTree.sol",
+    "lib/openzeppelin-contracts-5.4.0/utils/types/Time.sol",
+    "lib/openzeppelin-contracts-5.4.0/vendor/compound/ICompoundTimelock.sol",
+    "src/Vault.sol"
+   ],
+   "snapshot_sha256": "9512fe111cca6a401ef594e025e7d1b37d2add17ee76e61e41644440e2019988"
+  },
+  "build": {
+   "framework": "foundry",
+   "target": "."
+  },
+  "components": [
+   {
+    "name": "slither-analyzer",
+    "version": "0.11.6",
+    "role": "static-analysis"
+   },
+   {
+    "name": "crytic-compile",
+    "version": "0.4.2",
+    "role": "build"
+   },
+   {
+    "name": "solc",
+    "version": "0.8.24",
+    "role": "compiler"
+   },
+   {
+    "name": "fluxscope.rules",
+    "version": "0.1.0",
+    "role": "adapter",
+    "detail": {
+     "rules": [
+      "oz.erc20.internal",
+      "structural.token-accounting",
+      "oz.safeerc20",
+      "erc20.call",
+      "erc4626.call",
+      "claim.share-redemption",
+      "claim.exclusive-withdrawal",
+      "claim.erc4626",
+      "identity.approve-before-pull",
+      "kind.structural"
+     ]
+    }
+   }
+  ],
+  "boundaries": [],
+  "assumptions": [],
+  "notes": [
+   "Static analysis: relations describe behaviour the code supports (candidates), not observed executions. Amounts are symbolic expressions."
+  ]
+ },
+ "assets": [
+  {
+   "id": "asset:vault._asset",
+   "label": "underlying asset",
+   "kind": "token",
+   "identity": {
+    "kind": "scoped_expression",
+    "expression": "Vault._asset",
+    "note": "Identified by the state variable that stores the token address"
+   },
+   "description": "Token whose address is stored in Vault._asset.",
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "asset.identity",
+    "checks": []
+   },
+   "evidence": [
+    "ev:cfg:asset:vault._asset"
+   ]
+  },
+  {
+   "id": "asset:vault",
+   "label": "vault share",
+   "kind": "share",
+   "standard": "ERC20",
+   "identity": {
+    "kind": "contract_self",
+    "contract": "Vault",
+    "note": "Token implemented by the analysed contract itself"
+   },
+   "issuer": "ent:vault",
+   "description": "Token minted and burned by Vault. Transferable: holders can move vault share to other accounts via Vault.transfer(to, value); the holder of a position may differ from the original depositor. Transferable: holders can move vault share to other accounts via Vault.transferFrom(from, to, value); the holder of a position may differ from the original depositor.",
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "asset.identity",
+    "checks": []
+   },
+   "evidence": [
+    "ev:cfg:asset:vault",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:101-101",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:145-145"
+   ]
+  }
+ ],
+ "entities": [
+  {
+   "id": "ent:vault",
+   "label": "ERC4626 Vault",
+   "kind": "contract",
+   "contract": {
+    "name": "Vault",
+    "file": "src/Vault.sol"
+   },
+   "expression": "address(Vault)",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "config",
+    "verification": "supported",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:src_Vault.sol:9-11"
+   ]
+  },
+  {
+   "id": "ent:any",
+   "label": "Any account",
+   "kind": "account",
+   "description": "Any externally owned account or contract that calls an entry point without access restriction.",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "caller.unrestricted",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.deposit(uint256_address).receiver",
+   "label": "`receiver` argument of deposit()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.deposit(uint256,address).",
+   "expression": "receiver",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.mint(uint256_address).receiver",
+   "label": "`receiver` argument of mint()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.mint(uint256,address).",
+   "expression": "receiver",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.withdraw(uint256_address_address).owner",
+   "label": "`owner` argument of withdraw()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.withdraw(uint256,address,address).",
+   "expression": "owner",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.withdraw(uint256_address_address).receiver",
+   "label": "`receiver` argument of withdraw()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.withdraw(uint256,address,address).",
+   "expression": "receiver",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.redeem(uint256_address_address).owner",
+   "label": "`owner` argument of redeem()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.redeem(uint256,address,address).",
+   "expression": "owner",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.redeem(uint256_address_address).receiver",
+   "label": "`receiver` argument of redeem()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.redeem(uint256,address,address).",
+   "expression": "receiver",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.transfer(address_uint256).to",
+   "label": "`to` argument of transfer()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.transfer(address,uint256).",
+   "expression": "to",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.transferFrom(address_address_uint256).from",
+   "label": "`from` argument of transferFrom()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.transferFrom(address,address,uint256).",
+   "expression": "from",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  },
+  {
+   "id": "ent:param:vault.transferFrom(address_address_uint256).to",
+   "label": "`to` argument of transferFrom()",
+   "kind": "role",
+   "description": "Address chosen by the caller of Vault.transferFrom(address,address,uint256).",
+   "expression": "to",
+   "in_scope": true,
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "entity.parameter",
+    "checks": []
+   },
+   "evidence": []
+  }
+ ],
+ "operations": [
+  {
+   "id": "op:vault.deposit(uint256,address)",
+   "kind": "deposit",
+   "label": "Vault.deposit(assets, receiver)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "deposit",
+    "signature": "deposit(uint256,address)",
+    "visibility": "public"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:any",
+     "expression": "caller",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247"
+     ]
+    },
+    {
+     "role": "share_receiver",
+     "entity": "ent:param:vault.deposit(uint256_address).receiver",
+     "expression": "receiver",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.deposit(uint256,address)#f1",
+     "asset": "asset:vault._asset",
+     "from": "ent:any",
+     "to": "ent:vault",
+     "amount": {
+      "asset": "asset:vault._asset",
+      "unit": "raw",
+      "expression": "assets"
+     },
+     "mechanism": "transferFrom",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "oz.safeerc20",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 SafeERC20.safeTransferFrom encodes token.transferFrom(from, to, value)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+      "ev:rule:oz.safeerc20:f04a18df94"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:vault.deposit(uint256,address)#f2",
+     "asset": "asset:vault",
+     "to": "ent:param:vault.deposit(uint256_address).receiver",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares",
+      "note": "in terms of the entry call: ((((… - …) / (… & …)) | ((… - …) * (… + 1))) * (… * …)) | (….[1] / (… + 1)) + !!(Rounding.Floor % 2 == 1 && mulmod(assets, totalSupply() + 10 ** _decimalsOffset(), totalAssets() + 1) > 0)"
+     },
+     "mechanism": "mint",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "oz.erc20.internal",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 ERC20._mint (implementation writes _balances, _totalSupply)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+      "ev:rule:oz.erc20.internal:cad9b89c7f"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:vault.deposit(uint256,address)#c:61731641",
+     "kind": "require",
+     "text": "reverts if assets > maxAssets",
+     "expression": "assets > 115792089237316195423570985008687907853269984665640564039457584007913129639935",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:174-174"
+     ]
+    },
+    {
+     "id": "op:vault.deposit(uint256,address)#c:232bf3b7",
+     "kind": "require",
+     "text": "reverts if account == address(0) (in ERC20._mint)",
+     "expression": "receiver == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:216-216"
+     ]
+    },
+    {
+     "id": "op:vault.deposit(uint256,address)#c:bd416e1d",
+     "kind": "external",
+     "text": "reverts if fromBalance < value (in ERC20._mint)",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:deposit",
+    "checks": [],
+    "note": "Kind 'deposit': issues the executor's own token and receives another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:171-181"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.mint(uint256,address)",
+   "kind": "deposit",
+   "label": "Vault.mint(shares, receiver)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "mint",
+    "signature": "mint(uint256,address)",
+    "visibility": "public"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:any",
+     "expression": "caller",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247"
+     ]
+    },
+    {
+     "role": "share_receiver",
+     "entity": "ent:param:vault.mint(uint256_address).receiver",
+     "expression": "receiver",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.mint(uint256,address)#f1",
+     "asset": "asset:vault._asset",
+     "from": "ent:any",
+     "to": "ent:vault",
+     "amount": {
+      "asset": "asset:vault._asset",
+      "unit": "raw",
+      "expression": "assets",
+      "note": "in terms of the entry call: ((((… - …) / (… & …)) | ((… - …) * (… + 1))) * (… * …)) | (….[1] / (… + …)) + !!(Rounding.Ceil % 2 == 1 && mulmod(shares, totalAssets() + 1, totalSupply() + 10 ** _decimalsOffset()) > 0)"
+     },
+     "mechanism": "transferFrom",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "oz.safeerc20",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 SafeERC20.safeTransferFrom encodes token.transferFrom(from, to, value)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+      "ev:rule:oz.safeerc20:f04a18df94"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:vault.mint(uint256,address)#f2",
+     "asset": "asset:vault",
+     "to": "ent:param:vault.mint(uint256_address).receiver",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares"
+     },
+     "mechanism": "mint",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "oz.erc20.internal",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 ERC20._mint (implementation writes _balances, _totalSupply)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+      "ev:rule:oz.erc20.internal:cad9b89c7f"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:vault.mint(uint256,address)#c:c9a0d52f",
+     "kind": "require",
+     "text": "reverts if shares > maxShares",
+     "expression": "shares > 115792089237316195423570985008687907853269984665640564039457584007913129639935",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:187-187"
+     ]
+    },
+    {
+     "id": "op:vault.mint(uint256,address)#c:232bf3b7",
+     "kind": "require",
+     "text": "reverts if account == address(0) (in ERC20._mint)",
+     "expression": "receiver == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:216-216"
+     ]
+    },
+    {
+     "id": "op:vault.mint(uint256,address)#c:bd416e1d",
+     "kind": "state",
+     "text": "reverts if fromBalance < value (in ERC20._mint)",
+     "expression": "_balances[0] < shares",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:deposit",
+    "checks": [],
+    "note": "Kind 'deposit': issues the executor's own token and receives another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:184-194"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.withdraw(uint256,address,address)",
+   "kind": "withdraw",
+   "label": "Vault.withdraw(assets, receiver, owner)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "withdraw",
+    "signature": "withdraw(uint256,address,address)",
+    "visibility": "public"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "share_owner",
+     "entity": "ent:param:vault.withdraw(uint256_address_address).owner",
+     "expression": "owner",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:vault.withdraw(uint256_address_address).receiver",
+     "expression": "receiver",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#f1",
+     "asset": "asset:vault",
+     "from": "ent:param:vault.withdraw(uint256_address_address).owner",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares",
+      "note": "in terms of the entry call: ((((… - …) / (… & …)) | ((… - …) * (… + 1))) * (… * …)) | (….[1] / (… + 1)) + !!(Rounding.Ceil % 2 == 1 && mulmod(assets, totalSupply() + 10 ** _decimalsOffset(), totalAssets() + 1) > 0)"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "oz.erc20.internal",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 ERC20._burn (implementation writes _balances, _totalSupply)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+      "ev:rule:oz.erc20.internal:d8bf2748d6"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#f2",
+     "asset": "asset:vault._asset",
+     "from": "ent:vault",
+     "to": "ent:param:vault.withdraw(uint256_address_address).receiver",
+     "amount": {
+      "asset": "asset:vault._asset",
+      "unit": "raw",
+      "expression": "assets"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "oz.safeerc20",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 SafeERC20.safeTransfer encodes token.transfer(to, value)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+      "ev:rule:oz.safeerc20:8c531dea73"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:6bbe0d9d",
+     "kind": "external",
+     "text": "reverts if assets > maxAssets",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:200-200"
+     ]
+    },
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:76d0c5f0",
+     "kind": "require",
+     "text": "reverts if account == address(0) (in ERC20._burn)",
+     "expression": "owner == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:231-231"
+     ]
+    },
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:08aea68b",
+     "kind": "external",
+     "text": "reverts if fromBalance < value (in ERC20._burn)",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183"
+     ]
+    },
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:1cbaa8f8",
+     "kind": "external",
+     "text": "reverts if currentAllowance < value",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:298-298"
+     ]
+    },
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:6740718d",
+     "kind": "require",
+     "text": "reverts if owner == address(0)",
+     "expression": "owner == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275"
+     ]
+    },
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:408daaa5",
+     "kind": "require",
+     "text": "reverts if spender == address(0)",
+     "expression": "msg.sender == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:withdraw",
+    "checks": [],
+    "note": "Kind 'withdraw': burns the executor's own token and pays out another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:197-207"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.redeem(uint256,address,address)",
+   "kind": "redeem",
+   "label": "Vault.redeem(shares, receiver, owner)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "redeem",
+    "signature": "redeem(uint256,address,address)",
+    "visibility": "public"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "share_owner",
+     "entity": "ent:param:vault.redeem(uint256_address_address).owner",
+     "expression": "owner",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:vault.redeem(uint256_address_address).receiver",
+     "expression": "receiver",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.redeem(uint256,address,address)#f1",
+     "asset": "asset:vault",
+     "from": "ent:param:vault.redeem(uint256_address_address).owner",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "oz.erc20.internal",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 ERC20._burn (implementation writes _balances, _totalSupply)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217",
+      "ev:rule:oz.erc20.internal:d8bf2748d6"
+     ]
+    }
+   ],
+   "outputs": [
+    {
+     "id": "op:vault.redeem(uint256,address,address)#f2",
+     "asset": "asset:vault._asset",
+     "from": "ent:vault",
+     "to": "ent:param:vault.redeem(uint256_address_address).receiver",
+     "amount": {
+      "asset": "asset:vault._asset",
+      "unit": "raw",
+      "expression": "assets",
+      "note": "in terms of the entry call: ((((… - …) / (… & …)) | ((… - …) * (… + 1))) * (… * …)) | (….[1] / (… + …)) + !!(Rounding.Floor % 2 == 1 && mulmod(shares, totalAssets() + 1, totalSupply() + 10 ** _decimalsOffset()) > 0)"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "oz.safeerc20",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 SafeERC20.safeTransfer encodes token.transfer(to, value)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217",
+      "ev:rule:oz.safeerc20:8c531dea73"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:dc1cf44e",
+     "kind": "state",
+     "text": "reverts if shares > maxShares",
+     "expression": "shares > _balances[owner]",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:213-213"
+     ]
+    },
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:76d0c5f0",
+     "kind": "require",
+     "text": "reverts if account == address(0) (in ERC20._burn)",
+     "expression": "owner == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:231-231"
+     ]
+    },
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:08aea68b",
+     "kind": "state",
+     "text": "reverts if fromBalance < value (in ERC20._burn)",
+     "expression": "_balances[owner] < shares",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183"
+     ]
+    },
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:1cbaa8f8",
+     "kind": "state",
+     "text": "reverts if currentAllowance < value",
+     "expression": "_allowances[owner][msg.sender] < shares",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:298-298"
+     ]
+    },
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:6740718d",
+     "kind": "require",
+     "text": "reverts if owner == address(0)",
+     "expression": "owner == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275"
+     ]
+    },
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:408daaa5",
+     "kind": "require",
+     "text": "reverts if spender == address(0)",
+     "expression": "msg.sender == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:redeem",
+    "checks": [],
+    "note": "Kind 'redeem': burns the executor's own token and pays out another asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:210-220"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.transfer(address,uint256)",
+   "kind": "transfer",
+   "label": "Vault.transfer(to, value)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "transfer",
+    "signature": "transfer(address,uint256)",
+    "visibility": "public"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:any",
+     "expression": "owner",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:101-101"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:vault.transfer(address_uint256).to",
+     "expression": "to",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:101-101"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.transfer(address,uint256)#f1",
+     "asset": "asset:vault",
+     "from": "ent:any",
+     "to": "ent:param:vault.transfer(address_uint256).to",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "value"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "oz.erc20.internal",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 ERC20._transfer (implementation writes _balances)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:101-101",
+      "ev:rule:oz.erc20.internal:38e0cbab4c"
+     ]
+    }
+   ],
+   "outputs": [],
+   "conditions": [
+    {
+     "id": "op:vault.transfer(address,uint256)#c:65c789fe",
+     "kind": "require",
+     "text": "reverts if from == address(0) (in ERC20._transfer)",
+     "expression": "msg.sender == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:161-161"
+     ]
+    },
+    {
+     "id": "op:vault.transfer(address,uint256)#c:a9c057ef",
+     "kind": "require",
+     "text": "reverts if to == address(0) (in ERC20._transfer)",
+     "expression": "to == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:164-164"
+     ]
+    },
+    {
+     "id": "op:vault.transfer(address,uint256)#c:a8293412",
+     "kind": "state",
+     "text": "reverts if fromBalance < value (in ERC20._transfer)",
+     "expression": "_balances[msg.sender] < value",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:transfer",
+    "checks": [],
+    "note": "Kind 'transfer': moves a single asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:99-103"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.transferFrom(address,address,uint256)",
+   "kind": "transfer",
+   "label": "Vault.transferFrom(from, to, value)",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "transferFrom",
+    "signature": "transferFrom(address,address,uint256)",
+    "visibility": "public"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [
+    {
+     "role": "payer",
+     "entity": "ent:param:vault.transferFrom(address_address_uint256).from",
+     "expression": "from",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:145-145"
+     ]
+    },
+    {
+     "role": "receiver",
+     "entity": "ent:param:vault.transferFrom(address_address_uint256).to",
+     "expression": "to",
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:145-145"
+     ]
+    }
+   ],
+   "inputs": [
+    {
+     "id": "op:vault.transferFrom(address,address,uint256)#f1",
+     "asset": "asset:vault",
+     "from": "ent:param:vault.transferFrom(address_address_uint256).from",
+     "to": "ent:param:vault.transferFrom(address_address_uint256).to",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "value"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "oz.erc20.internal",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 ERC20._transfer (implementation writes _balances)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:145-145",
+      "ev:rule:oz.erc20.internal:38e0cbab4c"
+     ]
+    }
+   ],
+   "outputs": [],
+   "conditions": [
+    {
+     "id": "op:vault.transferFrom(address,address,uint256)#c:65c789fe",
+     "kind": "require",
+     "text": "reverts if from == address(0) (in ERC20._transfer)",
+     "expression": "from == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:161-161"
+     ]
+    },
+    {
+     "id": "op:vault.transferFrom(address,address,uint256)#c:a9c057ef",
+     "kind": "require",
+     "text": "reverts if to == address(0) (in ERC20._transfer)",
+     "expression": "to == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:164-164"
+     ]
+    },
+    {
+     "id": "op:vault.transferFrom(address,address,uint256)#c:a8293412",
+     "kind": "state",
+     "text": "reverts if fromBalance < value (in ERC20._transfer)",
+     "expression": "_balances[from] < value",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183"
+     ]
+    },
+    {
+     "id": "op:vault.transferFrom(address,address,uint256)#c:1cbaa8f8",
+     "kind": "state",
+     "text": "reverts if currentAllowance < value",
+     "expression": "_allowances[from][msg.sender] < value",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:298-298"
+     ]
+    },
+    {
+     "id": "op:vault.transferFrom(address,address,uint256)#c:6740718d",
+     "kind": "require",
+     "text": "reverts if owner == address(0)",
+     "expression": "from == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275"
+     ]
+    },
+    {
+     "id": "op:vault.transferFrom(address,address,uint256)#c:408daaa5",
+     "kind": "require",
+     "text": "reverts if spender == address(0)",
+     "expression": "msg.sender == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:transfer",
+    "checks": [],
+    "note": "Kind 'transfer': moves a single asset (structural rule)."
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:142-147"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "op:vault.approve(address,uint256)",
+   "kind": "other",
+   "label": "Vault.approve(spender, value)",
+   "description": "Changes _allowances, which the contract's asset-moving entry points read: it changes what accounts can obtain (no asset moves in this call).",
+   "entrypoint": {
+    "contract": "Vault",
+    "function": "approve",
+    "signature": "approve(address,uint256)",
+    "visibility": "public"
+   },
+   "initiator": "ent:any",
+   "executor": "ent:vault",
+   "participants": [],
+   "inputs": [],
+   "outputs": [],
+   "conditions": [
+    {
+     "id": "op:vault.approve(address,uint256)#c:6740718d",
+     "kind": "require",
+     "text": "reverts if owner == address(0)",
+     "expression": "msg.sender == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275"
+     ]
+    },
+    {
+     "id": "op:vault.approve(address,uint256)#c:408daaa5",
+     "kind": "require",
+     "text": "reverts if spender == address(0)",
+     "expression": "spender == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "kind.structural:other",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:120-124"
+   ],
+   "unresolved": []
+  }
+ ],
+ "positions": [
+  {
+   "id": "pos:vault:vault._asset",
+   "holder": "ent:vault",
+   "asset": "asset:vault._asset",
+   "kind": "custody",
+   "label": "underlying asset held by ERC4626 Vault",
+   "amount": {
+    "asset": "asset:vault._asset",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:117-117"
+   ]
+  },
+  {
+   "id": "pos:any:vault._asset",
+   "holder": "ent:any",
+   "asset": "asset:vault._asset",
+   "kind": "custody",
+   "label": "underlying asset held by Any account",
+   "amount": {
+    "asset": "asset:vault._asset",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217"
+   ]
+  },
+  {
+   "id": "pos:any:vault",
+   "holder": "ent:any",
+   "asset": "asset:vault",
+   "kind": "share",
+   "label": "vault share held by Any account",
+   "amount": {
+    "asset": "asset:vault",
+    "unit": "unknown",
+    "note": "Static analysis: amount not known"
+   },
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217"
+   ]
+  }
+ ],
+ "relations": [
+  {
+   "id": "rel:holds:pos:vault:vault._asset",
+   "kind": "holds",
+   "source": "ent:vault",
+   "target": "pos:vault:vault._asset",
+   "label": "holds",
+   "asset": "asset:vault._asset",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:117-117"
+   ]
+  },
+  {
+   "id": "rel:holds:pos:any:vault._asset",
+   "kind": "holds",
+   "source": "ent:any",
+   "target": "pos:any:vault._asset",
+   "label": "holds",
+   "asset": "asset:vault._asset",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217"
+   ]
+  },
+  {
+   "id": "rel:holds:pos:any:vault",
+   "kind": "holds",
+   "source": "ent:any",
+   "target": "pos:any:vault",
+   "label": "holds",
+   "asset": "asset:vault",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "position.flow",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217"
+   ]
+  },
+  {
+   "id": "rel:claim:pos_any_vault->pos_vault_vault._asset",
+   "kind": "claim",
+   "source": "pos:any:vault",
+   "target": "pos:vault:vault._asset",
+   "label": "claims",
+   "asset": "asset:vault._asset",
+   "operation": "op:vault.withdraw(uint256,address,address)",
+   "basis_detail": "payout assets",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "rule",
+    "verification": "supported",
+    "rule": "claim.share-redemption",
+    "checks": [
+     {
+      "id": "deposit-link",
+      "description": "2 entry point(s) take in underlying asset and issue vault share in the same transaction: Vault.deposit(assets, receiver), Vault.mint(shares, receiver)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178"
+      ]
+     },
+     {
+      "id": "deposit-roles",
+      "description": "In Vault.deposit(assets, receiver): Any account pays underlying asset (assets); `receiver` argument of deposit() receives vault share (shares) — payer and share receiver are different parties",
+      "result": "pass",
+      "evidence": [
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178"
+      ]
+     },
+     {
+      "id": "exit-exists",
+      "description": "Vault.withdraw(assets, receiver, owner) burns vault share and pays out underlying asset",
+      "result": "pass",
+      "evidence": [
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204"
+      ]
+     },
+     {
+      "id": "exit-roles",
+      "description": "Any account calls Vault.withdraw(assets, receiver, owner); vault share is burned from `owner` argument of withdraw(); underlying asset is paid to `receiver` argument of withdraw() — shares are burned from a party other than the caller",
+      "result": "pass",
+      "evidence": [
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204"
+      ]
+     },
+     {
+      "id": "amount-link",
+      "description": "Payout amount (assets) data-depends on the burned amount (shares)",
+      "result": "pass",
+      "evidence": [
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+       "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204"
+      ]
+     },
+     {
+      "id": "boundaries",
+      "description": "Exit path stays within analysed code",
+      "result": "pass",
+      "evidence": []
+     }
+    ]
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217"
+   ]
+  },
+  {
+   "id": "rel:exit:pos_any_vault->op_vault.withdraw(uint256_address_address)",
+   "kind": "exit",
+   "source": "pos:any:vault",
+   "target": "op:vault.withdraw(uint256,address,address)",
+   "label": "exit via",
+   "operation": "op:vault.withdraw(uint256,address,address)",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:197-207"
+   ]
+  },
+  {
+   "id": "rel:exit:pos_any_vault->op_vault.redeem(uint256_address_address)",
+   "kind": "exit",
+   "source": "pos:any:vault",
+   "target": "op:vault.redeem(uint256,address,address)",
+   "label": "exit via",
+   "operation": "op:vault.redeem(uint256,address,address)",
+   "conditions": [],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:210-220"
+   ]
+  }
+ ],
+ "exits": [
+  {
+   "id": "exit:any_vault:vault.withdraw(uint256_address_address)",
+   "position": "pos:any:vault",
+   "label": "Exit vault share via Vault.withdraw(assets, receiver, owner)",
+   "steps": [
+    {
+     "order": 1,
+     "operation": "op:vault.withdraw(uint256,address,address)",
+     "actor": "ent:any",
+     "description": "Any account calls Vault.withdraw(assets, receiver, owner)",
+     "optional": false,
+     "conditions": [
+      {
+       "id": "op:vault.withdraw(uint256,address,address)#c:6bbe0d9d",
+       "kind": "external",
+       "text": "reverts if assets > maxAssets",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:200-200"
+       ]
+      },
+      {
+       "id": "op:vault.withdraw(uint256,address,address)#c:76d0c5f0",
+       "kind": "require",
+       "text": "reverts if account == address(0) (in ERC20._burn)",
+       "expression": "owner == 0",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:231-231"
+       ]
+      },
+      {
+       "id": "op:vault.withdraw(uint256,address,address)#c:08aea68b",
+       "kind": "external",
+       "text": "reverts if fromBalance < value (in ERC20._burn)",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183"
+       ]
+      },
+      {
+       "id": "op:vault.withdraw(uint256,address,address)#c:1cbaa8f8",
+       "kind": "external",
+       "text": "reverts if currentAllowance < value",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:298-298"
+       ]
+      },
+      {
+       "id": "op:vault.withdraw(uint256,address,address)#c:6740718d",
+       "kind": "require",
+       "text": "reverts if owner == address(0)",
+       "expression": "owner == 0",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275"
+       ]
+      },
+      {
+       "id": "op:vault.withdraw(uint256,address,address)#c:408daaa5",
+       "kind": "require",
+       "text": "reverts if spender == address(0)",
+       "expression": "msg.sender == 0",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278"
+       ]
+      }
+     ],
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:197-207"
+     ]
+    }
+   ],
+   "consumes": [
+    {
+     "id": "exit:any_vault:vault.withdraw(uint256_address_address)#in0",
+     "asset": "asset:vault",
+     "from": "ent:param:vault.withdraw(uint256_address_address).owner",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares",
+      "note": "in terms of the entry call: ((((… - …) / (… & …)) | ((… - …) * (… + 1))) * (… * …)) | (….[1] / (… + 1)) + !!(Rounding.Ceil % 2 == 1 && mulmod(assets, totalSupply() + 10 ** _decimalsOffset(), totalAssets() + 1) > 0)"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "oz.erc20.internal",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 ERC20._burn (implementation writes _balances, _totalSupply)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+      "ev:rule:oz.erc20.internal:d8bf2748d6"
+     ]
+    }
+   ],
+   "returns": [
+    {
+     "id": "exit:any_vault:vault.withdraw(uint256_address_address)#out0",
+     "asset": "asset:vault._asset",
+     "from": "ent:vault",
+     "to": "ent:param:vault.withdraw(uint256_address_address).receiver",
+     "amount": {
+      "asset": "asset:vault._asset",
+      "unit": "raw",
+      "expression": "assets"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "oz.safeerc20",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 SafeERC20.safeTransfer encodes token.transfer(to, value)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+      "ev:rule:oz.safeerc20:8c531dea73"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:76d0c5f0",
+     "kind": "require",
+     "text": "reverts if account == address(0) (in ERC20._burn)",
+     "expression": "owner == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:231-231"
+     ]
+    },
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:6740718d",
+     "kind": "require",
+     "text": "reverts if owner == address(0)",
+     "expression": "owner == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275"
+     ]
+    },
+    {
+     "id": "op:vault.withdraw(uint256,address,address)#c:408daaa5",
+     "kind": "require",
+     "text": "reverts if spender == address(0)",
+     "expression": "msg.sender == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:197-207"
+   ],
+   "unresolved": []
+  },
+  {
+   "id": "exit:any_vault:vault.redeem(uint256_address_address)",
+   "position": "pos:any:vault",
+   "label": "Exit vault share via Vault.redeem(shares, receiver, owner)",
+   "steps": [
+    {
+     "order": 1,
+     "operation": "op:vault.redeem(uint256,address,address)",
+     "actor": "ent:any",
+     "description": "Any account calls Vault.redeem(shares, receiver, owner)",
+     "optional": false,
+     "conditions": [
+      {
+       "id": "op:vault.redeem(uint256,address,address)#c:dc1cf44e",
+       "kind": "state",
+       "text": "reverts if shares > maxShares",
+       "expression": "shares > _balances[owner]",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:213-213"
+       ]
+      },
+      {
+       "id": "op:vault.redeem(uint256,address,address)#c:76d0c5f0",
+       "kind": "require",
+       "text": "reverts if account == address(0) (in ERC20._burn)",
+       "expression": "owner == 0",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:231-231"
+       ]
+      },
+      {
+       "id": "op:vault.redeem(uint256,address,address)#c:08aea68b",
+       "kind": "state",
+       "text": "reverts if fromBalance < value (in ERC20._burn)",
+       "expression": "_balances[owner] < shares",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183"
+       ]
+      },
+      {
+       "id": "op:vault.redeem(uint256,address,address)#c:1cbaa8f8",
+       "kind": "state",
+       "text": "reverts if currentAllowance < value",
+       "expression": "_allowances[owner][msg.sender] < shares",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:298-298"
+       ]
+      },
+      {
+       "id": "op:vault.redeem(uint256,address,address)#c:6740718d",
+       "kind": "require",
+       "text": "reverts if owner == address(0)",
+       "expression": "owner == 0",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275"
+       ]
+      },
+      {
+       "id": "op:vault.redeem(uint256,address,address)#c:408daaa5",
+       "kind": "require",
+       "text": "reverts if spender == address(0)",
+       "expression": "msg.sender == 0",
+       "negated": false,
+       "evidence": [
+        "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278"
+       ]
+      }
+     ],
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:210-220"
+     ]
+    }
+   ],
+   "consumes": [
+    {
+     "id": "exit:any_vault:vault.redeem(uint256_address_address)#in0",
+     "asset": "asset:vault",
+     "from": "ent:param:vault.redeem(uint256_address_address).owner",
+     "amount": {
+      "asset": "asset:vault",
+      "unit": "raw",
+      "expression": "shares"
+     },
+     "mechanism": "burn",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "rule",
+      "verification": "supported",
+      "rule": "oz.erc20.internal",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 ERC20._burn (implementation writes _balances, _totalSupply)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217",
+      "ev:rule:oz.erc20.internal:d8bf2748d6"
+     ]
+    }
+   ],
+   "returns": [
+    {
+     "id": "exit:any_vault:vault.redeem(uint256_address_address)#out0",
+     "asset": "asset:vault._asset",
+     "from": "ent:vault",
+     "to": "ent:param:vault.redeem(uint256_address_address).receiver",
+     "amount": {
+      "asset": "asset:vault._asset",
+      "unit": "raw",
+      "expression": "assets",
+      "note": "in terms of the entry call: ((((… - …) / (… & …)) | ((… - …) * (… + 1))) * (… * …)) | (….[1] / (… + …)) + !!(Rounding.Floor % 2 == 1 && mulmod(shares, totalAssets() + 1, totalSupply() + 10 ** _decimalsOffset()) > 0)"
+     },
+     "mechanism": "transfer",
+     "conditions": [],
+     "status": {
+      "basis": "static",
+      "support": "adapter",
+      "verification": "supported",
+      "rule": "oz.safeerc20",
+      "checks": [],
+      "note": "@openzeppelin/contracts@5.4.0 SafeERC20.safeTransfer encodes token.transfer(to, value)"
+     },
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217",
+      "ev:rule:oz.safeerc20:8c531dea73"
+     ]
+    }
+   ],
+   "conditions": [
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:76d0c5f0",
+     "kind": "require",
+     "text": "reverts if account == address(0) (in ERC20._burn)",
+     "expression": "owner == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:231-231"
+     ]
+    },
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:6740718d",
+     "kind": "require",
+     "text": "reverts if owner == address(0)",
+     "expression": "owner == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275"
+     ]
+    },
+    {
+     "id": "op:vault.redeem(uint256,address,address)#c:408daaa5",
+     "kind": "require",
+     "text": "reverts if spender == address(0)",
+     "expression": "msg.sender == 0",
+     "negated": false,
+     "evidence": [
+      "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278"
+     ]
+    }
+   ],
+   "status": {
+    "basis": "static",
+    "support": "derived",
+    "verification": "supported",
+    "rule": "exit.burn-path",
+    "checks": []
+   },
+   "evidence": [
+    "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:210-220"
+   ],
+   "unresolved": []
+  }
+ ],
+ "evidence": [
+  {
+   "id": "ev:src:src_Vault.sol:9-11",
+   "kind": "source",
+   "title": "Contract Vault",
+   "synthetic": false,
+   "source": {
+    "file": "src/Vault.sol",
+    "contract": "Vault",
+    "start_line": 9,
+    "end_line": 11
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:171-181",
+   "kind": "source",
+   "title": "Entry point Vault.deposit(uint256,address)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "deposit(uint256,address)",
+    "start_line": 171,
+    "end_line": 181,
+    "snippet": "function deposit(uint256 assets, address receiver) public virtual returns (uint256) {\n        uint256 maxAssets = maxDeposit(receiver);\n        if (assets > maxAssets) {\n            revert ERC4626ExceededMaxDeposit(receiver, assets, maxAssets);\n        }\n\n        uint256 shares = previewDeposit(assets);\n        _deposit(_msgSender(), receiver, assets, shares);\n\n        return shares;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:174-174",
+   "kind": "source",
+   "title": "ERC4626.deposit(uint256,address): revert ERC4626ExceededMaxDeposit(receiver, assets, maxAssets)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "deposit(uint256,address)",
+    "start_line": 174,
+    "end_line": 174,
+    "snippet": "revert ERC4626ExceededMaxDeposit(receiver, assets, maxAssets)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:216-216",
+   "kind": "source",
+   "title": "ERC20._mint(address,uint256): revert ERC20InvalidReceiver(address(0))",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_mint(address,uint256)",
+    "start_line": 216,
+    "end_line": 216,
+    "snippet": "revert ERC20InvalidReceiver(address(0))"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:183-183",
+   "kind": "source",
+   "title": "ERC20._update(address,address,uint256): revert ERC20InsufficientBalance(from, fromBalance, value)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_update(address,address,uint256)",
+    "start_line": 183,
+    "end_line": 183,
+    "snippet": "revert ERC20InsufficientBalance(from, fromBalance, value)"
+   }
+  },
+  {
+   "id": "ev:cfg:asset:vault._asset",
+   "kind": "config",
+   "title": "Asset label for vault._asset",
+   "description": "Display label 'underlying asset' from the project configuration (display only).",
+   "synthetic": false,
+   "reference": "fluxscope.json"
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:247-247",
+   "kind": "source",
+   "title": "ERC4626._deposit(address,address,uint256,uint256): SafeERC20.safeTransferFrom(IERC20(asset()), caller, address(this), assets)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "_deposit(address,address,uint256,uint256)",
+    "start_line": 247,
+    "end_line": 247,
+    "snippet": "SafeERC20.safeTransferFrom(IERC20(asset()), caller, address(this), assets)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:178-178",
+   "kind": "source",
+   "title": "ERC4626.deposit(uint256,address): _deposit(_msgSender(), receiver, assets, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "deposit(uint256,address)",
+    "start_line": 178,
+    "end_line": 178,
+    "snippet": "_deposit(_msgSender(), receiver, assets, shares)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_utils_SafeERC20.sol:41-43",
+   "kind": "source",
+   "title": "Implementation used by rule oz.safeerc20: SafeERC20.safeTransferFrom(IERC20,address,address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/utils/SafeERC20.sol",
+    "contract": "SafeERC20",
+    "function": "safeTransferFrom(IERC20,address,address,uint256)",
+    "start_line": 41,
+    "end_line": 43,
+    "snippet": "function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {\n        _callOptionalReturn(token, abi.encodeCall(token.transferFrom, (from, to, value)));\n    }"
+   }
+  },
+  {
+   "id": "ev:rule:oz.safeerc20:f04a18df94",
+   "kind": "rule",
+   "title": "Rule oz.safeerc20",
+   "description": "@openzeppelin/contracts@5.4.0 SafeERC20.safeTransferFrom encodes token.transferFrom(from, to, value) — implementation at lib/openzeppelin-contracts-5.4.0/token/ERC20/utils/SafeERC20.sol:41-43",
+   "synthetic": false
+  },
+  {
+   "id": "ev:cfg:asset:vault",
+   "kind": "config",
+   "title": "Asset label for vault",
+   "description": "Display label 'vault share' from the project configuration (display only).",
+   "synthetic": false,
+   "reference": "fluxscope.json"
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:248-248",
+   "kind": "source",
+   "title": "ERC4626._deposit(address,address,uint256,uint256): _mint(receiver, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "_deposit(address,address,uint256,uint256)",
+    "start_line": 248,
+    "end_line": 248,
+    "snippet": "_mint(receiver, shares)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:214-219",
+   "kind": "source",
+   "title": "Implementation used by rule oz.erc20.internal: ERC20._mint(address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_mint(address,uint256)",
+    "start_line": 214,
+    "end_line": 219,
+    "snippet": "function _mint(address account, uint256 value) internal {\n        if (account == address(0)) {\n            revert ERC20InvalidReceiver(address(0));\n        }\n        _update(address(0), account, value);\n    }"
+   }
+  },
+  {
+   "id": "ev:rule:oz.erc20.internal:cad9b89c7f",
+   "kind": "rule",
+   "title": "Rule oz.erc20.internal",
+   "description": "@openzeppelin/contracts@5.4.0 ERC20._mint (implementation writes _balances, _totalSupply) — implementation at lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol:214-219",
+   "synthetic": false
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:184-194",
+   "kind": "source",
+   "title": "Entry point Vault.mint(uint256,address)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "mint(uint256,address)",
+    "start_line": 184,
+    "end_line": 194,
+    "snippet": "function mint(uint256 shares, address receiver) public virtual returns (uint256) {\n        uint256 maxShares = maxMint(receiver);\n        if (shares > maxShares) {\n            revert ERC4626ExceededMaxMint(receiver, shares, maxShares);\n        }\n\n        uint256 assets = previewMint(shares);\n        _deposit(_msgSender(), receiver, assets, shares);\n\n        return assets;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:187-187",
+   "kind": "source",
+   "title": "ERC4626.mint(uint256,address): revert ERC4626ExceededMaxMint(receiver, shares, maxShares)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "mint(uint256,address)",
+    "start_line": 187,
+    "end_line": 187,
+    "snippet": "revert ERC4626ExceededMaxMint(receiver, shares, maxShares)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:191-191",
+   "kind": "source",
+   "title": "ERC4626.mint(uint256,address): _deposit(_msgSender(), receiver, assets, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "mint(uint256,address)",
+    "start_line": 191,
+    "end_line": 191,
+    "snippet": "_deposit(_msgSender(), receiver, assets, shares)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:197-207",
+   "kind": "source",
+   "title": "Entry point Vault.withdraw(uint256,address,address)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "withdraw(uint256,address,address)",
+    "start_line": 197,
+    "end_line": 207,
+    "snippet": "function withdraw(uint256 assets, address receiver, address owner) public virtual returns (uint256) {\n        uint256 maxAssets = maxWithdraw(owner);\n        if (assets > maxAssets) {\n            revert ERC4626ExceededMaxWithdraw(owner, assets, maxAssets);\n        }\n\n        uint256 shares = previewWithdraw(assets);\n        _withdraw(_msgSender(), receiver, owner, assets, shares);\n\n        return shares;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:200-200",
+   "kind": "source",
+   "title": "ERC4626.withdraw(uint256,address,address): revert ERC4626ExceededMaxWithdraw(owner, assets, maxAssets)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "withdraw(uint256,address,address)",
+    "start_line": 200,
+    "end_line": 200,
+    "snippet": "revert ERC4626ExceededMaxWithdraw(owner, assets, maxAssets)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:231-231",
+   "kind": "source",
+   "title": "ERC20._burn(address,uint256): revert ERC20InvalidSender(address(0))",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_burn(address,uint256)",
+    "start_line": 231,
+    "end_line": 231,
+    "snippet": "revert ERC20InvalidSender(address(0))"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:298-298",
+   "kind": "source",
+   "title": "ERC20._spendAllowance(address,address,uint256): revert ERC20InsufficientAllowance(spender, currentAllowance, value)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_spendAllowance(address,address,uint256)",
+    "start_line": 298,
+    "end_line": 298,
+    "snippet": "revert ERC20InsufficientAllowance(spender, currentAllowance, value)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:275-275",
+   "kind": "source",
+   "title": "ERC20._approve(address,address,uint256,bool): revert ERC20InvalidApprover(address(0))",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_approve(address,address,uint256,bool)",
+    "start_line": 275,
+    "end_line": 275,
+    "snippet": "revert ERC20InvalidApprover(address(0))"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:278-278",
+   "kind": "source",
+   "title": "ERC20._approve(address,address,uint256,bool): revert ERC20InvalidSpender(address(0))",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_approve(address,address,uint256,bool)",
+    "start_line": 278,
+    "end_line": 278,
+    "snippet": "revert ERC20InvalidSpender(address(0))"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:273-273",
+   "kind": "source",
+   "title": "ERC4626._withdraw(address,address,address,uint256,uint256): _burn(owner, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "_withdraw(address,address,address,uint256,uint256)",
+    "start_line": 273,
+    "end_line": 273,
+    "snippet": "_burn(owner, shares)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:204-204",
+   "kind": "source",
+   "title": "ERC4626.withdraw(uint256,address,address): _withdraw(_msgSender(), receiver, owner, assets, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "withdraw(uint256,address,address)",
+    "start_line": 204,
+    "end_line": 204,
+    "snippet": "_withdraw(_msgSender(), receiver, owner, assets, shares)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:229-234",
+   "kind": "source",
+   "title": "Implementation used by rule oz.erc20.internal: ERC20._burn(address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_burn(address,uint256)",
+    "start_line": 229,
+    "end_line": 234,
+    "snippet": "function _burn(address account, uint256 value) internal {\n        if (account == address(0)) {\n            revert ERC20InvalidSender(address(0));\n        }\n        _update(account, address(0), value);\n    }"
+   }
+  },
+  {
+   "id": "ev:rule:oz.erc20.internal:d8bf2748d6",
+   "kind": "rule",
+   "title": "Rule oz.erc20.internal",
+   "description": "@openzeppelin/contracts@5.4.0 ERC20._burn (implementation writes _balances, _totalSupply) — implementation at lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol:229-234",
+   "synthetic": false
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:274-274",
+   "kind": "source",
+   "title": "ERC4626._withdraw(address,address,address,uint256,uint256): SafeERC20.safeTransfer(IERC20(asset()), receiver, assets)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "_withdraw(address,address,address,uint256,uint256)",
+    "start_line": 274,
+    "end_line": 274,
+    "snippet": "SafeERC20.safeTransfer(IERC20(asset()), receiver, assets)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_utils_SafeERC20.sol:33-35",
+   "kind": "source",
+   "title": "Implementation used by rule oz.safeerc20: SafeERC20.safeTransfer(IERC20,address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/utils/SafeERC20.sol",
+    "contract": "SafeERC20",
+    "function": "safeTransfer(IERC20,address,uint256)",
+    "start_line": 33,
+    "end_line": 35,
+    "snippet": "function safeTransfer(IERC20 token, address to, uint256 value) internal {\n        _callOptionalReturn(token, abi.encodeCall(token.transfer, (to, value)));\n    }"
+   }
+  },
+  {
+   "id": "ev:rule:oz.safeerc20:8c531dea73",
+   "kind": "rule",
+   "title": "Rule oz.safeerc20",
+   "description": "@openzeppelin/contracts@5.4.0 SafeERC20.safeTransfer encodes token.transfer(to, value) — implementation at lib/openzeppelin-contracts-5.4.0/token/ERC20/utils/SafeERC20.sol:33-35",
+   "synthetic": false
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:210-220",
+   "kind": "source",
+   "title": "Entry point Vault.redeem(uint256,address,address)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "redeem(uint256,address,address)",
+    "start_line": 210,
+    "end_line": 220,
+    "snippet": "function redeem(uint256 shares, address receiver, address owner) public virtual returns (uint256) {\n        uint256 maxShares = maxRedeem(owner);\n        if (shares > maxShares) {\n            revert ERC4626ExceededMaxRedeem(owner, shares, maxShares);\n        }\n\n        uint256 assets = previewRedeem(shares);\n        _withdraw(_msgSender(), receiver, owner, assets, shares);\n\n        return assets;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:213-213",
+   "kind": "source",
+   "title": "ERC4626.redeem(uint256,address,address): revert ERC4626ExceededMaxRedeem(owner, shares, maxShares)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "redeem(uint256,address,address)",
+    "start_line": 213,
+    "end_line": 213,
+    "snippet": "revert ERC4626ExceededMaxRedeem(owner, shares, maxShares)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:217-217",
+   "kind": "source",
+   "title": "ERC4626.redeem(uint256,address,address): _withdraw(_msgSender(), receiver, owner, assets, shares)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "redeem(uint256,address,address)",
+    "start_line": 217,
+    "end_line": 217,
+    "snippet": "_withdraw(_msgSender(), receiver, owner, assets, shares)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:99-103",
+   "kind": "source",
+   "title": "Entry point Vault.transfer(address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "transfer(address,uint256)",
+    "start_line": 99,
+    "end_line": 103,
+    "snippet": "function transfer(address to, uint256 value) public virtual returns (bool) {\n        address owner = _msgSender();\n        _transfer(owner, to, value);\n        return true;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:161-161",
+   "kind": "source",
+   "title": "ERC20._transfer(address,address,uint256): revert ERC20InvalidSender(address(0))",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_transfer(address,address,uint256)",
+    "start_line": 161,
+    "end_line": 161,
+    "snippet": "revert ERC20InvalidSender(address(0))"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:164-164",
+   "kind": "source",
+   "title": "ERC20._transfer(address,address,uint256): revert ERC20InvalidReceiver(address(0))",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_transfer(address,address,uint256)",
+    "start_line": 164,
+    "end_line": 164,
+    "snippet": "revert ERC20InvalidReceiver(address(0))"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:101-101",
+   "kind": "source",
+   "title": "ERC20.transfer(address,uint256): _transfer(owner, to, value)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "transfer(address,uint256)",
+    "start_line": 101,
+    "end_line": 101,
+    "snippet": "_transfer(owner, to, value)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:159-167",
+   "kind": "source",
+   "title": "Implementation used by rule oz.erc20.internal: ERC20._transfer(address,address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "_transfer(address,address,uint256)",
+    "start_line": 159,
+    "end_line": 167,
+    "snippet": "function _transfer(address from, address to, uint256 value) internal {\n        if (from == address(0)) {\n            revert ERC20InvalidSender(address(0));\n        }\n        if (to == address(0)) {\n            revert ERC20InvalidReceiver(address(0));\n        }\n        _update(from, to, value);\n    }"
+   }
+  },
+  {
+   "id": "ev:rule:oz.erc20.internal:38e0cbab4c",
+   "kind": "rule",
+   "title": "Rule oz.erc20.internal",
+   "description": "@openzeppelin/contracts@5.4.0 ERC20._transfer (implementation writes _balances) — implementation at lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol:159-167",
+   "synthetic": false
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:142-147",
+   "kind": "source",
+   "title": "Entry point Vault.transferFrom(address,address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "transferFrom(address,address,uint256)",
+    "start_line": 142,
+    "end_line": 147,
+    "snippet": "function transferFrom(address from, address to, uint256 value) public virtual returns (bool) {\n        address spender = _msgSender();\n        _spendAllowance(from, spender, value);\n        _transfer(from, to, value);\n        return true;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:145-145",
+   "kind": "source",
+   "title": "ERC20.transferFrom(address,address,uint256): _transfer(from, to, value)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "transferFrom(address,address,uint256)",
+    "start_line": 145,
+    "end_line": 145,
+    "snippet": "_transfer(from, to, value)"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_ERC20.sol:120-124",
+   "kind": "source",
+   "title": "Entry point Vault.approve(address,uint256)",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+    "contract": "ERC20",
+    "function": "approve(address,uint256)",
+    "start_line": 120,
+    "end_line": 124,
+    "snippet": "function approve(address spender, uint256 value) public virtual returns (bool) {\n        address owner = _msgSender();\n        _approve(owner, spender, value);\n        return true;\n    }"
+   }
+  },
+  {
+   "id": "ev:src:lib_openzeppelin-contracts-5.4.0_token_ERC20_extensions_ERC4626.sol:117-117",
+   "kind": "source",
+   "title": "ERC4626.totalAssets(): return IERC20(asset()).balanceOf(address(this))",
+   "description": "Balance read used for accounting",
+   "synthetic": false,
+   "source": {
+    "file": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+    "contract": "ERC4626",
+    "function": "totalAssets()",
+    "start_line": 117,
+    "end_line": 117,
+    "snippet": "return IERC20(asset()).balanceOf(address(this))"
+   }
+  }
+ ],
+ "sources": [
+  {
+   "path": "lib/openzeppelin-contracts-5.4.0/token/ERC20/ERC20.sol",
+   "sha256": "9f906af4cba6e7e091dc12d45e6687e1239cf82d17678198424250fd64ab96bd",
+   "language": "solidity",
+   "synthetic": false,
+   "content": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts (last updated v5.4.0) (token/ERC20/ERC20.sol)\n\npragma solidity ^0.8.20;\n\nimport {IERC20} from \"./IERC20.sol\";\nimport {IERC20Metadata} from \"./extensions/IERC20Metadata.sol\";\nimport {Context} from \"../../utils/Context.sol\";\nimport {IERC20Errors} from \"../../interfaces/draft-IERC6093.sol\";\n\n/**\n * @dev Implementation of the {IERC20} interface.\n *\n * This implementation is agnostic to the way tokens are created. This means\n * that a supply mechanism has to be added in a derived contract using {_mint}.\n *\n * TIP: For a detailed writeup see our guide\n * https://forum.openzeppelin.com/t/how-to-implement-erc20-supply-mechanisms/226[How\n * to implement supply mechanisms].\n *\n * The default value of {decimals} is 18. To change this, you should override\n * this function so it returns a different value.\n *\n * We have followed general OpenZeppelin Contracts guidelines: functions revert\n * instead returning `false` on failure. This behavior is nonetheless\n * conventional and does not conflict with the expectations of ERC-20\n * applications.\n */\nabstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {\n    mapping(address account => uint256) private _balances;\n\n    mapping(address account => mapping(address spender => uint256)) private _allowances;\n\n    uint256 private _totalSupply;\n\n    string private _name;\n    string private _symbol;\n\n    /**\n     * @dev Sets the values for {name} and {symbol}.\n     *\n     * Both values are immutable: they can only be set once during construction.\n     */\n    constructor(string memory name_, string memory symbol_) {\n        _name = name_;\n        _symbol = symbol_;\n    }\n\n    /**\n     * @dev Returns the name of the token.\n     */\n    function name() public view virtual returns (string memory) {\n        return _name;\n    }\n\n    /**\n     * @dev Returns the symbol of the token, usually a shorter version of the\n     * name.\n     */\n    function symbol() public view virtual returns (string memory) {\n        return _symbol;\n    }\n\n    /**\n     * @dev Returns the number of decimals used to get its user representation.\n     * For example, if `decimals` equals `2`, a balance of `505` tokens should\n     * be displayed to a user as `5.05` (`505 / 10 ** 2`).\n     *\n     * Tokens usually opt for a value of 18, imitating the relationship between\n     * Ether and Wei. This is the default value returned by this function, unless\n     * it's overridden.\n     *\n     * NOTE: This information is only used for _display_ purposes: it in\n     * no way affects any of the arithmetic of the contract, including\n     * {IERC20-balanceOf} and {IERC20-transfer}.\n     */\n    function decimals() public view virtual returns (uint8) {\n        return 18;\n    }\n\n    /// @inheritdoc IERC20\n    function totalSupply() public view virtual returns (uint256) {\n        return _totalSupply;\n    }\n\n    /// @inheritdoc IERC20\n    function balanceOf(address account) public view virtual returns (uint256) {\n        return _balances[account];\n    }\n\n    /**\n     * @dev See {IERC20-transfer}.\n     *\n     * Requirements:\n     *\n     * - `to` cannot be the zero address.\n     * - the caller must have a balance of at least `value`.\n     */\n    function transfer(address to, uint256 value) public virtual returns (bool) {\n        address owner = _msgSender();\n        _transfer(owner, to, value);\n        return true;\n    }\n\n    /// @inheritdoc IERC20\n    function allowance(address owner, address spender) public view virtual returns (uint256) {\n        return _allowances[owner][spender];\n    }\n\n    /**\n     * @dev See {IERC20-approve}.\n     *\n     * NOTE: If `value` is the maximum `uint256`, the allowance is not updated on\n     * `transferFrom`. This is semantically equivalent to an infinite approval.\n     *\n     * Requirements:\n     *\n     * - `spender` cannot be the zero address.\n     */\n    function approve(address spender, uint256 value) public virtual returns (bool) {\n        address owner = _msgSender();\n        _approve(owner, spender, value);\n        return true;\n    }\n\n    /**\n     * @dev See {IERC20-transferFrom}.\n     *\n     * Skips emitting an {Approval} event indicating an allowance update. This is not\n     * required by the ERC. See {xref-ERC20-_approve-address-address-uint256-bool-}[_approve].\n     *\n     * NOTE: Does not update the allowance if the current allowance\n     * is the maximum `uint256`.\n     *\n     * Requirements:\n     *\n     * - `from` and `to` cannot be the zero address.\n     * - `from` must have a balance of at least `value`.\n     * - the caller must have allowance for ``from``'s tokens of at least\n     * `value`.\n     */\n    function transferFrom(address from, address to, uint256 value) public virtual returns (bool) {\n        address spender = _msgSender();\n        _spendAllowance(from, spender, value);\n        _transfer(from, to, value);\n        return true;\n    }\n\n    /**\n     * @dev Moves a `value` amount of tokens from `from` to `to`.\n     *\n     * This internal function is equivalent to {transfer}, and can be used to\n     * e.g. implement automatic token fees, slashing mechanisms, etc.\n     *\n     * Emits a {Transfer} event.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead.\n     */\n    function _transfer(address from, address to, uint256 value) internal {\n        if (from == address(0)) {\n            revert ERC20InvalidSender(address(0));\n        }\n        if (to == address(0)) {\n            revert ERC20InvalidReceiver(address(0));\n        }\n        _update(from, to, value);\n    }\n\n    /**\n     * @dev Transfers a `value` amount of tokens from `from` to `to`, or alternatively mints (or burns) if `from`\n     * (or `to`) is the zero address. All customizations to transfers, mints, and burns should be done by overriding\n     * this function.\n     *\n     * Emits a {Transfer} event.\n     */\n    function _update(address from, address to, uint256 value) internal virtual {\n        if (from == address(0)) {\n            // Overflow check required: The rest of the code assumes that totalSupply never overflows\n            _totalSupply += value;\n        } else {\n            uint256 fromBalance = _balances[from];\n            if (fromBalance < value) {\n                revert ERC20InsufficientBalance(from, fromBalance, value);\n            }\n            unchecked {\n                // Overflow not possible: value <= fromBalance <= totalSupply.\n                _balances[from] = fromBalance - value;\n            }\n        }\n\n        if (to == address(0)) {\n            unchecked {\n                // Overflow not possible: value <= totalSupply or value <= fromBalance <= totalSupply.\n                _totalSupply -= value;\n            }\n        } else {\n            unchecked {\n                // Overflow not possible: balance + value is at most totalSupply, which we know fits into a uint256.\n                _balances[to] += value;\n            }\n        }\n\n        emit Transfer(from, to, value);\n    }\n\n    /**\n     * @dev Creates a `value` amount of tokens and assigns them to `account`, by transferring it from address(0).\n     * Relies on the `_update` mechanism\n     *\n     * Emits a {Transfer} event with `from` set to the zero address.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead.\n     */\n    function _mint(address account, uint256 value) internal {\n        if (account == address(0)) {\n            revert ERC20InvalidReceiver(address(0));\n        }\n        _update(address(0), account, value);\n    }\n\n    /**\n     * @dev Destroys a `value` amount of tokens from `account`, lowering the total supply.\n     * Relies on the `_update` mechanism.\n     *\n     * Emits a {Transfer} event with `to` set to the zero address.\n     *\n     * NOTE: This function is not virtual, {_update} should be overridden instead\n     */\n    function _burn(address account, uint256 value) internal {\n        if (account == address(0)) {\n            revert ERC20InvalidSender(address(0));\n        }\n        _update(account, address(0), value);\n    }\n\n    /**\n     * @dev Sets `value` as the allowance of `spender` over the `owner`'s tokens.\n     *\n     * This internal function is equivalent to `approve`, and can be used to\n     * e.g. set automatic allowances for certain subsystems, etc.\n     *\n     * Emits an {Approval} event.\n     *\n     * Requirements:\n     *\n     * - `owner` cannot be the zero address.\n     * - `spender` cannot be the zero address.\n     *\n     * Overrides to this logic should be done to the variant with an additional `bool emitEvent` argument.\n     */\n    function _approve(address owner, address spender, uint256 value) internal {\n        _approve(owner, spender, value, true);\n    }\n\n    /**\n     * @dev Variant of {_approve} with an optional flag to enable or disable the {Approval} event.\n     *\n     * By default (when calling {_approve}) the flag is set to true. On the other hand, approval changes made by\n     * `_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any\n     * `Approval` event during `transferFrom` operations.\n     *\n     * Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to\n     * true using the following override:\n     *\n     * ```solidity\n     * function _approve(address owner, address spender, uint256 value, bool) internal virtual override {\n     *     super._approve(owner, spender, value, true);\n     * }\n     * ```\n     *\n     * Requirements are the same as {_approve}.\n     */\n    function _approve(address owner, address spender, uint256 value, bool emitEvent) internal virtual {\n        if (owner == address(0)) {\n            revert ERC20InvalidApprover(address(0));\n        }\n        if (spender == address(0)) {\n            revert ERC20InvalidSpender(address(0));\n        }\n        _allowances[owner][spender] = value;\n        if (emitEvent) {\n            emit Approval(owner, spender, value);\n        }\n    }\n\n    /**\n     * @dev Updates `owner`'s allowance for `spender` based on spent `value`.\n     *\n     * Does not update the allowance value in case of infinite allowance.\n     * Revert if not enough allowance is available.\n     *\n     * Does not emit an {Approval} event.\n     */\n    function _spendAllowance(address owner, address spender, uint256 value) internal virtual {\n        uint256 currentAllowance = allowance(owner, spender);\n        if (currentAllowance < type(uint256).max) {\n            if (currentAllowance < value) {\n                revert ERC20InsufficientAllowance(spender, currentAllowance, value);\n            }\n            unchecked {\n                _approve(owner, spender, currentAllowance - value, false);\n            }\n        }\n    }\n}\n"
+  },
+  {
+   "path": "lib/openzeppelin-contracts-5.4.0/token/ERC20/extensions/ERC4626.sol",
+   "sha256": "1411daee7cd45ad8b9eaccde2071ccfdf277b78f07e2591aca91c92c62d66c13",
+   "language": "solidity",
+   "synthetic": false,
+   "content": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts (last updated v5.4.0) (token/ERC20/extensions/ERC4626.sol)\n\npragma solidity ^0.8.20;\n\nimport {IERC20, IERC20Metadata, ERC20} from \"../ERC20.sol\";\nimport {SafeERC20} from \"../utils/SafeERC20.sol\";\nimport {IERC4626} from \"../../../interfaces/IERC4626.sol\";\nimport {Math} from \"../../../utils/math/Math.sol\";\n\n/**\n * @dev Implementation of the ERC-4626 \"Tokenized Vault Standard\" as defined in\n * https://eips.ethereum.org/EIPS/eip-4626[ERC-4626].\n *\n * This extension allows the minting and burning of \"shares\" (represented using the ERC-20 inheritance) in exchange for\n * underlying \"assets\" through standardized {deposit}, {mint}, {redeem} and {burn} workflows. This contract extends\n * the ERC-20 standard. Any additional extensions included along it would affect the \"shares\" token represented by this\n * contract and not the \"assets\" token which is an independent contract.\n *\n * [CAUTION]\n * ====\n * In empty (or nearly empty) ERC-4626 vaults, deposits are at high risk of being stolen through frontrunning\n * with a \"donation\" to the vault that inflates the price of a share. This is variously known as a donation or inflation\n * attack and is essentially a problem of slippage. Vault deployers can protect against this attack by making an initial\n * deposit of a non-trivial amount of the asset, such that price manipulation becomes infeasible. Withdrawals may\n * similarly be affected by slippage. Users can protect against this attack as well as unexpected slippage in general by\n * verifying the amount received is as expected, using a wrapper that performs these checks such as\n * https://github.com/fei-protocol/ERC4626#erc4626router-and-base[ERC4626Router].\n *\n * Since v4.9, this implementation introduces configurable virtual assets and shares to help developers mitigate that risk.\n * The `_decimalsOffset()` corresponds to an offset in the decimal representation between the underlying asset's decimals\n * and the vault decimals. This offset also determines the rate of virtual shares to virtual assets in the vault, which\n * itself determines the initial exchange rate. While not fully preventing the attack, analysis shows that the default\n * offset (0) makes it non-profitable even if an attacker is able to capture value from multiple user deposits, as a result\n * of the value being captured by the virtual shares (out of the attacker's donation) matching the attacker's expected gains.\n * With a larger offset, the attack becomes orders of magnitude more expensive than it is profitable. More details about the\n * underlying math can be found xref:ROOT:erc4626.adoc#inflation-attack[here].\n *\n * The drawback of this approach is that the virtual shares do capture (a very small) part of the value being accrued\n * to the vault. Also, if the vault experiences losses, the users try to exit the vault, the virtual shares and assets\n * will cause the first user to exit to experience reduced losses in detriment to the last users that will experience\n * bigger losses. Developers willing to revert back to the pre-v4.9 behavior just need to override the\n * `_convertToShares` and `_convertToAssets` functions.\n *\n * To learn more, check out our xref:ROOT:erc4626.adoc[ERC-4626 guide].\n * ====\n */\nabstract contract ERC4626 is ERC20, IERC4626 {\n    using Math for uint256;\n\n    IERC20 private immutable _asset;\n    uint8 private immutable _underlyingDecimals;\n\n    /**\n     * @dev Attempted to deposit more assets than the max amount for `receiver`.\n     */\n    error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max);\n\n    /**\n     * @dev Attempted to mint more shares than the max amount for `receiver`.\n     */\n    error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max);\n\n    /**\n     * @dev Attempted to withdraw more assets than the max amount for `receiver`.\n     */\n    error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max);\n\n    /**\n     * @dev Attempted to redeem more shares than the max amount for `receiver`.\n     */\n    error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max);\n\n    /**\n     * @dev Set the underlying asset contract. This must be an ERC20-compatible contract (ERC-20 or ERC-777).\n     */\n    constructor(IERC20 asset_) {\n        (bool success, uint8 assetDecimals) = _tryGetAssetDecimals(asset_);\n        _underlyingDecimals = success ? assetDecimals : 18;\n        _asset = asset_;\n    }\n\n    /**\n     * @dev Attempts to fetch the asset decimals. A return value of false indicates that the attempt failed in some way.\n     */\n    function _tryGetAssetDecimals(IERC20 asset_) private view returns (bool ok, uint8 assetDecimals) {\n        (bool success, bytes memory encodedDecimals) = address(asset_).staticcall(\n            abi.encodeCall(IERC20Metadata.decimals, ())\n        );\n        if (success && encodedDecimals.length >= 32) {\n            uint256 returnedDecimals = abi.decode(encodedDecimals, (uint256));\n            if (returnedDecimals <= type(uint8).max) {\n                return (true, uint8(returnedDecimals));\n            }\n        }\n        return (false, 0);\n    }\n\n    /**\n     * @dev Decimals are computed by adding the decimal offset on top of the underlying asset's decimals. This\n     * \"original\" value is cached during construction of the vault contract. If this read operation fails (e.g., the\n     * asset has not been created yet), a default of 18 is used to represent the underlying asset's decimals.\n     *\n     * See {IERC20Metadata-decimals}.\n     */\n    function decimals() public view virtual override(IERC20Metadata, ERC20) returns (uint8) {\n        return _underlyingDecimals + _decimalsOffset();\n    }\n\n    /// @inheritdoc IERC4626\n    function asset() public view virtual returns (address) {\n        return address(_asset);\n    }\n\n    /// @inheritdoc IERC4626\n    function totalAssets() public view virtual returns (uint256) {\n        return IERC20(asset()).balanceOf(address(this));\n    }\n\n    /// @inheritdoc IERC4626\n    function convertToShares(uint256 assets) public view virtual returns (uint256) {\n        return _convertToShares(assets, Math.Rounding.Floor);\n    }\n\n    /// @inheritdoc IERC4626\n    function convertToAssets(uint256 shares) public view virtual returns (uint256) {\n        return _convertToAssets(shares, Math.Rounding.Floor);\n    }\n\n    /// @inheritdoc IERC4626\n    function maxDeposit(address) public view virtual returns (uint256) {\n        return type(uint256).max;\n    }\n\n    /// @inheritdoc IERC4626\n    function maxMint(address) public view virtual returns (uint256) {\n        return type(uint256).max;\n    }\n\n    /// @inheritdoc IERC4626\n    function maxWithdraw(address owner) public view virtual returns (uint256) {\n        return _convertToAssets(balanceOf(owner), Math.Rounding.Floor);\n    }\n\n    /// @inheritdoc IERC4626\n    function maxRedeem(address owner) public view virtual returns (uint256) {\n        return balanceOf(owner);\n    }\n\n    /// @inheritdoc IERC4626\n    function previewDeposit(uint256 assets) public view virtual returns (uint256) {\n        return _convertToShares(assets, Math.Rounding.Floor);\n    }\n\n    /// @inheritdoc IERC4626\n    function previewMint(uint256 shares) public view virtual returns (uint256) {\n        return _convertToAssets(shares, Math.Rounding.Ceil);\n    }\n\n    /// @inheritdoc IERC4626\n    function previewWithdraw(uint256 assets) public view virtual returns (uint256) {\n        return _convertToShares(assets, Math.Rounding.Ceil);\n    }\n\n    /// @inheritdoc IERC4626\n    function previewRedeem(uint256 shares) public view virtual returns (uint256) {\n        return _convertToAssets(shares, Math.Rounding.Floor);\n    }\n\n    /// @inheritdoc IERC4626\n    function deposit(uint256 assets, address receiver) public virtual returns (uint256) {\n        uint256 maxAssets = maxDeposit(receiver);\n        if (assets > maxAssets) {\n            revert ERC4626ExceededMaxDeposit(receiver, assets, maxAssets);\n        }\n\n        uint256 shares = previewDeposit(assets);\n        _deposit(_msgSender(), receiver, assets, shares);\n\n        return shares;\n    }\n\n    /// @inheritdoc IERC4626\n    function mint(uint256 shares, address receiver) public virtual returns (uint256) {\n        uint256 maxShares = maxMint(receiver);\n        if (shares > maxShares) {\n            revert ERC4626ExceededMaxMint(receiver, shares, maxShares);\n        }\n\n        uint256 assets = previewMint(shares);\n        _deposit(_msgSender(), receiver, assets, shares);\n\n        return assets;\n    }\n\n    /// @inheritdoc IERC4626\n    function withdraw(uint256 assets, address receiver, address owner) public virtual returns (uint256) {\n        uint256 maxAssets = maxWithdraw(owner);\n        if (assets > maxAssets) {\n            revert ERC4626ExceededMaxWithdraw(owner, assets, maxAssets);\n        }\n\n        uint256 shares = previewWithdraw(assets);\n        _withdraw(_msgSender(), receiver, owner, assets, shares);\n\n        return shares;\n    }\n\n    /// @inheritdoc IERC4626\n    function redeem(uint256 shares, address receiver, address owner) public virtual returns (uint256) {\n        uint256 maxShares = maxRedeem(owner);\n        if (shares > maxShares) {\n            revert ERC4626ExceededMaxRedeem(owner, shares, maxShares);\n        }\n\n        uint256 assets = previewRedeem(shares);\n        _withdraw(_msgSender(), receiver, owner, assets, shares);\n\n        return assets;\n    }\n\n    /**\n     * @dev Internal conversion function (from assets to shares) with support for rounding direction.\n     */\n    function _convertToShares(uint256 assets, Math.Rounding rounding) internal view virtual returns (uint256) {\n        return assets.mulDiv(totalSupply() + 10 ** _decimalsOffset(), totalAssets() + 1, rounding);\n    }\n\n    /**\n     * @dev Internal conversion function (from shares to assets) with support for rounding direction.\n     */\n    function _convertToAssets(uint256 shares, Math.Rounding rounding) internal view virtual returns (uint256) {\n        return shares.mulDiv(totalAssets() + 1, totalSupply() + 10 ** _decimalsOffset(), rounding);\n    }\n\n    /**\n     * @dev Deposit/mint common workflow.\n     */\n    function _deposit(address caller, address receiver, uint256 assets, uint256 shares) internal virtual {\n        // If asset() is ERC-777, `transferFrom` can trigger a reentrancy BEFORE the transfer happens through the\n        // `tokensToSend` hook. On the other hand, the `tokenReceived` hook, that is triggered after the transfer,\n        // calls the vault, which is assumed not malicious.\n        //\n        // Conclusion: we need to do the transfer before we mint so that any reentrancy would happen before the\n        // assets are transferred and before the shares are minted, which is a valid state.\n        // slither-disable-next-line reentrancy-no-eth\n        SafeERC20.safeTransferFrom(IERC20(asset()), caller, address(this), assets);\n        _mint(receiver, shares);\n\n        emit Deposit(caller, receiver, assets, shares);\n    }\n\n    /**\n     * @dev Withdraw/redeem common workflow.\n     */\n    function _withdraw(\n        address caller,\n        address receiver,\n        address owner,\n        uint256 assets,\n        uint256 shares\n    ) internal virtual {\n        if (caller != owner) {\n            _spendAllowance(owner, caller, shares);\n        }\n\n        // If asset() is ERC-777, `transfer` can trigger a reentrancy AFTER the transfer happens through the\n        // `tokensReceived` hook. On the other hand, the `tokensToSend` hook, that is triggered before the transfer,\n        // calls the vault, which is assumed not malicious.\n        //\n        // Conclusion: we need to do the transfer after the burn so that any reentrancy would happen after the\n        // shares are burned and after the assets are transferred, which is a valid state.\n        _burn(owner, shares);\n        SafeERC20.safeTransfer(IERC20(asset()), receiver, assets);\n\n        emit Withdraw(caller, receiver, owner, assets, shares);\n    }\n\n    function _decimalsOffset() internal view virtual returns (uint8) {\n        return 0;\n    }\n}\n"
+  },
+  {
+   "path": "lib/openzeppelin-contracts-5.4.0/token/ERC20/utils/SafeERC20.sol",
+   "sha256": "ac1fd9fa99b194a8db8dfa9ae8e3ff44feaa8f16668241fd2b66ae8b47d7c082",
+   "language": "solidity",
+   "synthetic": false,
+   "content": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts (last updated v5.3.0) (token/ERC20/utils/SafeERC20.sol)\n\npragma solidity ^0.8.20;\n\nimport {IERC20} from \"../IERC20.sol\";\nimport {IERC1363} from \"../../../interfaces/IERC1363.sol\";\n\n/**\n * @title SafeERC20\n * @dev Wrappers around ERC-20 operations that throw on failure (when the token\n * contract returns false). Tokens that return no value (and instead revert or\n * throw on failure) are also supported, non-reverting calls are assumed to be\n * successful.\n * To use this library you can add a `using SafeERC20 for IERC20;` statement to your contract,\n * which allows you to call the safe operations as `token.safeTransfer(...)`, etc.\n */\nlibrary SafeERC20 {\n    /**\n     * @dev An operation with an ERC-20 token failed.\n     */\n    error SafeERC20FailedOperation(address token);\n\n    /**\n     * @dev Indicates a failed `decreaseAllowance` request.\n     */\n    error SafeERC20FailedDecreaseAllowance(address spender, uint256 currentAllowance, uint256 requestedDecrease);\n\n    /**\n     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,\n     * non-reverting calls are assumed to be successful.\n     */\n    function safeTransfer(IERC20 token, address to, uint256 value) internal {\n        _callOptionalReturn(token, abi.encodeCall(token.transfer, (to, value)));\n    }\n\n    /**\n     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the\n     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.\n     */\n    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {\n        _callOptionalReturn(token, abi.encodeCall(token.transferFrom, (from, to, value)));\n    }\n\n    /**\n     * @dev Variant of {safeTransfer} that returns a bool instead of reverting if the operation is not successful.\n     */\n    function trySafeTransfer(IERC20 token, address to, uint256 value) internal returns (bool) {\n        return _callOptionalReturnBool(token, abi.encodeCall(token.transfer, (to, value)));\n    }\n\n    /**\n     * @dev Variant of {safeTransferFrom} that returns a bool instead of reverting if the operation is not successful.\n     */\n    function trySafeTransferFrom(IERC20 token, address from, address to, uint256 value) internal returns (bool) {\n        return _callOptionalReturnBool(token, abi.encodeCall(token.transferFrom, (from, to, value)));\n    }\n\n    /**\n     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,\n     * non-reverting calls are assumed to be successful.\n     *\n     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the \"client\"\n     * smart contract uses ERC-7674 to set temporary allowances, then the \"client\" smart contract should avoid using\n     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract\n     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.\n     */\n    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {\n        uint256 oldAllowance = token.allowance(address(this), spender);\n        forceApprove(token, spender, oldAllowance + value);\n    }\n\n    /**\n     * @dev Decrease the calling contract's allowance toward `spender` by `requestedDecrease`. If `token` returns no\n     * value, non-reverting calls are assumed to be successful.\n     *\n     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the \"client\"\n     * smart contract uses ERC-7674 to set temporary allowances, then the \"client\" smart contract should avoid using\n     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract\n     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.\n     */\n    function safeDecreaseAllowance(IERC20 token, address spender, uint256 requestedDecrease) internal {\n        unchecked {\n            uint256 currentAllowance = token.allowance(address(this), spender);\n            if (currentAllowance < requestedDecrease) {\n                revert SafeERC20FailedDecreaseAllowance(spender, currentAllowance, requestedDecrease);\n            }\n            forceApprove(token, spender, currentAllowance - requestedDecrease);\n        }\n    }\n\n    /**\n     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,\n     * non-reverting calls are assumed to be successful. Meant to be used with tokens that require the approval\n     * to be set to zero before setting it to a non-zero value, such as USDT.\n     *\n     * NOTE: If the token implements ERC-7674, this function will not modify any temporary allowance. This function\n     * only sets the \"standard\" allowance. Any temporary allowance will remain active, in addition to the value being\n     * set here.\n     */\n    function forceApprove(IERC20 token, address spender, uint256 value) internal {\n        bytes memory approvalCall = abi.encodeCall(token.approve, (spender, value));\n\n        if (!_callOptionalReturnBool(token, approvalCall)) {\n            _callOptionalReturn(token, abi.encodeCall(token.approve, (spender, 0)));\n            _callOptionalReturn(token, approvalCall);\n        }\n    }\n\n    /**\n     * @dev Performs an {ERC1363} transferAndCall, with a fallback to the simple {ERC20} transfer if the target has no\n     * code. This can be used to implement an {ERC721}-like safe transfer that rely on {ERC1363} checks when\n     * targeting contracts.\n     *\n     * Reverts if the returned value is other than `true`.\n     */\n    function transferAndCallRelaxed(IERC1363 token, address to, uint256 value, bytes memory data) internal {\n        if (to.code.length == 0) {\n            safeTransfer(token, to, value);\n        } else if (!token.transferAndCall(to, value, data)) {\n            revert SafeERC20FailedOperation(address(token));\n        }\n    }\n\n    /**\n     * @dev Performs an {ERC1363} transferFromAndCall, with a fallback to the simple {ERC20} transferFrom if the target\n     * has no code. This can be used to implement an {ERC721}-like safe transfer that rely on {ERC1363} checks when\n     * targeting contracts.\n     *\n     * Reverts if the returned value is other than `true`.\n     */\n    function transferFromAndCallRelaxed(\n        IERC1363 token,\n        address from,\n        address to,\n        uint256 value,\n        bytes memory data\n    ) internal {\n        if (to.code.length == 0) {\n            safeTransferFrom(token, from, to, value);\n        } else if (!token.transferFromAndCall(from, to, value, data)) {\n            revert SafeERC20FailedOperation(address(token));\n        }\n    }\n\n    /**\n     * @dev Performs an {ERC1363} approveAndCall, with a fallback to the simple {ERC20} approve if the target has no\n     * code. This can be used to implement an {ERC721}-like safe transfer that rely on {ERC1363} checks when\n     * targeting contracts.\n     *\n     * NOTE: When the recipient address (`to`) has no code (i.e. is an EOA), this function behaves as {forceApprove}.\n     * Opposedly, when the recipient address (`to`) has code, this function only attempts to call {ERC1363-approveAndCall}\n     * once without retrying, and relies on the returned value to be true.\n     *\n     * Reverts if the returned value is other than `true`.\n     */\n    function approveAndCallRelaxed(IERC1363 token, address to, uint256 value, bytes memory data) internal {\n        if (to.code.length == 0) {\n            forceApprove(token, to, value);\n        } else if (!token.approveAndCall(to, value, data)) {\n            revert SafeERC20FailedOperation(address(token));\n        }\n    }\n\n    /**\n     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement\n     * on the return value: the return value is optional (but if data is returned, it must not be false).\n     * @param token The token targeted by the call.\n     * @param data The call data (encoded using abi.encode or one of its variants).\n     *\n     * This is a variant of {_callOptionalReturnBool} that reverts if call fails to meet the requirements.\n     */\n    function _callOptionalReturn(IERC20 token, bytes memory data) private {\n        uint256 returnSize;\n        uint256 returnValue;\n        assembly (\"memory-safe\") {\n            let success := call(gas(), token, 0, add(data, 0x20), mload(data), 0, 0x20)\n            // bubble errors\n            if iszero(success) {\n                let ptr := mload(0x40)\n                returndatacopy(ptr, 0, returndatasize())\n                revert(ptr, returndatasize())\n            }\n            returnSize := returndatasize()\n            returnValue := mload(0)\n        }\n\n        if (returnSize == 0 ? address(token).code.length == 0 : returnValue != 1) {\n            revert SafeERC20FailedOperation(address(token));\n        }\n    }\n\n    /**\n     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement\n     * on the return value: the return value is optional (but if data is returned, it must not be false).\n     * @param token The token targeted by the call.\n     * @param data The call data (encoded using abi.encode or one of its variants).\n     *\n     * This is a variant of {_callOptionalReturn} that silently catches all reverts and returns a bool instead.\n     */\n    function _callOptionalReturnBool(IERC20 token, bytes memory data) private returns (bool) {\n        bool success;\n        uint256 returnSize;\n        uint256 returnValue;\n        assembly (\"memory-safe\") {\n            success := call(gas(), token, 0, add(data, 0x20), mload(data), 0, 0x20)\n            returnSize := returndatasize()\n            returnValue := mload(0)\n        }\n        return success && (returnSize == 0 ? address(token).code.length > 0 : returnValue == 1);\n    }\n}\n"
+  },
+  {
+   "path": "src/Vault.sol",
+   "sha256": "dfe2ad2b751d2f7f4d37b19c2b4cd0f8e4ac4fbb10f788d5578216a83d0ccb99",
+   "language": "solidity",
+   "synthetic": false,
+   "content": "// SPDX-License-Identifier: MIT\n// Deployment wrapper for FluxScope tests: OpenZeppelin's ERC4626 implementation, unmodified.\npragma solidity ^0.8.24;\n\nimport {ERC20} from \"@openzeppelin/contracts/token/ERC20/ERC20.sol\";\nimport {IERC20} from \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\nimport {ERC4626} from \"@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol\";\n\ncontract Vault is ERC4626 {\n    constructor(IERC20 asset_) ERC20(\"Vault share\", \"vTKN\") ERC4626(asset_) {}\n}\n"
+  }
+ ],
+ "unresolved": [],
+ "tasks": [
+  {
+   "id": "task:holders:asset:vault",
+   "question": "Who holds vault share, and who holds the assets it claims?",
+   "description": "Select the share and follow its claim relations to the custody positions.",
+   "focus": [
+    "asset:vault"
+   ],
+   "view": "holdings"
+  },
+  {
+   "id": "task:exit:asset:vault",
+   "question": "Which operations are needed to exit vault share, and under which conditions?",
+   "focus": [
+    "pos:any:vault"
+   ],
+   "view": "exits"
+  },
+  {
+   "id": "task:deps:asset:vault",
+   "question": "Which contracts and external protocols does vault share depend on?",
+   "focus": [
+    "asset:vault"
+   ],
+   "view": "dependencies"
+  }
+ ],
+ "provenance": {
+  "stages": [
+   {
+    "stage": "snapshot",
+    "status": "ok",
+    "seconds": 0.04,
+    "files": 208,
+    "normalized_line_endings": [],
+    "sha256": "9512fe111cca6a401ef594e025e7d1b37d2add17ee76e61e41644440e2019988"
+   },
+   {
+    "stage": "compile",
+    "status": "ok",
+    "seconds": 0.376,
+    "contracts": 16,
+    "versions": {
+     "slither-analyzer": "0.11.6",
+     "crytic-compile": "0.4.2",
+     "solc": "0.8.24"
+    }
+   },
+   {
+    "stage": "facts",
+    "status": "ok",
+    "seconds": 0.027,
+    "entry_points": 7,
+    "effects": 19,
+    "skipped_initializers": []
+   },
+   {
+    "stage": "semantics",
+    "status": "ok",
+    "seconds": 0.005,
+    "operations": 7,
+    "positions": 3,
+    "relations": 6
+   },
+   {
+    "stage": "check",
+    "status": "ok",
+    "seconds": 0.0
+   },
+   {
+    "stage": "assemble",
+    "status": "ok",
+    "seconds": 0.0
+   }
+  ],
+  "llm_calls": []
+ }
+}

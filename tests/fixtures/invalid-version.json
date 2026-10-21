@@ -1,0 +1,12 @@
+{
+  "schema": "fluxscope/analysis",
+  "schema_version": "9.0.0",
+  "meta": {
+    "id": "v",
+    "title": "Future",
+    "synthetic": true
+  },
+  "scope": {
+    "kind": "example"
+  }
+}

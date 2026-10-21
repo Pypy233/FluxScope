@@ -1,0 +1,15 @@
+.git
+.github
+.venv
+**/__pycache__
+*.egg-info
+.pytest_cache
+build
+dist
+tests
+docs
+frontend
+**/out
+**/cache
+**/crytic-export
+eval/llm-records/*/pending

@@ -1,0 +1,437 @@
+{
+  "schema": "fluxscope/analysis",
+  "schema_version": "0.1.0",
+  "meta": {
+    "id": "fixture-router-fanout",
+    "title": "Fixture — Router fan-out with rebalance cycle (synthetic)",
+    "description": "Test fixture for import: a router splits deposits across two strategies; a rebalance moves funds between them.",
+    "synthetic": true,
+    "tags": [
+      "fixture"
+    ]
+  },
+  "scope": {
+    "kind": "execution_observation",
+    "chain": {
+      "chain_id": 31337,
+      "name": "fixture chain",
+      "block": 77
+    },
+    "notes": [
+      "Synthetic fixture used by the end-to-end tests."
+    ]
+  },
+  "assets": [
+    {
+      "id": "n-tok",
+      "label": "Token W (fixture)",
+      "kind": "token",
+      "identity": {
+        "kind": "example"
+      },
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      }
+    },
+    {
+      "id": "n-rs",
+      "label": "rW router share",
+      "kind": "share",
+      "identity": {
+        "kind": "contract_self",
+        "contract": "Router"
+      },
+      "issuer": "n-router",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      }
+    }
+  ],
+  "entities": [
+    {
+      "id": "n-alice",
+      "label": "Alice",
+      "kind": "account"
+    },
+    {
+      "id": "n-ops",
+      "label": "Ops multisig",
+      "kind": "role"
+    },
+    {
+      "id": "n-router",
+      "label": "Router",
+      "kind": "contract"
+    },
+    {
+      "id": "n-s1",
+      "label": "Strategy S1",
+      "kind": "contract"
+    },
+    {
+      "id": "n-s2",
+      "label": "Strategy S2",
+      "kind": "contract"
+    },
+    {
+      "id": "n-ext",
+      "label": "Venue E (external)",
+      "kind": "external_contract",
+      "in_scope": false
+    }
+  ],
+  "operations": [
+    {
+      "id": "o-dep",
+      "kind": "deposit",
+      "label": "Router.deposit",
+      "initiator": "n-alice",
+      "executor": "n-router",
+      "inputs": [
+        {
+          "id": "fl1",
+          "asset": "n-tok",
+          "from": "n-alice",
+          "to": "n-router",
+          "amount": {
+            "asset": "n-tok",
+            "unit": "decimal",
+            "value": "10"
+          },
+          "evidence": [
+            "x1"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "id": "fl2",
+          "asset": "n-rs",
+          "from": null,
+          "to": "n-alice",
+          "amount": {
+            "asset": "n-rs",
+            "unit": "decimal",
+            "value": "10"
+          },
+          "mechanism": "mint",
+          "evidence": [
+            "x1"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "x1"
+      ]
+    },
+    {
+      "id": "o-s1",
+      "kind": "allocate",
+      "label": "invest → S1",
+      "parent": "o-dep",
+      "order": 1,
+      "transaction": "same",
+      "executor": "n-router",
+      "inputs": [
+        {
+          "id": "fl3",
+          "asset": "n-tok",
+          "from": "n-router",
+          "to": "n-s1",
+          "amount": {
+            "asset": "n-tok",
+            "unit": "decimal",
+            "value": "6"
+          },
+          "evidence": [
+            "x1"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "x1"
+      ]
+    },
+    {
+      "id": "o-s2",
+      "kind": "allocate",
+      "label": "invest → S2",
+      "parent": "o-dep",
+      "order": 2,
+      "transaction": "same",
+      "executor": "n-router",
+      "inputs": [
+        {
+          "id": "fl4",
+          "asset": "n-tok",
+          "from": "n-router",
+          "to": "n-s2",
+          "amount": {
+            "asset": "n-tok",
+            "unit": "decimal",
+            "value": "4"
+          },
+          "evidence": [
+            "x1"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "x1"
+      ]
+    },
+    {
+      "id": "o-ext",
+      "kind": "deposit",
+      "label": "S2 → Venue E",
+      "executor": "n-s2",
+      "inputs": [
+        {
+          "id": "fl5",
+          "asset": "n-tok",
+          "from": "n-s2",
+          "to": "n-ext",
+          "amount": {
+            "asset": "n-tok",
+            "unit": "unknown"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "llm",
+        "verification": "pending"
+      }
+    },
+    {
+      "id": "o-reb",
+      "kind": "transfer",
+      "label": "Router.rebalance",
+      "initiator": "n-ops",
+      "executor": "n-router",
+      "inputs": [
+        {
+          "id": "fl6",
+          "asset": "n-tok",
+          "from": "n-s1",
+          "to": "n-s2",
+          "amount": {
+            "asset": "n-tok",
+            "unit": "unknown",
+            "expression": "amt"
+          },
+          "evidence": [
+            "x2"
+          ]
+        },
+        {
+          "id": "fl7",
+          "asset": "n-tok",
+          "from": "n-s2",
+          "to": "n-s1",
+          "amount": {
+            "asset": "n-tok",
+            "unit": "unknown",
+            "expression": "amt (reverse direction)"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "partially_supported"
+      },
+      "evidence": [
+        "x2"
+      ]
+    }
+  ],
+  "positions": [
+    {
+      "id": "p-a",
+      "holder": "n-alice",
+      "asset": "n-rs",
+      "kind": "share",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "x1"
+      ]
+    },
+    {
+      "id": "p-1",
+      "holder": "n-s1",
+      "asset": "n-tok",
+      "kind": "custody",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      }
+    },
+    {
+      "id": "p-2",
+      "holder": "n-s2",
+      "asset": "n-tok",
+      "kind": "custody",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      }
+    },
+    {
+      "id": "p-e",
+      "holder": "n-ext",
+      "asset": "n-tok",
+      "kind": "custody",
+      "status": {
+        "basis": "static",
+        "support": "llm",
+        "verification": "pending"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "kind": "claim",
+      "source": "p-a",
+      "target": "p-1",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "x1"
+      ]
+    },
+    {
+      "id": "r2",
+      "kind": "claim",
+      "source": "p-a",
+      "target": "p-2",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      }
+    },
+    {
+      "id": "r3",
+      "kind": "depends_on",
+      "source": "p-2",
+      "target": "n-ext",
+      "status": {
+        "basis": "static",
+        "support": "llm",
+        "verification": "pending"
+      }
+    },
+    {
+      "id": "r4",
+      "kind": "claim",
+      "source": "p-2",
+      "target": "p-e",
+      "status": {
+        "basis": "static",
+        "support": "llm",
+        "verification": "pending"
+      }
+    }
+  ],
+  "exits": [
+    {
+      "id": "x-a",
+      "position": "p-a",
+      "label": "Router.withdraw (not observed)",
+      "steps": [
+        {
+          "order": 1,
+          "operation": "o-dep",
+          "actor": "n-alice"
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "llm",
+        "verification": "pending",
+        "note": "Exit operation not present in the trace."
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "x1",
+      "kind": "trace",
+      "title": "Router deposit trace (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xfixture0000000000000000000000000000000000000000000000000000000001",
+        "block": 70,
+        "call_path": "Alice → Router.deposit → S1.invest / S2.invest"
+      }
+    },
+    {
+      "id": "x2",
+      "kind": "source",
+      "title": "Router.rebalance (snippet only)",
+      "synthetic": true,
+      "source": {
+        "file": "fixture/Router.sol",
+        "start_line": 40,
+        "end_line": 43,
+        "contract": "Router",
+        "function": "rebalance",
+        "snippet": "function rebalance(uint256 amt) external onlyOps {\n    s1.divest(amt);\n    s2.invest(amt);\n}"
+      }
+    }
+  ],
+  "sources": [],
+  "unresolved": [
+    {
+      "id": "u1",
+      "kind": "missing_exit",
+      "text": "No withdraw entrypoint was observed for rW shares.",
+      "subjects": [
+        "n-rs",
+        "p-a"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t1",
+      "question": "Which strategies back Alice's rW share?",
+      "focus": [
+        "p-a"
+      ],
+      "view": "holdings",
+      "answer": "Strategy S1 and Strategy S2; S2 further depends on Venue E."
+    }
+  ]
+}

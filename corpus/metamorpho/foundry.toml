@@ -1,0 +1,10 @@
+# Minimal build configuration for the pinned FluxScope snapshot of morpho-org/metamorpho.
+# Upstream: https://github.com/morpho-org/metamorpho @ f5faa9c21b1396c291b471a6a5ad9407d23486a9
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.21"
+evm_version = "paris"
+optimizer = true
+optimizer_runs = 999999

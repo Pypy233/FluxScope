@@ -1,0 +1,26 @@
+{
+  "schema": "fluxscope/analysis",
+  "schema_version": "0.1.0",
+  "meta": {
+    "id": "bad-schema",
+    "synthetic": true
+  },
+  "scope": {
+    "kind": "guesswork"
+  },
+  "assets": [
+    {
+      "id": "a1",
+      "label": "A",
+      "kind": "token",
+      "identity": {
+        "kind": "example"
+      },
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "maybe"
+      }
+    }
+  ]
+}

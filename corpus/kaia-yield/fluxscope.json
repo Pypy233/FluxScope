@@ -1,0 +1,179 @@
+{
+  "name": "Kaia yield aggregator (partial snapshot)",
+  "description": "Kaia-side vault stack of a yield aggregator: CooldownVault (two-step-withdrawal wrapper of the underlying, 1:1 shares, strategy predeposit debt) feeding a Yearn V2 vault whose CustomYearnStrategy deposits the underlying into CustomVault (ERC-4626), which allocates to registered CustomStrategy contracts. Partial snapshot (the local yield path only) pinned to a fixed commit; the Yearn V2 vault (Vyper), the router, health checks, external-assets providers and execution targets are outside the analysed scope.",
+  "repository": "https://github.com/superearn-io/superearn-core-public",
+  "commit": "ddbfd27e1fab5f7c3a759aca5a4565e22235c9b6",
+  "build": {
+    "framework": "foundry",
+    "target": "."
+  },
+  "instances": [
+    {
+      "id": "cooldown",
+      "contract": "CooldownVault",
+      "label": "CooldownVault",
+      "group": "stack",
+      "description": "User-entry vault: wraps the underlying 1:1 into cooldown shares; withdrawals are two-step (request, then claim after the cooldown)."
+    },
+    {
+      "id": "strategy",
+      "contract": "CustomYearnStrategy",
+      "label": "CustomYearnStrategy",
+      "group": "stack",
+      "description": "Yearn V2 strategy whose want is the CooldownVault share; invests the underlying in CustomVault."
+    },
+    {
+      "id": "customVault",
+      "contract": "CustomVault",
+      "label": "CustomVault",
+      "group": "stack",
+      "description": "ERC-4626 vault used only by CustomYearnStrategy; operators allocate its underlying to registered custom strategies."
+    },
+    {
+      "id": "customStrategy",
+      "contract": "CustomStrategy",
+      "label": "CustomStrategy",
+      "group": "stack",
+      "description": "Reference ICustomStrategy registered in CustomVault; its strategist executes allow-listed calls with the funds."
+    }
+  ],
+  "bindings": [
+    {
+      "instance": "strategy",
+      "variable": "cooldownVault",
+      "target": "cooldown",
+      "note": "BaseCooldownStrategy sets cooldownVault = want = vault.token(); the deployed Yearn vault's token is the CooldownVault."
+    },
+    {
+      "instance": "strategy",
+      "variable": "want",
+      "target": "cooldown",
+      "note": "BaseStrategy._initialize sets want = vault.token(); the deployed Yearn vault's token is the CooldownVault."
+    },
+    {
+      "instance": "strategy",
+      "variable": "customVault",
+      "target": "customVault",
+      "note": "Constructor argument _customVault."
+    },
+    {
+      "instance": "strategy",
+      "variable": "externalShareToken",
+      "target": "customVault",
+      "note": "BaseCooldownStrategy(_vault, _customVault, ...): the external share token is the CustomVault share."
+    },
+    {
+      "instance": "strategy",
+      "variable": "vault",
+      "external": {
+        "label": "Yearn V2 vault (Kaia)",
+        "kind": "external_contract",
+        "description": "Yearn V2 vault (Vyper) whose token is the CooldownVault share; not part of the repository."
+      },
+      "note": "Constructor argument _vault."
+    },
+    {
+      "instance": "customVault",
+      "variable": "customYearnStrategy",
+      "target": "strategy",
+      "note": "setCustomYearnStrategy(strategy) during deployment."
+    },
+    {
+      "instance": "customStrategy",
+      "variable": "remoteVault",
+      "target": "customVault",
+      "note": "On Kaia the custom strategy's remoteVault is the CustomVault (checked by CustomVault.addCustomStrategy)."
+    }
+  ],
+  "registries": [
+    {
+      "instance": "customVault",
+      "variable": "isCustomStrategy",
+      "members": [
+        "customStrategy"
+      ],
+      "note": "addCustomStrategy(customStrategy) during deployment."
+    },
+    {
+      "instance": "customVault",
+      "variable": "customStrategies",
+      "members": [
+        "customStrategy"
+      ],
+      "note": "addCustomStrategy(customStrategy) pushes it to the array summed by totalAssets()."
+    },
+    {
+      "instance": "cooldown",
+      "variable": "_strategiesSet",
+      "members": [
+        "strategy"
+      ],
+      "note": "addStrategy(CustomYearnStrategy) during deployment."
+    },
+    {
+      "instance": "cooldown",
+      "variable": "_authorizedAddresses",
+      "members": [
+        "strategy"
+      ],
+      "note": "addAuthorizedAddress for the router, the Yearn vault and the strategies; only the strategy is analysed."
+    }
+  ],
+  "identities": [
+    {
+      "same": [
+        "strategy.externalUnderlyingToken",
+        "cooldown._underlying",
+        "customVault._asset"
+      ],
+      "source": "code",
+      "note": "Constructors: CustomYearnStrategy passes CustomVault(_customVault).asset() as the external underlying and BaseCooldownStrategy requires it to equal cooldownVault.asset()."
+    }
+  ],
+  "assets": [
+    {
+      "expression": "cooldown",
+      "label": "cooldown share",
+      "description": "ERC-20 share implemented by CooldownVault (1:1 with the underlying); transfers only between authorized addresses."
+    },
+    {
+      "expression": "cooldown._underlying",
+      "label": "underlying (USDT)",
+      "description": "Token wrapped by the CooldownVault (USDT on Kaia)."
+    },
+    {
+      "expression": "customVault",
+      "label": "CustomVault share",
+      "description": "ERC-4626 share implemented by CustomVault."
+    }
+  ],
+  "groups": [
+    {
+      "id": "stack",
+      "label": "Kaia vault stack",
+      "members": [
+        "cooldown",
+        "strategy",
+        "customVault",
+        "customStrategy"
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "lib/openzeppelin-contracts-upgradeable-4.9.4",
+      "package": "@openzeppelin/contracts-upgradeable",
+      "version": "4.9.4"
+    },
+    {
+      "path": "lib/openzeppelin-contracts-5.3.0",
+      "package": "@openzeppelin/contracts",
+      "version": "5.3.0"
+    }
+  ],
+  "exclude_entrypoints": [],
+  "notes": [
+    "Only the four analysed contracts and their transitive imports are part of the snapshot (BUSL-1.1 / GPL-3.0 sources; recreate with scripts/fetch_snapshot.py).",
+    "The Yearn V2 vault is Vyper and not in the repository: its share token, report() accounting and user deposits are outside the analysed scope."
+  ]
+}

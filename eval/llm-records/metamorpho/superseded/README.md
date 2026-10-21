@@ -1,0 +1,3 @@
+Answers to the `semantic` requests made before the generic analyzer fixes of 2026-10-21 (SafeTransferLib and partial ERC-20 interfaces, inline transfer pairing, staking ledgers, external payouts, AccessControl roles and ERC-2771 senders, state-changing entry points, refinement of weak structural kinds). The facts in the requests changed, so they no longer match a request hash; kept as recorded model output: 48080d195ce0, 4c7b8b47b55c, 6a12af63feaa.
+
+Answers to the `semantic` requests made before the second set of analyzer changes of 2026-10-21 (namespaced storage, generic safe-transfer libraries, swap / merkle-claim rules, dependencies through the issuer); the requests' facts changed, so they no longer match a request hash: 0999762a2877, 2fb20d03b02f, 4a698854d05b.

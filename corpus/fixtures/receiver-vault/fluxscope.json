@@ -1,0 +1,23 @@
+{
+  "name": "Receiver vault (synthetic fixture)",
+  "description": "SYNTHETIC TEST FIXTURE: a vault with separate caller / receiver / owner roles, a keeper-only allocation into a tokenized strategy, and a lending pool that is only available as an interface.",
+  "build": {"framework": "foundry"},
+  "instances": [
+    {"id": "vault", "contract": "Vault", "label": "Vault", "group": "system"},
+    {"id": "strategy", "contract": "Strategy", "label": "Strategy", "group": "system"}
+  ],
+  "bindings": [
+    {"instance": "vault", "variable": "strategy", "target": "strategy"},
+    {"instance": "strategy", "variable": "vault", "target": "vault"}
+  ],
+  "identities": [
+    {"same": ["vault.asset", "strategy.asset"], "source": "deployment", "note": "Both constructors receive the same token address."}
+  ],
+  "assets": [
+    {"expression": "vault.asset", "label": "USDT (example label)", "symbol": "USDT"},
+    {"expression": "vault", "label": "vU (vault share)", "symbol": "vU"},
+    {"expression": "strategy", "label": "sU (strategy share)", "symbol": "sU"}
+  ],
+  "groups": [{"id": "system", "label": "Fixture system", "members": ["vault", "strategy"]}],
+  "notes": ["Synthetic fixture used by the FluxScope test-suite."]
+}

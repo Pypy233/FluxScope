@@ -1,0 +1,11 @@
+# Generated files: collapsed in diffs and excluded from language statistics
+dist/** linguist-generated=true
+schema/*.schema.json linguist-generated=true
+eval/llm-records/** linguist-generated=true
+eval/results/** linguist-generated=true
+tests/fixtures/beefy-erc4626.result.json linguist-generated=true
+# Third-party Solidity used as analysis input
+corpus/** linguist-vendored=true
+corpus/fixtures/receiver-vault/** linguist-vendored=false
+# keep third-party files byte-identical (two upstream files use CRLF)
+corpus/**/*.sol -text

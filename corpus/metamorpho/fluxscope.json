@@ -1,0 +1,24 @@
+{
+  "name": "MetaMorpho vault (Morpho Blue allocator)",
+  "description": "MetaMorpho: an ERC-4626 vault that supplies its asset to Morpho Blue lending markets in a curated supply queue and withdraws through a withdraw queue; fees are minted as shares. Held-out case: analysed without analyzer changes. Morpho Blue itself is outside the analysed scope (interface only).",
+  "repository": "https://github.com/morpho-org/metamorpho",
+  "commit": "f5faa9c21b1396c291b471a6a5ad9407d23486a9",
+  "build": {"framework": "foundry", "target": "."},
+  "instances": [
+    {"id": "vault", "contract": "MetaMorpho", "label": "MetaMorpho", "group": "metamorpho",
+     "description": "ERC-4626 vault allocating to Morpho Blue markets."}
+  ],
+  "bindings": [],
+  "assets": [
+    {"expression": "vault", "label": "MetaMorpho share"},
+    {"expression": "vault._asset", "label": "vault asset", "description": "ERC4626 asset passed to the constructor."}
+  ],
+  "groups": [{"id": "metamorpho", "label": "MetaMorpho", "members": ["vault"]}],
+  "dependencies": [
+    {"path": "lib/openzeppelin-contracts", "package": "@openzeppelin/contracts", "version": "5.0.0"}
+  ],
+  "notes": [
+    "Only MetaMorpho.sol and its transitive imports are part of the snapshot (recreate with scripts/fetch_snapshot.py corpus/metamorpho).",
+    "MORPHO is an immutable set in the constructor; no deployment is configured, so it stays an external contract identified by the state variable."
+  ]
+}

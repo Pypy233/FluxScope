@@ -1,0 +1,5105 @@
+{
+ "truth": "eval/kaia-yield.truth.json",
+ "project": "corpus/kaia-yield",
+ "configs": {
+  "rules": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 40,
+    "by_support": {
+     "rule": [
+      40,
+      40
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations_missing": [],
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recover()": {
+     "kind": "transfer",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "other",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "transfer",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "other",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "other",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "other",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    }
+   },
+   "claims": {
+    "tp": 5,
+    "fp": 3,
+    "fn": 3,
+    "precision": 0.625,
+    "recall": 0.625,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('any:cvshare', 'customVault:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:asset:customStrategy.withdraw(address_uint256).token')",
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 6,
+    "fp": 4,
+    "fn": 2,
+    "precision": 0.6,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('strategy', 'customStrategy')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 7,
+    "fp": 3,
+    "fn": 1,
+    "precision": 0.7,
+    "recall": 0.875,
+    "missed": [
+     "('authorized', 'strategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')"
+    ]
+   },
+   "exits": {
+    "tp": 8,
+    "fp": 3,
+    "fn": 4,
+    "precision": 0.727,
+    "recall": 0.667,
+    "missed": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "extra": [
+     "('any:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('any:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": null,
+    "recall": null,
+    "missed": [],
+    "extra": [],
+    "_truth": []
+   }
+  },
+  "llm-only": {
+   "operation_kind": {
+    "accuracy": 0.95,
+    "n": 40
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "other",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.recover()": {
+     "kind": "other",
+     "caller": "cv_governance",
+     "kind_ok": false,
+     "caller_ok": true
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "harvest",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "other",
+     "caller": "st_governance",
+     "kind_ok": false,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "redeem",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.857,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 0,
+    "fp": 15,
+    "fn": 8,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cooldown:claim:predeposit', 'strategy:debt:predeposit')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:claim:predeposit')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')",
+     "('yvault:claim:strategy', 'strategy:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 0,
+    "fp": 7,
+    "fn": 8,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('authorized', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'customStrategy')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')"
+    ],
+    "extra": [
+     "('authorized', 'cooldown')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('receiver', 'cooldown')",
+     "('strategy', 'cooldown')",
+     "('strategy', 'customVault')",
+     "('yvault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 12,
+    "fp": 30,
+    "fn": 0,
+    "precision": 0.286,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveShortfall(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')",
+     "('cooldown:usdt', 'CooldownVault.claim(uint256,uint256)')",
+     "('cooldown:usdt', 'CooldownVault.instantRedeem(uint256)')",
+     "('cooldown:usdt', 'CooldownVault.recover()')",
+     "('customStrategy:usdt', 'CustomStrategy.submitExecution(address[],bytes[])')",
+     "('customStrategy:usdt', 'CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)')",
+     "('customStrategy:usdt', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:usdt', 'CustomVault.depositToCustomStrategy(address,address,uint256)')",
+     "('customVault:usdt', 'CustomVault.redeem(uint256,address,address)')",
+     "('customVault:usdt', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('strategy:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('strategy:cv', 'CustomYearnStrategy.harvest()')",
+     "('strategy:cv', 'CustomYearnStrategy.migrate(address)')",
+     "('strategy:cv', 'CustomYearnStrategy.tend()')",
+     "('strategy:cv', 'CustomYearnStrategy.withdraw(uint256)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.migrate(address)')",
+     "('strategy:debt:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('strategy:debt:predeposit', 'CooldownVault.retrieveShortfall(uint256)')",
+     "('strategy:debt:predeposit', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('strategy:debt:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')",
+     "('strategy:usdt', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('strategy:usdt', 'CustomYearnStrategy.harvest()')",
+     "('strategy:usdt', 'CustomYearnStrategy.migrate(address)')",
+     "('strategy:usdt', 'CustomYearnStrategy.repayPredepositDebt(uint256)')",
+     "('strategy:usdt', 'CustomYearnStrategy.tend()')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.harvest()')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.migrate(address)')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 4,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('claim:customStrategy', 'usdt')",
+     "('claim:predeposit', 'debt:predeposit')",
+     "('claim:strategy', 'cv')",
+     "('claim:strategy', 'cvshare')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "008eb9b4edc3d2ada67ccdb0c3d651b11777625bde9e6123b9cd51098c2d6f61",
+    "sample": 0,
+    "response_sha256": "c07b2144daafd9000137e9bd3837211bcd061ece0c6a076c41ed58f9930c3538",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "llm-only@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 40
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "mint",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.recover()": {
+     "kind": "transfer",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "harvest",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "transfer",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.857,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 0,
+    "fp": 14,
+    "fn": 8,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:claim:predeposit')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')",
+     "('yvault:claim:strategy', 'strategy:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 0,
+    "fp": 7,
+    "fn": 8,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('authorized', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'customStrategy')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')"
+    ],
+    "extra": [
+     "('authorized', 'cooldown')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('receiver', 'cooldown')",
+     "('strategy', 'cooldown')",
+     "('strategy', 'customVault')",
+     "('yvault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 12,
+    "fp": 6,
+    "fn": 0,
+    "precision": 0.667,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveShortfall(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')",
+     "('strategy:cv', 'CustomYearnStrategy.harvest()')",
+     "('strategy:cv', 'CustomYearnStrategy.tend()')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.harvest()')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 7,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "(\"CustomVault.totalAssets() adds each CustomStrategy's provider-reported totalAssets, but CustomStrategy.withdraw only transfers the strategy's actual token balance; whether the reported value is redeemable by CustomVault cannot be settled from the code.\", 'claim:customStrategy')",
+     "(\"CustomYearnStrategy assumes want = yVault.token() is this CooldownVault (cooldownVault = ICooldownVault(address(want))); the code does not verify that the Yearn vault's token is this CooldownVault rather than another ICooldownVault-compatible contract.\", 'cv')",
+     "('CustomStrategy.totalAssets() is whatever the governance-set ExternalAssetsProvider reports in denominationToken units; submitExecution can move or convert funds into other tokens or external positions, so the code cannot confirm that what CustomStrategy holds is actually usdt.', 'customStrategy:usdt')",
+     "('CustomVault restricts deposit/mint/withdraw/redeem to customYearnStrategy but leaves transfer/transferFrom unrestricted, so cvshare can end up with holders other than the strategy, who then cannot redeem directly; the set of cvshare holders is not settled by the code.', 'cvshare')",
+     "('CustomVault.customYearnStrategy is set by governance (setCustomYearnStrategy) or handed over by the current strategy (migrateCustomYearnStrategy); the code does not tie it to the CustomYearnStrategy instance whose customVault points at this CustomVault.', 'strategy')",
+     "('Whether the CustomYearnStrategy is a member of CooldownVault._strategiesSet (needed for predeposit, instantRedeem, retrieveShortfall) and whether the Yearn vault is in _authorizedAddresses is governance configuration, not enforced by code.', 'cv_strategy')",
+     "('cv', 'recoverClaimLoss() mints unbacked cv to governance, but _beforeTokenTransfer requires the recipient to be an authorized address; whether governance is an authorized holder, and therefore who holds these shares, is not settled by the code.')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "1193d8da07ea033a7e710563a631f4ef5b87f1e9e9a9c7a836f5b7f997156653",
+    "sample": 1,
+    "response_sha256": "f3a7f7b6ad79045cad18f6376b03c071a29231e4555f163f5378e9f708d308e3",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "llm-only@3": {
+   "operation_kind": {
+    "accuracy": 0.95,
+    "n": 40
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.recover()": {
+     "kind": "other",
+     "caller": "cv_governance",
+     "kind_ok": false,
+     "caller_ok": true
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "harvest",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "other",
+     "caller": "st_governance",
+     "kind_ok": false,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 1,
+    "fn": 2,
+    "precision": 0.857,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 0,
+    "fp": 14,
+    "fn": 8,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:claim:predeposit')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')",
+     "('yvault:claim:strategy', 'strategy:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 0,
+    "fp": 7,
+    "fn": 8,
+    "precision": 0.0,
+    "recall": 0.0,
+    "missed": [
+     "('authorized', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'customStrategy')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')"
+    ],
+    "extra": [
+     "('authorized', 'cooldown')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('receiver', 'cooldown')",
+     "('strategy', 'cooldown')",
+     "('strategy', 'customVault')",
+     "('yvault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 12,
+    "fp": 6,
+    "fn": 0,
+    "precision": 0.667,
+    "recall": 1.0,
+    "missed": [],
+    "extra": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveShortfall(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')",
+     "('strategy:cv', 'CustomYearnStrategy.harvest()')",
+     "('strategy:cv', 'CustomYearnStrategy.tend()')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.harvest()')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('CustomVault.customYearnStrategy', 'strategy')",
+     "('claim:customStrategy', 'customStrategy:usdt')",
+     "('cv', 'yearn_vault.token()')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "baseline",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "baseline-v1",
+    "request_sha256": "7b009a731a7a052b322a809efecdcccd4818f00c0dfa2dd6eaef670e7bf29dae",
+    "sample": 2,
+    "response_sha256": "32202640cd16acefe5f274baeeec88ef25a0b66b42d7f3646fd491cc58f1d8b1",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    }
+   }
+  },
+  "combined": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 40,
+    "by_support": {
+     "rule": [
+      36,
+      36
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations_missing": [],
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recover()": {
+     "kind": "transfer",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "transfer",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 5,
+    "fn": 2,
+    "precision": 0.545,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('any:cv', 'cooldown:usdt')",
+     "('any:cvshare', 'customVault:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:asset:customStrategy.withdraw(address_uint256).token')",
+     "('cv_governance:cv', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 6,
+    "fp": 11,
+    "fn": 2,
+    "precision": 0.353,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('customVault:claim:customStrategy', 'targets')",
+     "('cvshare', 'customStrategy')",
+     "('cvshare', 'provider')",
+     "('receiver:request', 'strategy:debt:predeposit')",
+     "('strategy', 'customStrategy')",
+     "('yvault:claim:strategy', 'cvshare')",
+     "('yvault:claim:strategy', 'debt:predeposit')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 7,
+    "fp": 10,
+    "fn": 1,
+    "precision": 0.412,
+    "recall": 0.875,
+    "missed": [
+     "('authorized', 'strategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('customVault', 'targets')",
+     "('cvshare', 'customStrategy')",
+     "('cvshare', 'provider')",
+     "('receiver', 'strategy')",
+     "('yvault', 'cvshare')",
+     "('yvault', 'debt')"
+    ]
+   },
+   "exits": {
+    "tp": 8,
+    "fp": 3,
+    "fn": 4,
+    "precision": 0.727,
+    "recall": 0.667,
+    "missed": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "extra": [
+     "('any:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('any:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')",
+     "('asset:customStrategy.deposit(address_uint256).token', 'usdt')",
+     "('asset:customStrategy.withdraw(address_uint256).token', 'usdt')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "4855add944fc8ccb48f355cf88641cebbef3845f0fbf9daee5899d479820c738",
+    "sample": 0,
+    "response_sha256": "0adf7f6ce756623ea6fe4e58fd08bcb15d95da7ecbfbf0acb07c72a64faba4d8",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 70,
+    "accepted": 70,
+    "rejected": [],
+    "context_chars": 399612
+   }
+  },
+  "combined+checked": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 40,
+    "by_support": {
+     "rule": [
+      36,
+      36
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations_missing": [],
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recover()": {
+     "kind": "transfer",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "transfer",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 5,
+    "fn": 2,
+    "precision": 0.545,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('any:cv', 'cooldown:usdt')",
+     "('any:cvshare', 'customVault:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:asset:customStrategy.withdraw(address_uint256).token')",
+     "('cv_governance:cv', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 6,
+    "fp": 7,
+    "fn": 2,
+    "precision": 0.462,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cvshare', 'customStrategy')",
+     "('cvshare', 'provider')",
+     "('strategy', 'customStrategy')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 7,
+    "fp": 6,
+    "fn": 1,
+    "precision": 0.538,
+    "recall": 0.875,
+    "missed": [
+     "('authorized', 'strategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cvshare', 'customStrategy')",
+     "('cvshare', 'provider')"
+    ]
+   },
+   "exits": {
+    "tp": 8,
+    "fp": 3,
+    "fn": 4,
+    "precision": 0.727,
+    "recall": 0.667,
+    "missed": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "extra": [
+     "('any:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('any:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "4855add944fc8ccb48f355cf88641cebbef3845f0fbf9daee5899d479820c738",
+    "sample": 0,
+    "response_sha256": "0adf7f6ce756623ea6fe4e58fd08bcb15d95da7ecbfbf0acb07c72a64faba4d8",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 70,
+    "accepted": 70,
+    "rejected": [],
+    "context_chars": 399612
+   }
+  },
+  "combined@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 40,
+    "by_support": {
+     "rule": [
+      36,
+      36
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations_missing": [],
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recover()": {
+     "kind": "transfer",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "transfer",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 4,
+    "fn": 2,
+    "precision": 0.6,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('any:cvshare', 'customVault:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:asset:customStrategy.withdraw(address_uint256).token')",
+     "('cv_governance:cv', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 6,
+    "fp": 10,
+    "fn": 2,
+    "precision": 0.375,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('asset:strategy', 'cvshare')",
+     "('asset:strategy', 'debt:predeposit')",
+     "('cooldown', 'customStrategy')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cv', 'debt:predeposit')",
+     "('cvshare', 'provider')",
+     "('receiver:request', 'cooldown:claim:predeposit')",
+     "('strategy', 'customStrategy')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 7,
+    "fp": 9,
+    "fn": 1,
+    "precision": 0.438,
+    "recall": 0.875,
+    "missed": [
+     "('authorized', 'strategy')"
+    ],
+    "extra": [
+     "('asset', 'cvshare')",
+     "('asset', 'debt')",
+     "('cooldown', 'customStrategy')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cv', 'debt')",
+     "('cvshare', 'provider')",
+     "('receiver', 'cooldown')"
+    ]
+   },
+   "exits": {
+    "tp": 8,
+    "fp": 3,
+    "fn": 4,
+    "precision": 0.727,
+    "recall": 0.667,
+    "missed": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "extra": [
+     "('any:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('any:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')",
+     "('asset:customStrategy.deposit(address_uint256).token', 'usdt')",
+     "('asset:customStrategy.withdraw(address_uint256).token', 'usdt')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "16b0c8d3de4787eccdb4bf39d1869d4067f7e470aa5120895e7120c389f9949c",
+    "sample": 1,
+    "response_sha256": "7f378b7044a0f1dfe076d07596ddfdb5d7a4fd1e93103d18961114503ca98668",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 64,
+    "accepted": 64,
+    "rejected": [],
+    "context_chars": 399612
+   }
+  },
+  "combined+checked@2": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 40,
+    "by_support": {
+     "rule": [
+      36,
+      36
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations_missing": [],
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recover()": {
+     "kind": "transfer",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "transfer",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 4,
+    "fn": 2,
+    "precision": 0.6,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('any:cvshare', 'customVault:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:asset:customStrategy.withdraw(address_uint256).token')",
+     "('cv_governance:cv', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 6,
+    "fp": 9,
+    "fn": 2,
+    "precision": 0.4,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('asset:strategy', 'cvshare')",
+     "('asset:strategy', 'debt:predeposit')",
+     "('cooldown', 'customStrategy')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cvshare', 'provider')",
+     "('receiver:request', 'cooldown:claim:predeposit')",
+     "('strategy', 'customStrategy')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 7,
+    "fp": 8,
+    "fn": 1,
+    "precision": 0.467,
+    "recall": 0.875,
+    "missed": [
+     "('authorized', 'strategy')"
+    ],
+    "extra": [
+     "('asset', 'cvshare')",
+     "('asset', 'debt')",
+     "('cooldown', 'customStrategy')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cvshare', 'provider')",
+     "('receiver', 'cooldown')"
+    ]
+   },
+   "exits": {
+    "tp": 8,
+    "fp": 3,
+    "fn": 4,
+    "precision": 0.727,
+    "recall": 0.667,
+    "missed": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "extra": [
+     "('any:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('any:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "16b0c8d3de4787eccdb4bf39d1869d4067f7e470aa5120895e7120c389f9949c",
+    "sample": 1,
+    "response_sha256": "7f378b7044a0f1dfe076d07596ddfdb5d7a4fd1e93103d18961114503ca98668",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 64,
+    "accepted": 64,
+    "rejected": [],
+    "context_chars": 399612
+   }
+  },
+  "combined@3": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 40,
+    "by_support": {
+     "rule": [
+      36,
+      36
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations_missing": [],
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recover()": {
+     "kind": "transfer",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "transfer",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 3,
+    "fn": 2,
+    "precision": 0.667,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('any:cvshare', 'customVault:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:asset:customStrategy.withdraw(address_uint256).token')",
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 6,
+    "fp": 10,
+    "fn": 2,
+    "precision": 0.375,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cvshare', 'provider')",
+     "('receiver:request', 'strategy:debt:predeposit')",
+     "('strategy', 'customStrategy')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 7,
+    "fp": 8,
+    "fn": 1,
+    "precision": 0.467,
+    "recall": 0.875,
+    "missed": [
+     "('authorized', 'strategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cvshare', 'provider')",
+     "('receiver', 'strategy')",
+     "('strategy', 'customVault')",
+     "('yvault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 8,
+    "fp": 3,
+    "fn": 4,
+    "precision": 0.727,
+    "recall": 0.667,
+    "missed": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "extra": [
+     "('any:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('any:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 3,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')",
+     "('asset:customStrategy.deposit(address_uint256).token', 'usdt')",
+     "('asset:customStrategy.withdraw(address_uint256).token', 'usdt')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "ff4ce44dff0b4c6a9f59acb42ae745c7183f2ce6ff7192a45f79df92a28db46b",
+    "sample": 2,
+    "response_sha256": "b07ed0b67fcc9b8fd2c602d795cc9628c21b0a0ba5fdcb710f0c7b897ada25e0",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 65,
+    "accepted": 65,
+    "rejected": [],
+    "context_chars": 399612
+   }
+  },
+  "combined+checked@3": {
+   "operation_kind": {
+    "accuracy": 1.0,
+    "n": 40,
+    "by_support": {
+     "rule": [
+      36,
+      36
+     ],
+     "llm": [
+      4,
+      4
+     ]
+    }
+   },
+   "caller": {
+    "accuracy": 0.975,
+    "n": 40
+   },
+   "operations_missing": [],
+   "operations": {
+    "CooldownVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.depositFor(address,uint256)": {
+     "kind": "deposit",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.withdrawTo(address,uint256)": {
+     "kind": "redeem",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.claim(uint256,uint256)": {
+     "kind": "claim",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.updateRedeemReceiver(uint256,address)": {
+     "kind": "transfer",
+     "caller": "request_receiver",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.predeposit(uint256)": {
+     "kind": "borrow",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cv_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.instantRedeem(uint256)": {
+     "kind": "redeem",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.retrieveShortfall(uint256)": {
+     "kind": "repay",
+     "caller": "cv_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.writeOffPredepositDebt(uint256)": {
+     "kind": "other",
+     "caller": "request_strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recover()": {
+     "kind": "transfer",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.recoverClaimLoss()": {
+     "kind": "mint",
+     "caller": "cv_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "authorized",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CooldownVault.transferFrom(address,address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": false,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.harvest()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.tend()": {
+     "kind": "allocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdraw(uint256)": {
+     "kind": "withdraw",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.migrate(address)": {
+     "kind": "transfer",
+     "caller": "yearn_vault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": "transfer",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.repayPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "cooldown",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.withdrawFromCustomVault(uint256)": {
+     "kind": "deallocate",
+     "caller": "st_keepers",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)": {
+     "kind": "repay",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomYearnStrategy.acceptExecution()": {
+     "kind": "call",
+     "caller": "st_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomYearnStrategy.setEmergencyExit()": {
+     "kind": "other",
+     "caller": "st_emergency",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.deposit(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.mint(uint256,address)": {
+     "kind": "deposit",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdraw(uint256,address,address)": {
+     "kind": "withdraw",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.redeem(uint256,address,address)": {
+     "kind": "redeem",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.depositToCustomStrategy(address,address,uint256)": {
+     "kind": "allocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.withdrawFromCustomStrategy(address,address,uint256)": {
+     "kind": "deallocate",
+     "caller": "cvault_operator",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.migrateCustomYearnStrategy(address)": {
+     "kind": "other",
+     "caller": "strategy",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.addCustomStrategy(address)": {
+     "kind": "other",
+     "caller": "cvault_governance",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomVault.transfer(address,uint256)": {
+     "kind": "transfer",
+     "caller": "any",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.deposit(address,uint256)": {
+     "kind": "deposit",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.withdraw(address,uint256)": {
+     "kind": "withdraw",
+     "caller": "customVault",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "rule"
+    },
+    "CustomStrategy.submitExecution(address[],bytes[])": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    },
+    "CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)": {
+     "kind": "call",
+     "caller": "cs_strategist",
+     "kind_ok": true,
+     "caller_ok": true,
+     "support": "llm"
+    }
+   },
+   "claims": {
+    "tp": 6,
+    "fp": 3,
+    "fn": 2,
+    "precision": 0.667,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')"
+    ],
+    "extra": [
+     "('any:cvshare', 'customVault:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:asset:customStrategy.withdraw(address_uint256).token')",
+     "('strategy:cv', 'cooldown:usdt')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')"
+    ]
+   },
+   "dependencies": {
+    "tp": 6,
+    "fp": 9,
+    "fn": 2,
+    "precision": 0.4,
+    "recall": 0.75,
+    "missed": [
+     "('authorized:cv', 'strategy')",
+     "('strategy:cvshare', 'customStrategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cvshare', 'provider')",
+     "('strategy', 'customStrategy')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'strategy')",
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')",
+     "('strategy:cvshare', 'customStrategy')"
+    ]
+   },
+   "dependencies_relaxed": {
+    "tp": 7,
+    "fp": 7,
+    "fn": 1,
+    "precision": 0.5,
+    "recall": 0.875,
+    "missed": [
+     "('authorized', 'strategy')"
+    ],
+    "extra": [
+     "('cooldown', 'customStrategy')",
+     "('cooldown', 'strategy')",
+     "('customVault', 'customStrategy')",
+     "('customVault', 'provider')",
+     "('cvshare', 'provider')",
+     "('strategy', 'customVault')",
+     "('yvault', 'strategy')"
+    ]
+   },
+   "exits": {
+    "tp": 8,
+    "fp": 3,
+    "fn": 4,
+    "precision": 0.727,
+    "recall": 0.667,
+    "missed": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "extra": [
+     "('any:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('any:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')"
+    ],
+    "_truth": [
+     "('authorized:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('authorized:cv', 'CooldownVault.withdrawTo(address,uint256)')",
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('receiver:request', 'CooldownVault.claim(uint256,uint256)')",
+     "('strategy:cv', 'CooldownVault.instantRedeem(uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.withdrawFromCustomVault(uint256)')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.withdraw(uint256)')"
+    ]
+   },
+   "identity_questions": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 0,
+    "precision": 0.0,
+    "recall": null,
+    "missed": [],
+    "extra": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')"
+    ],
+    "_truth": []
+   },
+   "llm_call": {
+    "call_id": "semantic",
+    "provider": "exchange",
+    "model": "claude-opus-5-5",
+    "prompt_version": "semantic-v1",
+    "request_sha256": "ff4ce44dff0b4c6a9f59acb42ae745c7183f2ce6ff7192a45f79df92a28db46b",
+    "sample": 2,
+    "response_sha256": "b07ed0b67fcc9b8fd2c602d795cc9628c21b0a0ba5fdcb710f0c7b897ada25e0",
+    "cached": true,
+    "seconds": 0.0,
+    "usage": {},
+    "stop_reason": "answered",
+    "answered_by": {
+     "channel": "claude-code-subagent",
+     "model": "claude-opus-5-5"
+    },
+    "proposals": 65,
+    "accepted": 65,
+    "rejected": [],
+    "context_chars": 399612
+   }
+  }
+ },
+ "contribution": {
+  "llm-only": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cooldown:claim:predeposit', 'strategy:debt:predeposit')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:claim:predeposit')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')",
+     "('yvault:claim:strategy', 'strategy:usdt')"
+    ],
+    "lost_correct": [
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')"
+    ]
+   },
+   "exits": {
+    "added_correct": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "added_wrong": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveShortfall(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('cooldown:usdt', 'CooldownVault.claim(uint256,uint256)')",
+     "('cooldown:usdt', 'CooldownVault.instantRedeem(uint256)')",
+     "('cooldown:usdt', 'CooldownVault.recover()')",
+     "('customStrategy:usdt', 'CustomStrategy.submitExecution(address[],bytes[])')",
+     "('customStrategy:usdt', 'CustomStrategy.submitExecutionWithExpectedBalance(address[],bytes[],uint256)')",
+     "('customStrategy:usdt', 'CustomStrategy.withdraw(address,uint256)')",
+     "('customVault:usdt', 'CustomVault.depositToCustomStrategy(address,address,uint256)')",
+     "('customVault:usdt', 'CustomVault.redeem(uint256,address,address)')",
+     "('customVault:usdt', 'CustomVault.withdraw(uint256,address,address)')",
+     "('strategy:cv', 'CooldownVault.redeem(uint256,address,address)')",
+     "('strategy:cv', 'CooldownVault.withdraw(uint256,address,address)')",
+     "('strategy:cv', 'CustomYearnStrategy.harvest()')",
+     "('strategy:cv', 'CustomYearnStrategy.migrate(address)')",
+     "('strategy:cv', 'CustomYearnStrategy.tend()')",
+     "('strategy:cv', 'CustomYearnStrategy.withdraw(uint256)')",
+     "('strategy:cvshare', 'CustomYearnStrategy.migrate(address)')",
+     "('strategy:debt:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('strategy:debt:predeposit', 'CooldownVault.retrieveShortfall(uint256)')",
+     "('strategy:debt:predeposit', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('strategy:debt:predeposit', 'CustomYearnStrategy.repayPredepositDebt(uint256)')",
+     "('strategy:usdt', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('strategy:usdt', 'CustomYearnStrategy.harvest()')",
+     "('strategy:usdt', 'CustomYearnStrategy.migrate(address)')",
+     "('strategy:usdt', 'CustomYearnStrategy.repayPredepositDebt(uint256)')",
+     "('strategy:usdt', 'CustomYearnStrategy.tend()')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.harvest()')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.migrate(address)')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('claim:customStrategy', 'usdt')",
+     "('claim:predeposit', 'debt:predeposit')",
+     "('claim:strategy', 'cv')",
+     "('claim:strategy', 'cvshare')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {
+    "CooldownVault.recover()": {
+     "kind": {
+      "rules": "transfer",
+      "this": "other",
+      "now_correct": false
+     }
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": {
+      "rules": "transfer",
+      "this": "other",
+      "now_correct": false
+     }
+    }
+   }
+  },
+  "llm-only@2": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:claim:predeposit')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')",
+     "('yvault:claim:strategy', 'strategy:usdt')"
+    ],
+    "lost_correct": [
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')"
+    ]
+   },
+   "exits": {
+    "added_correct": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "added_wrong": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveShortfall(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('strategy:cv', 'CustomYearnStrategy.harvest()')",
+     "('strategy:cv', 'CustomYearnStrategy.tend()')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.harvest()')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "(\"CustomVault.totalAssets() adds each CustomStrategy's provider-reported totalAssets, but CustomStrategy.withdraw only transfers the strategy's actual token balance; whether the reported value is redeemable by CustomVault cannot be settled from the code.\", 'claim:customStrategy')",
+     "(\"CustomYearnStrategy assumes want = yVault.token() is this CooldownVault (cooldownVault = ICooldownVault(address(want))); the code does not verify that the Yearn vault's token is this CooldownVault rather than another ICooldownVault-compatible contract.\", 'cv')",
+     "('CustomStrategy.totalAssets() is whatever the governance-set ExternalAssetsProvider reports in denominationToken units; submitExecution can move or convert funds into other tokens or external positions, so the code cannot confirm that what CustomStrategy holds is actually usdt.', 'customStrategy:usdt')",
+     "('CustomVault restricts deposit/mint/withdraw/redeem to customYearnStrategy but leaves transfer/transferFrom unrestricted, so cvshare can end up with holders other than the strategy, who then cannot redeem directly; the set of cvshare holders is not settled by the code.', 'cvshare')",
+     "('CustomVault.customYearnStrategy is set by governance (setCustomYearnStrategy) or handed over by the current strategy (migrateCustomYearnStrategy); the code does not tie it to the CustomYearnStrategy instance whose customVault points at this CustomVault.', 'strategy')",
+     "('Whether the CustomYearnStrategy is a member of CooldownVault._strategiesSet (needed for predeposit, instantRedeem, retrieveShortfall) and whether the Yearn vault is in _authorizedAddresses is governance configuration, not enforced by code.', 'cv_strategy')",
+     "('cv', 'recoverClaimLoss() mints unbacked cv to governance, but _beforeTokenTransfer requires the recipient to be an authorized address; whether governance is an authorized holder, and therefore who holds these shares, is not settled by the code.')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "llm-only@3": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('authorized:cv', 'cooldown:claim:predeposit')",
+     "('authorized:cv', 'cooldown:usdt')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cooldown:claim:predeposit', 'strategy:usdt')",
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')",
+     "('receiver:request', 'cooldown:claim:predeposit')",
+     "('receiver:request', 'cooldown:usdt')",
+     "('strategy:cv', 'cooldown:usdt')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('strategy:cvshare', 'customVault:usdt')",
+     "('yvault:claim:strategy', 'strategy:cv')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')",
+     "('yvault:claim:strategy', 'strategy:usdt')"
+    ],
+    "lost_correct": [
+     "('cooldown', 'healthcheck')",
+     "('customStrategy', 'provider')",
+     "('customStrategy', 'targets')",
+     "('strategy', 'healthcheck')",
+     "('strategy', 'targets')",
+     "('strategy', 'yvault')"
+    ]
+   },
+   "exits": {
+    "added_correct": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveDebt(uint256)')",
+     "('customVault:claim:customStrategy', 'CustomVault.withdrawFromCustomStrategy(address,address,uint256)')",
+     "('strategy:cvshare', 'CustomVault.redeem(uint256,address,address)')",
+     "('strategy:cvshare', 'CustomVault.withdraw(uint256,address,address)')"
+    ],
+    "added_wrong": [
+     "('cooldown:claim:predeposit', 'CooldownVault.retrieveShortfall(uint256)')",
+     "('cooldown:claim:predeposit', 'CustomYearnStrategy.emergencyRepayRemainingPredepositDebt(uint256)')",
+     "('strategy:cv', 'CustomYearnStrategy.harvest()')",
+     "('strategy:cv', 'CustomYearnStrategy.tend()')",
+     "('yvault:claim:strategy', 'CustomYearnStrategy.harvest()')"
+    ],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('CustomVault.customYearnStrategy', 'strategy')",
+     "('claim:customStrategy', 'customStrategy:usdt')",
+     "('cv', 'yearn_vault.token()')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {
+    "CooldownVault.recover()": {
+     "kind": {
+      "rules": "transfer",
+      "this": "other",
+      "now_correct": false
+     }
+    },
+    "CustomYearnStrategy.sweep(address)": {
+     "kind": {
+      "rules": "transfer",
+      "this": "other",
+      "now_correct": false
+     }
+    }
+   }
+  },
+  "combined": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [
+     "('any:cv', 'cooldown:usdt')",
+     "('cv_governance:cv', 'cooldown:usdt')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('customVault:claim:customStrategy', 'targets')",
+     "('cvshare', 'customStrategy')",
+     "('cvshare', 'provider')",
+     "('receiver:request', 'strategy:debt:predeposit')",
+     "('yvault:claim:strategy', 'cvshare')",
+     "('yvault:claim:strategy', 'debt:predeposit')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')",
+     "('asset:customStrategy.deposit(address_uint256).token', 'usdt')",
+     "('asset:customStrategy.withdraw(address_uint256).token', 'usdt')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined+checked": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [
+     "('any:cv', 'cooldown:usdt')",
+     "('cv_governance:cv', 'cooldown:usdt')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cvshare', 'customStrategy')",
+     "('cvshare', 'provider')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined@2": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [
+     "('cv_governance:cv', 'cooldown:usdt')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:strategy', 'cvshare')",
+     "('asset:strategy', 'debt:predeposit')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cv', 'debt:predeposit')",
+     "('cvshare', 'provider')",
+     "('receiver:request', 'cooldown:claim:predeposit')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')",
+     "('asset:customStrategy.deposit(address_uint256).token', 'usdt')",
+     "('asset:customStrategy.withdraw(address_uint256).token', 'usdt')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined+checked@2": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [
+     "('cv_governance:cv', 'cooldown:usdt')"
+    ],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:strategy', 'cvshare')",
+     "('asset:strategy', 'debt:predeposit')",
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cvshare', 'provider')",
+     "('receiver:request', 'cooldown:claim:predeposit')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined@3": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cvshare', 'provider')",
+     "('receiver:request', 'strategy:debt:predeposit')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')",
+     "('asset:customStrategy.deposit(address_uint256).token', 'usdt')",
+     "('asset:customStrategy.withdraw(address_uint256).token', 'usdt')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  },
+  "combined+checked@3": {
+   "claims": {
+    "added_correct": [
+     "('customVault:claim:customStrategy', 'customStrategy:usdt')"
+    ],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "dependencies": {
+    "added_correct": [],
+    "added_wrong": [
+     "('cooldown:claim:predeposit', 'strategy:cvshare')",
+     "('cvshare', 'provider')",
+     "('strategy:cvshare', 'customVault:claim:customStrategy')",
+     "('yvault:claim:strategy', 'strategy:cvshare')",
+     "('yvault:claim:strategy', 'strategy:debt:predeposit')"
+    ],
+    "lost_correct": []
+   },
+   "exits": {
+    "added_correct": [],
+    "added_wrong": [],
+    "lost_correct": []
+   },
+   "identity_questions": {
+    "added_correct": [],
+    "added_wrong": [
+     "('asset:cooldown.strategyShortfall', 'debt:predeposit')"
+    ],
+    "lost_correct": []
+   },
+   "operations": {}
+  }
+ },
+ "summary": {
+  "rules": {
+   "runs": 1,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 1
+   },
+   "caller": {
+    "mean": 0.975,
+    "min": 0.975,
+    "max": 0.975,
+    "n": 1
+   },
+   "claims_precision": {
+    "mean": 0.625,
+    "min": 0.625,
+    "max": 0.625,
+    "n": 1
+   },
+   "claims_recall": {
+    "mean": 0.625,
+    "min": 0.625,
+    "max": 0.625,
+    "n": 1
+   },
+   "dependencies_precision": {
+    "mean": 0.6,
+    "min": 0.6,
+    "max": 0.6,
+    "n": 1
+   },
+   "dependencies_recall": {
+    "mean": 0.75,
+    "min": 0.75,
+    "max": 0.75,
+    "n": 1
+   },
+   "exits_precision": {
+    "mean": 0.727,
+    "min": 0.727,
+    "max": 0.727,
+    "n": 1
+   },
+   "exits_recall": {
+    "mean": 0.667,
+    "min": 0.667,
+    "max": 0.667,
+    "n": 1
+   },
+   "identity_questions_precision": {
+    "mean": null
+   },
+   "identity_questions_recall": {
+    "mean": null
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.7,
+    "min": 0.7,
+    "max": 0.7,
+    "n": 1
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 0.875,
+    "min": 0.875,
+    "max": 0.875,
+    "n": 1
+   }
+  },
+  "llm-only": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 0.967,
+    "min": 0.95,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 0.975,
+    "min": 0.975,
+    "max": 0.975,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 0.857,
+    "min": 0.857,
+    "max": 0.857,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 0.75,
+    "min": 0.75,
+    "max": 0.75,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 0.54,
+    "min": 0.286,
+    "max": 0.667,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": null
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   }
+  },
+  "combined": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 0.975,
+    "min": 0.975,
+    "max": 0.975,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 0.604,
+    "min": 0.545,
+    "max": 0.667,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 0.75,
+    "min": 0.75,
+    "max": 0.75,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 0.368,
+    "min": 0.353,
+    "max": 0.375,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 0.75,
+    "min": 0.75,
+    "max": 0.75,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 0.727,
+    "min": 0.727,
+    "max": 0.727,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 0.667,
+    "min": 0.667,
+    "max": 0.667,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": null
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.439,
+    "min": 0.412,
+    "max": 0.467,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 0.875,
+    "min": 0.875,
+    "max": 0.875,
+    "n": 3
+   }
+  },
+  "combined+checked": {
+   "runs": 3,
+   "op_kind": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "n": 3
+   },
+   "caller": {
+    "mean": 0.975,
+    "min": 0.975,
+    "max": 0.975,
+    "n": 3
+   },
+   "claims_precision": {
+    "mean": 0.604,
+    "min": 0.545,
+    "max": 0.667,
+    "n": 3
+   },
+   "claims_recall": {
+    "mean": 0.75,
+    "min": 0.75,
+    "max": 0.75,
+    "n": 3
+   },
+   "dependencies_precision": {
+    "mean": 0.421,
+    "min": 0.4,
+    "max": 0.462,
+    "n": 3
+   },
+   "dependencies_recall": {
+    "mean": 0.75,
+    "min": 0.75,
+    "max": 0.75,
+    "n": 3
+   },
+   "exits_precision": {
+    "mean": 0.727,
+    "min": 0.727,
+    "max": 0.727,
+    "n": 3
+   },
+   "exits_recall": {
+    "mean": 0.667,
+    "min": 0.667,
+    "max": 0.667,
+    "n": 3
+   },
+   "identity_questions_precision": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0,
+    "n": 3
+   },
+   "identity_questions_recall": {
+    "mean": null
+   },
+   "dependencies_relaxed_precision": {
+    "mean": 0.502,
+    "min": 0.467,
+    "max": 0.538,
+    "n": 3
+   },
+   "dependencies_relaxed_recall": {
+    "mean": 0.875,
+    "min": 0.875,
+    "max": 0.875,
+    "n": 3
+   }
+  }
+ }
+}

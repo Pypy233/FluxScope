@@ -1,0 +1,8 @@
+{
+  "name": "OpenZeppelin ERC4626 (5.4.0)",
+  "description": "OpenZeppelin's ERC4626 implementation behind a minimal constructor wrapper; the underlying token is outside the analysed scope.",
+  "build": {"framework": "foundry"},
+  "instances": [{"id": "vault", "contract": "Vault", "label": "ERC4626 Vault"}],
+  "assets": [{"expression": "vault", "label": "vault share"}, {"expression": "vault._asset", "label": "underlying asset"}],
+  "dependencies": [{"path": "lib/openzeppelin-contracts-5.4.0", "package": "@openzeppelin/contracts", "version": "5.4.0"}]
+}

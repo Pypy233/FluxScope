@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="FluxScope viewer @VERSION@">
+<title>FluxScope — DeFi asset flow viewer</title>
+<style>
+/*@CSS@*/
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="2" opacity=".55"/></svg>
+      <span class="brand-name">FluxScope</span>
+      <span class="proto-chip" title="Shows results produced by the FluxScope analyzer (offline report or web service).">Research prototype</span>
+    </div>
+    <div id="scope-banner" data-testid="scope-banner"></div>
+    <nav id="view-switch" role="tablist" aria-label="View">
+      <button data-view="code" role="tab" title="Source code next to the graph of the code you are reading">Code</button>
+      <button data-view="flows" role="tab" title="Entities and operations; asset movements">Flows</button>
+      <button data-view="holdings" role="tab" title="Who holds which position; claims on underlying positions">Holdings</button>
+      <button data-view="dependencies" role="tab" title="Claims, dependencies, bindings and cross-contract calls">Dependencies</button>
+      <button data-view="exits" role="tab" title="Operations needed to exit positions">Exits</button>
+      <button data-view="all" role="tab" title="Everything">All</button>
+    </nav>
+    <div class="top-actions">
+      <button id="btn-export-json" class="btn" title="Download the current case as an analysis-result JSON file">Export JSON</button>
+      <button id="btn-export-html" class="btn btn-primary" title="Download an offline HTML report containing the viewer and the current case">Export HTML report</button>
+    </div>
+  </header>
+  <div id="report-banner" hidden></div>
+  <main id="main">
+    <aside id="sidebar" aria-label="Data and filters">
+      <section class="side-section" id="sec-cases">
+        <h3>Cases</h3>
+        <div id="case-list" data-testid="case-list"></div>
+        <div class="import-row">
+          <label class="btn btn-small" for="file-input" title="Import an analysis-result JSON (or an exported FluxScope HTML report)">Import JSON…</label>
+          <input id="file-input" type="file" accept=".json,application/json,.html" hidden>
+          <button id="btn-paste" class="btn btn-small" title="Paste analysis-result JSON">Paste…</button>
+        </div>
+        <p class="hint">You can also drop a file anywhere on the page.</p>
+      </section>
+      <section class="side-section" id="sec-analyze">
+        <h3>Analyze project</h3>
+        <div id="analyze-panel"></div>
+      </section>
+      <section class="side-section" id="sec-search">
+        <h3>Search</h3>
+        <input id="search-input" type="search" placeholder="Assets, entities, operations, positions…" autocomplete="off" spellcheck="false">
+        <div id="search-results" data-testid="search-results"></div>
+      </section>
+      <section class="side-section collapsible" id="sec-tasks">
+        <h3>User tasks</h3>
+        <div id="task-list"></div>
+      </section>
+      <section class="side-section collapsible" id="sec-filters">
+        <h3>Filters</h3>
+        <div id="filter-panel"></div>
+      </section>
+      <section class="side-section collapsible" id="sec-legend">
+        <h3>Legend</h3>
+        <div id="legend"></div>
+      </section>
+      <section class="side-section collapsible" id="sec-groups">
+        <h3>Groups</h3>
+        <div id="group-list"></div>
+      </section>
+      <section class="side-section collapsible" id="sec-unresolved">
+        <h3>Unresolved &amp; boundaries</h3>
+        <div id="unresolved-list"></div>
+      </section>
+      <section class="side-section collapsible" id="sec-scope">
+        <h3>Scope &amp; provenance</h3>
+        <div id="scope-panel"></div>
+      </section>
+    </aside>
+    <section id="center">
+      <div id="work">
+      <div id="code-pane" data-testid="code-pane" hidden></div>
+      <div id="work-split" class="splitter-v" title="Drag to resize" hidden></div>
+      <div id="graph-col">
+      <div id="graph-toolbar">
+        <div class="tb-group">
+          <button class="btn btn-small" id="btn-toggle-left" title="Hide or show the left panel">◧</button>
+          <button class="btn btn-small" id="btn-fit" title="Fit the whole graph into the window">Fit</button>
+          <button class="btn btn-small" id="btn-zoom-in" title="Zoom in">+</button>
+          <button class="btn btn-small" id="btn-zoom-out" title="Zoom out">−</button>
+        </div>
+        <div class="tb-group graph-only" title="Dependency depth shown in Holdings / Dependencies views">
+          <span class="tb-label">Depth</span>
+          <button class="btn btn-small" id="btn-depth-dec" title="Show fewer dependency levels">−</button>
+          <span id="depth-value" data-testid="depth-value">2</span>
+          <button class="btn btn-small" id="btn-depth-inc" title="Show more dependency levels">+</button>
+          <button class="btn btn-small" id="btn-expand-all" title="Expand all groups, operations and dependency levels">Expand all</button>
+          <button class="btn btn-small" id="btn-collapse-all" title="Collapse groups, nested operations and dependency levels">Collapse all</button>
+        </div>
+        <div class="tb-group graph-only" title="Highlight paths related to the selection">
+          <span class="tb-label">Related</span>
+          <select id="related-mode">
+            <option value="both">Up + down</option>
+            <option value="up">Upstream</option>
+            <option value="down">Downstream</option>
+            <option value="off">Off</option>
+          </select>
+        </div>
+        <div class="tb-group graph-only">
+          <span class="tb-label">Layout</span>
+          <select id="layout-dir" title="Graph orientation">
+            <option value="auto">Auto</option>
+            <option value="LR">Left → right</option>
+            <option value="TB">Top → down</option>
+          </select>
+          <span class="tb-label">Labels</span>
+          <select id="label-mode" title="Edge labels: Auto shows all labels on small graphs and only the highlighted ones on dense graphs">
+            <option value="auto">Auto</option>
+            <option value="all">All</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+        <div class="tb-group code-only" id="code-tools" data-testid="code-tools"></div>
+        <div class="tb-spacer"></div>
+        <div id="graph-stats" class="tb-label"></div>
+      </div>
+      <div id="graph-wrap">
+        <svg id="graph" data-testid="graph" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div id="graph-empty" hidden></div>
+        <div id="tooltip" hidden></div>
+        <div id="toast" hidden></div>
+      </div>
+      <div id="details-split" class="splitter-h" title="Drag to resize" hidden></div>
+      <div id="details-slot"></div>
+      </div>
+      </div>
+      <div id="drawer" class="closed">
+        <div id="drawer-handle" title="Drag to resize"></div>
+        <div id="drawer-head">
+          <span class="drawer-title">Evidence &amp; source</span>
+          <span id="drawer-sub"></span>
+          <div class="tb-spacer"></div>
+          <select id="source-picker" title="Open an embedded source file"></select>
+          <button class="btn btn-small" id="btn-drawer-toggle">Show</button>
+        </div>
+        <div id="drawer-body" data-testid="evidence-panel"></div>
+      </div>
+    </section>
+    <aside id="details" aria-label="Details" data-testid="details"></aside>
+  </main>
+</div>
+<div id="modal-root"></div>
+<div id="drop-overlay" hidden><div>Drop a FluxScope JSON file to import it</div></div>
+<script type="application/json" id="fluxscope-schema">/*@SCHEMA@*/</script>
+<script type="application/json" id="fluxscope-data">/*@DATA@*/</script>
+<script type="application/json" id="fluxscope-config">/*@CONFIG@*/</script>
+<script>
+/*@JS@*/
+</script>
+</body>
+</html>

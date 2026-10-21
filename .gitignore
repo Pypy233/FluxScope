@@ -1,0 +1,19 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.DS_Store
+
+# local build output (working files, screenshots, server jobs)
+build/
+out/
+cache/
+crytic-export/
+dist/screenshots/
+
+# LLM requests waiting for an answer (answered ones are stored next to them)
+eval/llm-records/*/pending/
+
+# Docker image archives (docker save); too large for git, attach them to a GitHub release instead
+release/

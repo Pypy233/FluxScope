@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/superearn-io/superearn-core-public.git",
+  "commit": "ddbfd27e1fab5f7c3a759aca5a4565e22235c9b6",
+  "roots": [
+    "src/superearn/core/CooldownVault.sol",
+    "src/superearn/core/strategy/custom/CustomYearnStrategy.sol",
+    "src/superearn/core/strategy/custom/CustomVault.sol",
+    "src/superearn/core/strategy/custom/CustomStrategy.sol"
+  ],
+  "remappings": {
+    "@superearn/": "src/superearn/",
+    "@yearn-vaults/": "src/yearn-vaults/"
+  },
+  "packages": [
+    {"prefix": "@openzeppelin/contracts/", "url": "https://registry.npmjs.org/@openzeppelin/contracts/-/contracts-5.3.0.tgz",
+     "sha1": "0a90ce16f5c855e3c8239691f1722cd4999ae741", "dest": "lib/openzeppelin-contracts-5.3.0/"},
+    {"prefix": "@openzeppelin/contracts-upgradeable/", "url": "https://registry.npmjs.org/@openzeppelin/contracts-upgradeable/-/contracts-upgradeable-4.9.4.tgz",
+     "sha1": "202222fa94fd85bd0a5794ead73acc63d815b55b", "dest": "lib/openzeppelin-contracts-upgradeable-4.9.4/"}
+  ]
+}

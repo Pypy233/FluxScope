@@ -1,0 +1,237 @@
+{
+  "project": "corpus/beefy-erc4626",
+  "annotated_by": "manual reading of BeefyVaultV7.sol, StrategyERC4626.sol and BaseAllToNativeFactoryStrat.sol at e33f868 (AssetLens authors)",
+  "notes": [
+    "Kinds list every acceptable label; callers use the role vocabulary below.",
+    "beforeDeposit() only moves assets when harvestOnDeposit is set, in which case only the vault may call it.",
+    "Claims/dependencies use canonical position keys holder:asset.",
+    "Exits = entry points whose execution consumes (burns/redeems) the position; added the strategy's ERC-4626 share exits after reviewing the first rules-only run (they had been omitted from the first annotation).",
+    "Annotated by the tool authors: an independent annotation is needed before reporting numbers in a paper."
+  ],
+  "vocabulary": {
+    "roles": {
+      "any": "any account",
+      "owner": "vault owner (_owner)",
+      "manager": "strategy owner or factory.keeper()",
+      "vault": "BeefyVaultV7 instance",
+      "strategy": "StrategyERC4626 instance"
+    },
+    "assets": {
+      "moo": "vault share token (BeefyVaultV7 itself)",
+      "want": "StrategyERC4626.want",
+      "erc4626share": "shares of StrategyERC4626.erc4626",
+      "erc4626asset": "StrategyERC4626.erc4626.asset()",
+      "claim:strategy": "vault's non-tokenized claim on the strategy"
+    },
+    "holders": {
+      "any": "any account",
+      "vault": "BeefyVaultV7",
+      "strategy": "StrategyERC4626",
+      "erc4626": "external ERC-4626 vault"
+    }
+  },
+  "operations": {
+    "BeefyVaultV7.deposit(uint256)": {
+      "kind": [
+        "deposit"
+      ],
+      "caller": "any"
+    },
+    "BeefyVaultV7.depositAll()": {
+      "kind": [
+        "deposit"
+      ],
+      "caller": "any"
+    },
+    "BeefyVaultV7.earn()": {
+      "kind": [
+        "allocate"
+      ],
+      "caller": "any"
+    },
+    "BeefyVaultV7.withdraw(uint256)": {
+      "kind": [
+        "redeem",
+        "withdraw"
+      ],
+      "caller": "any"
+    },
+    "BeefyVaultV7.withdrawAll()": {
+      "kind": [
+        "redeem",
+        "withdraw"
+      ],
+      "caller": "any"
+    },
+    "BeefyVaultV7.upgradeStrat()": {
+      "kind": [
+        "deallocate",
+        "allocate",
+        "other"
+      ],
+      "caller": "owner"
+    },
+    "BeefyVaultV7.inCaseTokensGetStuck(address)": {
+      "kind": [
+        "transfer",
+        "withdraw"
+      ],
+      "caller": "owner"
+    },
+    "BeefyVaultV7.transfer(address,uint256)": {
+      "kind": [
+        "transfer"
+      ],
+      "caller": "any"
+    },
+    "BeefyVaultV7.transferFrom(address,address,uint256)": {
+      "kind": [
+        "transfer"
+      ],
+      "caller": "any"
+    },
+    "StrategyERC4626.deposit()": {
+      "kind": [
+        "allocate",
+        "deposit"
+      ],
+      "caller": "any"
+    },
+    "StrategyERC4626.withdraw(uint256)": {
+      "kind": [
+        "withdraw",
+        "deallocate"
+      ],
+      "caller": "vault"
+    },
+    "StrategyERC4626.beforeDeposit()": {
+      "kind": [
+        "harvest"
+      ],
+      "caller": "vault"
+    },
+    "StrategyERC4626.harvest()": {
+      "kind": [
+        "harvest"
+      ],
+      "caller": "any"
+    },
+    "StrategyERC4626.harvest(address)": {
+      "kind": [
+        "harvest"
+      ],
+      "caller": "any"
+    },
+    "StrategyERC4626.panic()": {
+      "kind": [
+        "deallocate"
+      ],
+      "caller": "manager"
+    },
+    "StrategyERC4626.retireStrat()": {
+      "kind": [
+        "withdraw",
+        "deallocate"
+      ],
+      "caller": "vault"
+    },
+    "StrategyERC4626.unpause()": {
+      "kind": [
+        "allocate"
+      ],
+      "caller": "manager"
+    },
+    "StrategyERC4626.claim(address[],uint256[],bytes32[][])": {
+      "kind": [
+        "claim",
+        "call",
+        "other"
+      ],
+      "caller": "any"
+    }
+  },
+  "claims": [
+    [
+      "any:moo",
+      "vault:want"
+    ],
+    [
+      "any:moo",
+      "vault:claim:strategy"
+    ],
+    [
+      "vault:claim:strategy",
+      "strategy:want"
+    ],
+    [
+      "vault:claim:strategy",
+      "strategy:erc4626share"
+    ],
+    [
+      "strategy:erc4626share",
+      "erc4626:erc4626asset"
+    ]
+  ],
+  "dependencies": [
+    [
+      "any:moo",
+      "strategy"
+    ],
+    [
+      "strategy",
+      "erc4626"
+    ],
+    [
+      "strategy",
+      "factory"
+    ],
+    [
+      "strategy",
+      "swapper"
+    ]
+  ],
+  "exits": {
+    "any:moo": [
+      "BeefyVaultV7.withdraw(uint256)",
+      "BeefyVaultV7.withdrawAll()"
+    ],
+    "vault:claim:strategy": [
+      "StrategyERC4626.withdraw(uint256)",
+      "StrategyERC4626.retireStrat()"
+    ],
+    "strategy:erc4626share": [
+      "StrategyERC4626.withdraw(uint256)",
+      "StrategyERC4626.retireStrat()",
+      "StrategyERC4626.panic()",
+      "BeefyVaultV7.withdraw(uint256)",
+      "BeefyVaultV7.withdrawAll()"
+    ]
+  },
+  "identity_questions": [
+    [
+      "want",
+      "erc4626asset"
+    ]
+  ],
+  "aliases": {
+    "assets": {
+      "asset:vault": "moo",
+      "asset:strategy.want": "want",
+      "asset:strategy.erc4626": "erc4626share",
+      "asset:strategy.erc4626.asset()": "erc4626asset",
+      "asset:claim:strategy": "claim:strategy"
+    },
+    "entities": {
+      "ent:any": "any",
+      "ent:vault": "vault",
+      "ent:strategy": "strategy",
+      "ent:strategy.erc4626": "erc4626",
+      "ent:strategy.factory": "factory",
+      "ent:strategy.swapper": "swapper",
+      "ent:vault._owner": "owner"
+    },
+    "entity_labels": {
+      "or factory.keeper()": "manager"
+    }
+  }
+}

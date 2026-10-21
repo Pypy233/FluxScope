@@ -1,0 +1,61 @@
+{
+  "schema": "fluxscope/analysis",
+  "schema_version": "0.1.0",
+  "meta": {
+    "id": "bad-refs",
+    "title": "Dangling references",
+    "synthetic": true
+  },
+  "scope": {
+    "kind": "example"
+  },
+  "assets": [
+    {
+      "id": "a1",
+      "label": "A",
+      "kind": "token",
+      "identity": {
+        "kind": "example"
+      },
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "supported"
+      }
+    }
+  ],
+  "entities": [
+    {
+      "id": "e1",
+      "label": "E",
+      "kind": "account"
+    }
+  ],
+  "operations": [
+    {
+      "id": "o1",
+      "kind": "transfer",
+      "label": "t",
+      "inputs": [
+        {
+          "id": "f1",
+          "asset": "a1",
+          "from": "e1",
+          "to": "e-missing",
+          "amount": {
+            "asset": "a-missing",
+            "unit": "raw"
+          }
+        }
+      ],
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev-missing"
+      ]
+    }
+  ]
+}

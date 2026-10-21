@@ -1,0 +1,2382 @@
+{
+  "schema": "fluxscope/analysis",
+  "schema_version": "0.1.0",
+  "meta": {
+    "id": "example-nested-vault",
+    "title": "Example A — Nested vault (synthetic)",
+    "description": "A user deposits Token U into a vault, the vault issues vU shares, a keeper allocates the idle assets to a strategy that issues sU shares to the vault and supplies the assets to an external lending market L (receipt lU). Redemption unwinds the layers.",
+    "synthetic": true,
+    "created_at": "2026-10-20T00:00:00Z",
+    "generator": {
+      "name": "examples/generate.py",
+      "version": "0.1.0"
+    },
+    "tags": [
+      "example",
+      "vault",
+      "nested",
+      "strategy"
+    ]
+  },
+  "scope": {
+    "kind": "example",
+    "project": {
+      "name": "Example yield system (synthetic)",
+      "version": "example-1",
+      "entry_contracts": [
+        "ExampleVault",
+        "ExampleStrategy"
+      ],
+      "files": [
+        "example/ExampleVault.sol",
+        "example/ExampleStrategy.sol",
+        "example/IMarketL.sol"
+      ]
+    },
+    "chain": {
+      "chain_id": 31337,
+      "name": "local test chain (synthetic)",
+      "block": 1200
+    },
+    "components": [
+      {
+        "name": "hand-written example",
+        "role": "example"
+      }
+    ],
+    "boundaries": [
+      {
+        "id": "bnd:marketL",
+        "target": "Lending market L (IMarketL)",
+        "reason": "Only the interface IMarketL is available; the market implementation is outside the analysis scope.",
+        "evidence": [
+          "ev:a:imarket"
+        ]
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "asm:a:erc20",
+        "text": "Token U behaves as a standard ERC-20 token (no fee on transfer, no rebasing).",
+        "source": "example"
+      }
+    ],
+    "notes": [
+      "Synthetic example data for exercising the viewer. Names, code, addresses and transactions are invented."
+    ]
+  },
+  "assets": [
+    {
+      "id": "asset:U",
+      "label": "Token U (example)",
+      "symbol": "U",
+      "kind": "token",
+      "standard": "ERC20",
+      "identity": {
+        "kind": "example",
+        "expression": "ExampleVault.asset",
+        "address": "0x00000000000000000000000000000000000000c0",
+        "chain_id": 31337
+      },
+      "decimals": 18,
+      "description": "Base asset deposited by users. Identity is the configured token address, not its name.",
+      "status": {
+        "basis": "example",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:vault-asset"
+      ]
+    },
+    {
+      "id": "asset:vU",
+      "label": "vU vault share",
+      "symbol": "vU",
+      "kind": "share",
+      "identity": {
+        "kind": "contract_self",
+        "contract": "ExampleVault",
+        "expression": "ExampleVault.balanceOf"
+      },
+      "issuer": "ent:vault",
+      "decimals": 18,
+      "description": "Share ledger kept inside ExampleVault. Represents a pro-rata claim on ExampleVault.totalAssets().",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported",
+        "rule": "share-ledger"
+      },
+      "evidence": [
+        "ev:a:vault-shares",
+        "ev:a:mint-impl",
+        "ev:a:burn-impl"
+      ]
+    },
+    {
+      "id": "asset:sU",
+      "label": "sU strategy share",
+      "symbol": "sU",
+      "kind": "share",
+      "identity": {
+        "kind": "contract_self",
+        "contract": "ExampleStrategy",
+        "expression": "ExampleStrategy.balanceOf"
+      },
+      "issuer": "ent:strategy",
+      "description": "Share ledger kept inside ExampleStrategy; only the vault is credited.",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported",
+        "rule": "share-ledger"
+      },
+      "evidence": [
+        "ev:a:s-shares"
+      ]
+    },
+    {
+      "id": "asset:lU",
+      "label": "lU market receipt",
+      "symbol": "lU",
+      "kind": "share",
+      "identity": {
+        "kind": "scoped_expression",
+        "expression": "IMarketL(ExampleStrategy.market) receipt"
+      },
+      "issuer": "ent:marketL",
+      "description": "Receipt credited by lending market L. Semantics taken from interface comments only.",
+      "status": {
+        "basis": "static",
+        "support": "adapter",
+        "verification": "unresolved",
+        "rule": "interface-doc",
+        "note": "Implementation of market L is outside the analysis scope."
+      },
+      "evidence": [
+        "ev:a:imarket-supply"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "ent:user",
+      "label": "User (any account)",
+      "kind": "account",
+      "description": "Any externally owned account or contract calling deposit / redeem.",
+      "expression": "msg.sender",
+      "evidence": [
+        "ev:a:deposit"
+      ]
+    },
+    {
+      "id": "ent:keeper",
+      "label": "Keeper",
+      "kind": "role",
+      "expression": "ExampleVault.keeper",
+      "description": "Address stored in ExampleVault.keeper; only it can call allocate().",
+      "evidence": [
+        "ev:a:keeper"
+      ]
+    },
+    {
+      "id": "ent:sys",
+      "label": "Example yield system",
+      "kind": "protocol",
+      "description": "Contracts of the analysed project."
+    },
+    {
+      "id": "ent:vault",
+      "label": "ExampleVault",
+      "kind": "contract",
+      "parent": "ent:sys",
+      "contract": {
+        "name": "ExampleVault",
+        "file": "example/ExampleVault.sol",
+        "address": "0x00000000000000000000000000000000000000b1",
+        "chain_id": 31337
+      },
+      "evidence": [
+        "ev:a:deposit"
+      ]
+    },
+    {
+      "id": "ent:strategy",
+      "label": "ExampleStrategy",
+      "kind": "contract",
+      "parent": "ent:sys",
+      "contract": {
+        "name": "ExampleStrategy",
+        "file": "example/ExampleStrategy.sol",
+        "address": "0x00000000000000000000000000000000000000b2",
+        "chain_id": 31337
+      },
+      "evidence": [
+        "ev:a:s-deposit"
+      ]
+    },
+    {
+      "id": "ent:marketL",
+      "label": "Lending market L",
+      "kind": "external_contract",
+      "in_scope": false,
+      "contract": {
+        "name": "IMarketL",
+        "file": "example/IMarketL.sol"
+      },
+      "description": "External lending market. Only its interface is available.",
+      "evidence": [
+        "ev:a:imarket"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "id": "op:deposit",
+      "kind": "deposit",
+      "label": "ExampleVault.deposit(assets)",
+      "description": "User pays Token U to the vault and receives newly minted vU shares.",
+      "entrypoint": {
+        "contract": "ExampleVault",
+        "function": "deposit",
+        "signature": "deposit(uint256)",
+        "visibility": "external"
+      },
+      "initiator": "ent:user",
+      "executor": "ent:vault",
+      "participants": [
+        {
+          "role": "caller",
+          "entity": "ent:user",
+          "expression": "msg.sender",
+          "evidence": [
+            "ev:a:deposit-pull"
+          ]
+        },
+        {
+          "role": "payer",
+          "entity": "ent:user",
+          "expression": "msg.sender",
+          "evidence": [
+            "ev:a:deposit-pull"
+          ]
+        },
+        {
+          "role": "share_receiver",
+          "entity": "ent:user",
+          "expression": "msg.sender",
+          "evidence": [
+            "ev:a:deposit-mint"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "id": "c:a:dep-paused",
+          "kind": "modifier",
+          "text": "Vault is not paused",
+          "expression": "!paused",
+          "evidence": [
+            "ev:a:paused"
+          ]
+        },
+        {
+          "id": "c:a:dep-zero",
+          "kind": "require",
+          "text": "assets > 0",
+          "expression": "assets > 0",
+          "evidence": [
+            "ev:a:deposit-zero"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "checks": [
+          {
+            "id": "chk:a:dep-in",
+            "description": "An inflow of Token U from the caller precedes the mint",
+            "result": "pass",
+            "evidence": [
+              "ev:a:deposit-pull"
+            ]
+          },
+          {
+            "id": "chk:a:dep-mint",
+            "description": "vU shares are minted to the same caller",
+            "result": "pass",
+            "evidence": [
+              "ev:a:deposit-mint"
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "ev:a:deposit",
+        "ev:a:tx-deposit"
+      ]
+    },
+    {
+      "id": "op:deposit.pull",
+      "kind": "transfer",
+      "label": "transferFrom U: user → vault",
+      "parent": "op:deposit",
+      "order": 1,
+      "transaction": "same",
+      "executor": "ent:vault",
+      "initiator": "ent:vault",
+      "inputs": [
+        {
+          "id": "f:a:dep-in",
+          "asset": "asset:U",
+          "from": "ent:user",
+          "to": "ent:vault",
+          "amount": {
+            "asset": "asset:U",
+            "unit": "decimal",
+            "value": "1000",
+            "expression": "assets",
+            "note": "value from synthetic transaction"
+          },
+          "mechanism": "transferFrom",
+          "evidence": [
+            "ev:a:deposit-pull",
+            "ev:a:log-transfer"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic deposit transaction."
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic deposit transaction."
+      },
+      "evidence": [
+        "ev:a:deposit-pull",
+        "ev:a:log-transfer"
+      ]
+    },
+    {
+      "id": "op:deposit.mint",
+      "kind": "mint",
+      "label": "mint vU → user",
+      "parent": "op:deposit",
+      "order": 2,
+      "transaction": "same",
+      "executor": "ent:vault",
+      "outputs": [
+        {
+          "id": "f:a:dep-mint",
+          "asset": "asset:vU",
+          "from": null,
+          "to": "ent:user",
+          "amount": {
+            "asset": "asset:vU",
+            "unit": "decimal",
+            "value": "1000",
+            "expression": "supply == 0 ? assets : assets * supply / totalAssets()"
+          },
+          "mechanism": "mint",
+          "evidence": [
+            "ev:a:deposit-mint",
+            "ev:a:deposit-shares"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported",
+            "note": "Seen in the synthetic deposit transaction."
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic deposit transaction."
+      },
+      "evidence": [
+        "ev:a:deposit-mint",
+        "ev:a:mint-impl",
+        "ev:a:tx-deposit"
+      ]
+    },
+    {
+      "id": "op:allocate",
+      "kind": "allocate",
+      "label": "ExampleVault.allocate(amount)",
+      "description": "Keeper moves idle Token U from the vault into the strategy, which supplies it to market L. Runs in a separate transaction from user deposits.",
+      "entrypoint": {
+        "contract": "ExampleVault",
+        "function": "allocate",
+        "signature": "allocate(uint256)",
+        "visibility": "external"
+      },
+      "initiator": "ent:keeper",
+      "executor": "ent:vault",
+      "participants": [
+        {
+          "role": "caller",
+          "entity": "ent:keeper",
+          "expression": "msg.sender == keeper",
+          "evidence": [
+            "ev:a:keeper"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "id": "c:a:alloc-keeper",
+          "kind": "access_control",
+          "text": "Caller must be the keeper",
+          "expression": "msg.sender == keeper",
+          "evidence": [
+            "ev:a:keeper"
+          ]
+        },
+        {
+          "id": "c:a:alloc-idle",
+          "kind": "require",
+          "text": "amount <= idle Token U in the vault",
+          "expression": "amount <= asset.balanceOf(address(this))",
+          "evidence": [
+            "ev:a:allocate-idle"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported",
+        "note": "Seen in the synthetic allocate trace."
+      },
+      "evidence": [
+        "ev:a:allocate",
+        "ev:a:tx-allocate"
+      ]
+    },
+    {
+      "id": "op:allocate.transfer",
+      "kind": "transfer",
+      "label": "transfer U: vault → strategy",
+      "parent": "op:allocate",
+      "order": 1,
+      "transaction": "same",
+      "executor": "ent:vault",
+      "inputs": [
+        {
+          "id": "f:a:alloc-tx",
+          "asset": "asset:U",
+          "from": "ent:vault",
+          "to": "ent:strategy",
+          "amount": {
+            "asset": "asset:U",
+            "unit": "decimal",
+            "value": "800",
+            "expression": "amount"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:a:allocate-transfer"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:allocate-transfer",
+        "ev:a:tx-allocate"
+      ]
+    },
+    {
+      "id": "op:allocate.sdeposit",
+      "kind": "deposit",
+      "label": "ExampleStrategy.deposit(amount)",
+      "parent": "op:allocate",
+      "order": 2,
+      "transaction": "same",
+      "initiator": "ent:vault",
+      "executor": "ent:strategy",
+      "entrypoint": {
+        "contract": "ExampleStrategy",
+        "function": "deposit",
+        "signature": "deposit(uint256)",
+        "visibility": "external"
+      },
+      "participants": [
+        {
+          "role": "caller",
+          "entity": "ent:vault",
+          "expression": "msg.sender == vault",
+          "evidence": [
+            "ev:a:s-onlyvault"
+          ]
+        },
+        {
+          "role": "share_receiver",
+          "entity": "ent:vault",
+          "expression": "vault",
+          "evidence": [
+            "ev:a:s-mint"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "id": "c:a:sdep-vault",
+          "kind": "access_control",
+          "text": "Caller must be the vault",
+          "expression": "msg.sender == vault",
+          "evidence": [
+            "ev:a:s-onlyvault"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-deposit",
+        "ev:a:allocate-call"
+      ]
+    },
+    {
+      "id": "op:allocate.smint",
+      "kind": "mint",
+      "label": "credit sU → vault",
+      "parent": "op:allocate.sdeposit",
+      "order": 1,
+      "transaction": "same",
+      "executor": "ent:strategy",
+      "outputs": [
+        {
+          "id": "f:a:smint",
+          "asset": "asset:sU",
+          "from": null,
+          "to": "ent:vault",
+          "amount": {
+            "asset": "asset:sU",
+            "unit": "unknown",
+            "expression": "supply == 0 ? amount : amount * supply / (totalAssets() - amount)"
+          },
+          "mechanism": "ledger-credit",
+          "evidence": [
+            "ev:a:s-mint"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-mint"
+      ]
+    },
+    {
+      "id": "op:allocate.supply",
+      "kind": "deposit",
+      "label": "IMarketL.supply(U, amount, strategy)",
+      "parent": "op:allocate.sdeposit",
+      "order": 2,
+      "transaction": "same",
+      "initiator": "ent:strategy",
+      "executor": "ent:marketL",
+      "participants": [
+        {
+          "role": "payer",
+          "entity": "ent:strategy",
+          "expression": "msg.sender"
+        },
+        {
+          "role": "receipt_receiver",
+          "entity": "ent:strategy",
+          "expression": "address(this)",
+          "evidence": [
+            "ev:a:s-supply"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "id": "f:a:supply-in",
+          "asset": "asset:U",
+          "from": "ent:strategy",
+          "to": "ent:marketL",
+          "amount": {
+            "asset": "asset:U",
+            "unit": "decimal",
+            "value": "800",
+            "expression": "amount"
+          },
+          "mechanism": "adapter:interface-doc",
+          "evidence": [
+            "ev:a:s-supply",
+            "ev:a:imarket-supply"
+          ],
+          "status": {
+            "basis": "observed",
+            "support": "manual",
+            "verification": "supported"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:a:supply-out",
+          "asset": "asset:lU",
+          "from": null,
+          "to": "ent:strategy",
+          "amount": {
+            "asset": "asset:lU",
+            "unit": "unknown",
+            "expression": "per market L exchange rate"
+          },
+          "mechanism": "mint",
+          "evidence": [
+            "ev:a:imarket-supply"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "adapter",
+            "verification": "unresolved",
+            "note": "Receipt minting is described by the interface only."
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "adapter",
+        "verification": "unresolved",
+        "rule": "interface-doc"
+      },
+      "evidence": [
+        "ev:a:s-supply",
+        "ev:a:imarket-supply"
+      ],
+      "unresolved": [
+        "unr:a:market-impl"
+      ]
+    },
+    {
+      "id": "op:redeem",
+      "kind": "redeem",
+      "label": "ExampleVault.redeem(shares)",
+      "description": "Holder burns vU shares and receives Token U. If the vault's idle balance is insufficient, the vault first pulls the shortfall from the strategy, which may withdraw from market L.",
+      "entrypoint": {
+        "contract": "ExampleVault",
+        "function": "redeem",
+        "signature": "redeem(uint256)",
+        "visibility": "external"
+      },
+      "initiator": "ent:user",
+      "executor": "ent:vault",
+      "participants": [
+        {
+          "role": "caller",
+          "entity": "ent:user",
+          "expression": "msg.sender"
+        },
+        {
+          "role": "share_owner",
+          "entity": "ent:user",
+          "expression": "msg.sender",
+          "evidence": [
+            "ev:a:redeem-burn"
+          ]
+        },
+        {
+          "role": "asset_receiver",
+          "entity": "ent:user",
+          "expression": "msg.sender",
+          "evidence": [
+            "ev:a:redeem-pay"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "id": "c:a:red-bal",
+          "kind": "require",
+          "text": "Caller holds at least `shares` vU (checked by the burn underflow)",
+          "expression": "balanceOf[msg.sender] >= shares",
+          "evidence": [
+            "ev:a:burn-impl"
+          ]
+        },
+        {
+          "id": "c:a:red-idle",
+          "kind": "branch",
+          "text": "Idle Token U in the vault is below the redemption amount",
+          "expression": "idle < assets",
+          "evidence": [
+            "ev:a:redeem-branch"
+          ]
+        },
+        {
+          "id": "c:a:red-liq",
+          "kind": "external",
+          "text": "Market L has enough liquidity to honour the withdrawal",
+          "evidence": [
+            "ev:a:llm-liquidity"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "llm",
+            "verification": "pending"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported",
+        "checks": [
+          {
+            "id": "chk:a:red-burn",
+            "description": "vU of the caller is burned",
+            "result": "pass",
+            "evidence": [
+              "ev:a:redeem-burn"
+            ]
+          },
+          {
+            "id": "chk:a:red-pay",
+            "description": "Token U is paid to the caller",
+            "result": "pass",
+            "evidence": [
+              "ev:a:redeem-pay"
+            ]
+          },
+          {
+            "id": "chk:a:red-dep",
+            "description": "Payout depends on the burned share amount",
+            "result": "pass",
+            "detail": "assets = shares * totalAssets() / totalSupply",
+            "evidence": [
+              "ev:a:redeem-assets"
+            ]
+          },
+          {
+            "id": "chk:a:red-ext",
+            "description": "All called implementations are in scope",
+            "result": "unknown",
+            "detail": "market L withdraw is interface-only",
+            "evidence": [
+              "ev:a:imarket-withdraw"
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "ev:a:redeem"
+      ],
+      "unresolved": [
+        "unr:a:market-impl",
+        "unr:a:liquidity"
+      ]
+    },
+    {
+      "id": "op:redeem.burn",
+      "kind": "burn",
+      "label": "burn vU from holder",
+      "parent": "op:redeem",
+      "order": 1,
+      "transaction": "same",
+      "executor": "ent:vault",
+      "inputs": [
+        {
+          "id": "f:a:red-burn",
+          "asset": "asset:vU",
+          "from": "ent:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:vU",
+            "unit": "unknown",
+            "expression": "shares"
+          },
+          "mechanism": "burn",
+          "evidence": [
+            "ev:a:redeem-burn",
+            "ev:a:burn-impl"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:redeem-burn"
+      ]
+    },
+    {
+      "id": "op:redeem.swithdraw",
+      "kind": "withdraw",
+      "label": "ExampleStrategy.withdraw(assets - idle)",
+      "parent": "op:redeem",
+      "order": 2,
+      "transaction": "same",
+      "initiator": "ent:vault",
+      "executor": "ent:strategy",
+      "entrypoint": {
+        "contract": "ExampleStrategy",
+        "function": "withdraw",
+        "signature": "withdraw(uint256)",
+        "visibility": "external"
+      },
+      "conditions": [
+        {
+          "id": "c:a:sw-branch",
+          "kind": "branch",
+          "text": "Runs only if idle Token U in the vault < assets",
+          "expression": "idle < assets",
+          "evidence": [
+            "ev:a:redeem-branch"
+          ]
+        },
+        {
+          "id": "c:a:sw-vault",
+          "kind": "access_control",
+          "text": "Caller must be the vault",
+          "expression": "msg.sender == vault",
+          "evidence": [
+            "ev:a:s-onlyvault"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-withdraw",
+        "ev:a:redeem-branch"
+      ]
+    },
+    {
+      "id": "op:redeem.sburn",
+      "kind": "burn",
+      "label": "debit sU from vault",
+      "parent": "op:redeem.swithdraw",
+      "order": 1,
+      "transaction": "same",
+      "executor": "ent:strategy",
+      "inputs": [
+        {
+          "id": "f:a:sburn",
+          "asset": "asset:sU",
+          "from": "ent:vault",
+          "to": null,
+          "amount": {
+            "asset": "asset:sU",
+            "unit": "unknown",
+            "expression": "amount * totalSupply / totalAssets()"
+          },
+          "mechanism": "ledger-debit",
+          "evidence": [
+            "ev:a:s-burn"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-burn"
+      ]
+    },
+    {
+      "id": "op:redeem.mwithdraw",
+      "kind": "withdraw",
+      "label": "IMarketL.withdraw(U, amount - idle, strategy)",
+      "parent": "op:redeem.swithdraw",
+      "order": 2,
+      "transaction": "same",
+      "initiator": "ent:strategy",
+      "executor": "ent:marketL",
+      "conditions": [
+        {
+          "id": "c:a:mw-branch",
+          "kind": "branch",
+          "text": "Runs only if idle Token U in the strategy < amount",
+          "expression": "idle < amount",
+          "evidence": [
+            "ev:a:s-mwithdraw"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "id": "f:a:mw-burn",
+          "asset": "asset:lU",
+          "from": "ent:strategy",
+          "to": null,
+          "amount": {
+            "asset": "asset:lU",
+            "unit": "unknown",
+            "expression": "per market L exchange rate"
+          },
+          "mechanism": "burn",
+          "evidence": [
+            "ev:a:imarket-withdraw"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "adapter",
+            "verification": "unresolved"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "f:a:mw-out",
+          "asset": "asset:U",
+          "from": "ent:marketL",
+          "to": "ent:strategy",
+          "amount": {
+            "asset": "asset:U",
+            "unit": "unknown",
+            "expression": "amount - idle"
+          },
+          "mechanism": "adapter:interface-doc",
+          "evidence": [
+            "ev:a:s-mwithdraw",
+            "ev:a:imarket-withdraw"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "adapter",
+            "verification": "unresolved"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "adapter",
+        "verification": "unresolved",
+        "rule": "interface-doc"
+      },
+      "evidence": [
+        "ev:a:s-mwithdraw",
+        "ev:a:imarket-withdraw"
+      ],
+      "unresolved": [
+        "unr:a:market-impl"
+      ]
+    },
+    {
+      "id": "op:redeem.spay",
+      "kind": "transfer",
+      "label": "transfer U: strategy → vault",
+      "parent": "op:redeem.swithdraw",
+      "order": 3,
+      "transaction": "same",
+      "executor": "ent:strategy",
+      "inputs": [
+        {
+          "id": "f:a:spay",
+          "asset": "asset:U",
+          "from": "ent:strategy",
+          "to": "ent:vault",
+          "amount": {
+            "asset": "asset:U",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:a:s-pay"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-pay"
+      ]
+    },
+    {
+      "id": "op:redeem.pay",
+      "kind": "transfer",
+      "label": "transfer U: vault → holder",
+      "parent": "op:redeem",
+      "order": 3,
+      "transaction": "same",
+      "executor": "ent:vault",
+      "outputs": [
+        {
+          "id": "f:a:red-pay",
+          "asset": "asset:U",
+          "from": "ent:vault",
+          "to": "ent:user",
+          "amount": {
+            "asset": "asset:U",
+            "unit": "unknown",
+            "expression": "shares * totalAssets() / totalSupply"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:a:redeem-pay",
+            "ev:a:redeem-assets"
+          ],
+          "status": {
+            "basis": "static",
+            "support": "rule",
+            "verification": "supported"
+          }
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:redeem-pay"
+      ]
+    }
+  ],
+  "positions": [
+    {
+      "id": "pos:user-vU",
+      "holder": "ent:user",
+      "asset": "asset:vU",
+      "kind": "share",
+      "label": "vU held by user",
+      "amount": {
+        "asset": "asset:vU",
+        "unit": "decimal",
+        "value": "1000",
+        "expression": "balanceOf[user]",
+        "note": "after the synthetic deposit"
+      },
+      "description": "Pro-rata claim on everything the vault accounts for in totalAssets().",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:deposit-mint",
+        "ev:a:tx-deposit"
+      ]
+    },
+    {
+      "id": "pos:vault-U",
+      "holder": "ent:vault",
+      "asset": "asset:U",
+      "kind": "custody",
+      "label": "Idle U in vault",
+      "amount": {
+        "asset": "asset:U",
+        "unit": "decimal",
+        "value": "200",
+        "expression": "asset.balanceOf(vault)",
+        "note": "1000 deposited − 800 allocated"
+      },
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:totalassets",
+        "ev:a:tx-allocate"
+      ]
+    },
+    {
+      "id": "pos:vault-sU",
+      "holder": "ent:vault",
+      "asset": "asset:sU",
+      "kind": "share",
+      "label": "sU held by vault",
+      "amount": {
+        "asset": "asset:sU",
+        "unit": "unknown",
+        "expression": "strategy.balanceOf[vault]"
+      },
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-mint"
+      ]
+    },
+    {
+      "id": "pos:strategy-U",
+      "holder": "ent:strategy",
+      "asset": "asset:U",
+      "kind": "custody",
+      "label": "Idle U in strategy",
+      "amount": {
+        "asset": "asset:U",
+        "unit": "unknown",
+        "expression": "asset.balanceOf(strategy)"
+      },
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-totalassets"
+      ]
+    },
+    {
+      "id": "pos:strategy-lU",
+      "holder": "ent:strategy",
+      "asset": "asset:lU",
+      "kind": "share",
+      "label": "lU held by strategy",
+      "amount": {
+        "asset": "asset:lU",
+        "unit": "unknown",
+        "expression": "market.balanceOf(strategy)"
+      },
+      "status": {
+        "basis": "static",
+        "support": "adapter",
+        "verification": "unresolved"
+      },
+      "evidence": [
+        "ev:a:s-supply",
+        "ev:a:s-totalassets"
+      ]
+    },
+    {
+      "id": "pos:market-U",
+      "holder": "ent:marketL",
+      "asset": "asset:U",
+      "kind": "custody",
+      "label": "U supplied to market L",
+      "amount": {
+        "asset": "asset:U",
+        "unit": "unknown",
+        "expression": "unknown (market internals)"
+      },
+      "description": "Held by market L and possibly lent to its borrowers; outside the analysis scope.",
+      "status": {
+        "basis": "static",
+        "support": "adapter",
+        "verification": "unresolved"
+      },
+      "evidence": [
+        "ev:a:imarket-supply"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel:a:claim-vU-vaultU",
+      "kind": "claim",
+      "source": "pos:user-vU",
+      "target": "pos:vault-U",
+      "label": "pro-rata claim",
+      "basis_detail": "assets = shares * totalAssets() / totalSupply; totalAssets() includes asset.balanceOf(vault)",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported",
+        "rule": "share-redeem-pro-rata",
+        "checks": [
+          {
+            "id": "chk:a:c1-in",
+            "description": "Deposit links U inflow to vU mint",
+            "result": "pass",
+            "evidence": [
+              "ev:a:deposit-pull",
+              "ev:a:deposit-mint"
+            ]
+          },
+          {
+            "id": "chk:a:c1-exit",
+            "description": "An exit burns vU and pays U",
+            "result": "pass",
+            "evidence": [
+              "ev:a:redeem-burn",
+              "ev:a:redeem-pay"
+            ]
+          },
+          {
+            "id": "chk:a:c1-amt",
+            "description": "Payout amount depends on burned shares",
+            "result": "pass",
+            "evidence": [
+              "ev:a:redeem-assets"
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "ev:a:redeem-assets",
+        "ev:a:totalassets"
+      ]
+    },
+    {
+      "id": "rel:a:claim-vU-sU",
+      "kind": "claim",
+      "source": "pos:user-vU",
+      "target": "pos:vault-sU",
+      "label": "pro-rata claim (via strategy)",
+      "basis_detail": "totalAssets() adds strategy.totalAssets(); redeem pulls the shortfall via strategy.withdraw",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported",
+        "rule": "share-redeem-pro-rata"
+      },
+      "evidence": [
+        "ev:a:totalassets",
+        "ev:a:redeem-branch"
+      ]
+    },
+    {
+      "id": "rel:a:claim-sU-stratU",
+      "kind": "claim",
+      "source": "pos:vault-sU",
+      "target": "pos:strategy-U",
+      "label": "claim",
+      "basis_detail": "ExampleStrategy.totalAssets() includes asset.balanceOf(strategy)",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-totalassets",
+        "ev:a:s-pay"
+      ]
+    },
+    {
+      "id": "rel:a:claim-sU-lU",
+      "kind": "claim",
+      "source": "pos:vault-sU",
+      "target": "pos:strategy-lU",
+      "label": "claim",
+      "basis_detail": "ExampleStrategy.totalAssets() includes market.balanceOf(strategy)",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-totalassets",
+        "ev:a:s-mwithdraw"
+      ]
+    },
+    {
+      "id": "rel:a:claim-lU-marketU",
+      "kind": "claim",
+      "source": "pos:strategy-lU",
+      "target": "pos:market-U",
+      "label": "redeemable (per interface)",
+      "basis_detail": "IMarketL.withdraw burns receipts and returns the token",
+      "status": {
+        "basis": "static",
+        "support": "adapter",
+        "verification": "unresolved",
+        "note": "Depends on the unseen market implementation."
+      },
+      "evidence": [
+        "ev:a:imarket-withdraw"
+      ]
+    },
+    {
+      "id": "rel:a:dep-vU-strategy",
+      "kind": "depends_on",
+      "source": "asset:vU",
+      "target": "ent:strategy",
+      "label": "share value reads strategy.totalAssets()",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:totalassets"
+      ]
+    },
+    {
+      "id": "rel:a:dep-sU-market",
+      "kind": "depends_on",
+      "source": "asset:sU",
+      "target": "ent:marketL",
+      "label": "share value reads market.balanceOf()",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-totalassets"
+      ]
+    },
+    {
+      "id": "rel:a:dep-lU-market",
+      "kind": "depends_on",
+      "source": "asset:lU",
+      "target": "ent:marketL",
+      "label": "redeemability depends on market liquidity",
+      "status": {
+        "basis": "static",
+        "support": "llm",
+        "verification": "pending"
+      },
+      "evidence": [
+        "ev:a:llm-liquidity"
+      ]
+    },
+    {
+      "id": "rel:a:bind-strategy",
+      "kind": "binding",
+      "source": "ent:vault",
+      "target": "ent:strategy",
+      "label": "ExampleVault.strategy",
+      "status": {
+        "basis": "config",
+        "support": "config",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:strategy-var",
+        "ev:a:cfg-binding"
+      ]
+    },
+    {
+      "id": "rel:a:calls-vs",
+      "kind": "calls",
+      "source": "ent:vault",
+      "target": "ent:strategy",
+      "label": "deposit / withdraw / totalAssets",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:allocate-call",
+        "ev:a:redeem-branch"
+      ]
+    },
+    {
+      "id": "rel:a:calls-sm",
+      "kind": "calls",
+      "source": "ent:strategy",
+      "target": "ent:marketL",
+      "label": "supply / withdraw / balanceOf",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-supply",
+        "ev:a:s-mwithdraw"
+      ]
+    },
+    {
+      "id": "rel:a:exit-vU",
+      "kind": "exit",
+      "source": "pos:user-vU",
+      "target": "op:redeem",
+      "label": "redeem",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:redeem"
+      ]
+    },
+    {
+      "id": "rel:a:exit-sU",
+      "kind": "exit",
+      "source": "pos:vault-sU",
+      "target": "op:redeem.swithdraw",
+      "label": "strategy withdraw (vault only)",
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:s-withdraw"
+      ]
+    },
+    {
+      "id": "rel:a:holds-user",
+      "kind": "holds",
+      "source": "ent:user",
+      "target": "pos:user-vU",
+      "label": "holds",
+      "status": {
+        "basis": "observed",
+        "support": "manual",
+        "verification": "supported"
+      },
+      "evidence": [
+        "ev:a:tx-deposit"
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "id": "exit:a:vU",
+      "position": "pos:user-vU",
+      "label": "Redeem vU for Token U",
+      "steps": [
+        {
+          "order": 1,
+          "operation": "op:redeem",
+          "actor": "ent:user",
+          "transaction": "same",
+          "description": "Holder calls redeem(shares); shares are burned from msg.sender, so only the holder can exit its own position.",
+          "conditions": [
+            {
+              "id": "c:a:x1",
+              "kind": "require",
+              "text": "Caller holds at least `shares` vU",
+              "expression": "balanceOf[msg.sender] >= shares",
+              "evidence": [
+                "ev:a:burn-impl"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:a:redeem",
+            "ev:a:redeem-burn"
+          ]
+        },
+        {
+          "order": 2,
+          "operation": "op:redeem.swithdraw",
+          "actor": "ent:vault",
+          "transaction": "same",
+          "optional": true,
+          "description": "Only if the vault's idle U is below the redemption amount.",
+          "conditions": [
+            {
+              "id": "c:a:x2",
+              "kind": "branch",
+              "text": "idle U in vault < assets",
+              "expression": "idle < assets",
+              "evidence": [
+                "ev:a:redeem-branch"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:a:redeem-branch",
+            "ev:a:s-withdraw"
+          ]
+        },
+        {
+          "order": 3,
+          "operation": "op:redeem.mwithdraw",
+          "actor": "ent:strategy",
+          "transaction": "same",
+          "optional": true,
+          "description": "Only if the strategy's idle U is below the requested amount; relies on market L liquidity.",
+          "conditions": [
+            {
+              "id": "c:a:x3",
+              "kind": "branch",
+              "text": "idle U in strategy < amount",
+              "expression": "idle < amount",
+              "evidence": [
+                "ev:a:s-mwithdraw"
+              ]
+            },
+            {
+              "id": "c:a:x3b",
+              "kind": "external",
+              "text": "Market L can pay out (implementation not analysed)",
+              "evidence": [
+                "ev:a:imarket-withdraw"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:a:s-mwithdraw"
+          ]
+        },
+        {
+          "order": 4,
+          "operation": "op:redeem.pay",
+          "actor": "ent:vault",
+          "transaction": "same",
+          "description": "Vault transfers Token U to the holder.",
+          "evidence": [
+            "ev:a:redeem-pay"
+          ]
+        }
+      ],
+      "consumes": [
+        {
+          "id": "f:a:x-c",
+          "asset": "asset:vU",
+          "from": "ent:user",
+          "to": null,
+          "amount": {
+            "asset": "asset:vU",
+            "unit": "unknown",
+            "expression": "shares"
+          },
+          "mechanism": "burn",
+          "evidence": [
+            "ev:a:redeem-burn"
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "id": "f:a:x-r",
+          "asset": "asset:U",
+          "from": "ent:vault",
+          "to": "ent:user",
+          "amount": {
+            "asset": "asset:U",
+            "unit": "unknown",
+            "expression": "shares * totalAssets() / totalSupply"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:a:redeem-pay"
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "id": "c:a:x-all",
+          "kind": "external",
+          "text": "Downstream liquidity in market L when the vault and strategy idle balances are insufficient",
+          "evidence": [
+            "ev:a:llm-liquidity"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "partially_supported",
+        "checks": [
+          {
+            "id": "chk:a:x-actor",
+            "description": "Exit actor equals share owner (burn from msg.sender)",
+            "result": "pass",
+            "evidence": [
+              "ev:a:redeem-burn"
+            ]
+          },
+          {
+            "id": "chk:a:x-recv",
+            "description": "Asset receiver equals caller",
+            "result": "pass",
+            "evidence": [
+              "ev:a:redeem-pay"
+            ]
+          },
+          {
+            "id": "chk:a:x-ext",
+            "description": "Downstream withdrawal implementation analysed",
+            "result": "unknown",
+            "detail": "IMarketL is interface-only",
+            "evidence": [
+              "ev:a:imarket"
+            ]
+          }
+        ]
+      },
+      "evidence": [
+        "ev:a:redeem"
+      ],
+      "unresolved": [
+        "unr:a:market-impl",
+        "unr:a:liquidity"
+      ]
+    },
+    {
+      "id": "exit:a:sU",
+      "position": "pos:vault-sU",
+      "label": "Vault withdraws from strategy",
+      "steps": [
+        {
+          "order": 1,
+          "operation": "op:redeem.swithdraw",
+          "actor": "ent:vault",
+          "transaction": "same",
+          "description": "Only callable by the vault (onlyVault); in this code it is reached through ExampleVault.redeem.",
+          "conditions": [
+            {
+              "id": "c:a:xs1",
+              "kind": "access_control",
+              "text": "msg.sender == vault",
+              "expression": "msg.sender == vault",
+              "evidence": [
+                "ev:a:s-onlyvault"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:a:s-withdraw"
+          ]
+        },
+        {
+          "order": 2,
+          "operation": "op:redeem.mwithdraw",
+          "actor": "ent:strategy",
+          "transaction": "same",
+          "optional": true,
+          "conditions": [
+            {
+              "id": "c:a:xs2",
+              "kind": "branch",
+              "text": "idle U in strategy < amount",
+              "expression": "idle < amount",
+              "evidence": [
+                "ev:a:s-mwithdraw"
+              ]
+            }
+          ],
+          "evidence": [
+            "ev:a:s-mwithdraw"
+          ]
+        }
+      ],
+      "returns": [
+        {
+          "id": "f:a:xs-r",
+          "asset": "asset:U",
+          "from": "ent:strategy",
+          "to": "ent:vault",
+          "amount": {
+            "asset": "asset:U",
+            "unit": "unknown",
+            "expression": "amount"
+          },
+          "mechanism": "transfer",
+          "evidence": [
+            "ev:a:s-pay"
+          ]
+        }
+      ],
+      "status": {
+        "basis": "static",
+        "support": "rule",
+        "verification": "partially_supported"
+      },
+      "evidence": [
+        "ev:a:s-withdraw"
+      ],
+      "unresolved": [
+        "unr:a:market-impl"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev:a:vault-asset",
+      "kind": "source",
+      "title": "ExampleVault.asset (Token U)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 10,
+        "end_line": 10,
+        "snippet": "    IERC20 public immutable asset;            // Token U (example)",
+        "contract": "ExampleVault"
+      }
+    },
+    {
+      "id": "ev:a:vault-shares",
+      "kind": "source",
+      "title": "vU share ledger",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 15,
+        "end_line": 16,
+        "snippet": "    mapping(address => uint256) public balanceOf;   // vU shares\n    uint256 public totalSupply;",
+        "contract": "ExampleVault"
+      }
+    },
+    {
+      "id": "ev:a:strategy-var",
+      "kind": "source",
+      "title": "ExampleVault.strategy",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 11,
+        "end_line": 11,
+        "snippet": "    ExampleStrategy public strategy;          // bound by configuration",
+        "contract": "ExampleVault"
+      }
+    },
+    {
+      "id": "ev:a:keeper",
+      "kind": "source",
+      "title": "onlyKeeper modifier",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 23,
+        "end_line": 25,
+        "snippet": "    modifier onlyKeeper() {\n        require(msg.sender == keeper, \"!keeper\");\n        _;",
+        "contract": "ExampleVault"
+      }
+    },
+    {
+      "id": "ev:a:paused",
+      "kind": "source",
+      "title": "whenNotPaused modifier",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 18,
+        "end_line": 20,
+        "snippet": "    modifier whenNotPaused() {\n        require(!paused, \"paused\");\n        _;",
+        "contract": "ExampleVault"
+      }
+    },
+    {
+      "id": "ev:a:totalassets",
+      "kind": "source",
+      "title": "ExampleVault.totalAssets()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 28,
+        "end_line": 30,
+        "snippet": "    function totalAssets() public view returns (uint256) {\n        return asset.balanceOf(address(this)) + strategy.totalAssets();\n    }",
+        "contract": "ExampleVault",
+        "function": "totalAssets()"
+      }
+    },
+    {
+      "id": "ev:a:deposit",
+      "kind": "source",
+      "title": "ExampleVault.deposit()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 32,
+        "end_line": 38,
+        "snippet": "    function deposit(uint256 assets) external whenNotPaused returns (uint256 shares) {\n        require(assets > 0, \"zero\");\n        uint256 supply = totalSupply;\n        shares = supply == 0 ? assets : assets * supply / totalAssets();\n        asset.transferFrom(msg.sender, address(this), assets);\n        _mint(msg.sender, shares);\n    }",
+        "contract": "ExampleVault",
+        "function": "deposit(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:deposit-zero",
+      "kind": "source",
+      "title": "require(assets > 0)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 33,
+        "end_line": 33,
+        "snippet": "        require(assets > 0, \"zero\");",
+        "contract": "ExampleVault",
+        "function": "deposit(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:deposit-shares",
+      "kind": "source",
+      "title": "share amount",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 35,
+        "end_line": 35,
+        "snippet": "        shares = supply == 0 ? assets : assets * supply / totalAssets();",
+        "contract": "ExampleVault",
+        "function": "deposit(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:deposit-pull",
+      "kind": "source",
+      "title": "asset.transferFrom(msg.sender, vault, assets)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 36,
+        "end_line": 36,
+        "snippet": "        asset.transferFrom(msg.sender, address(this), assets);",
+        "contract": "ExampleVault",
+        "function": "deposit(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:deposit-mint",
+      "kind": "source",
+      "title": "_mint(msg.sender, shares)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 37,
+        "end_line": 37,
+        "snippet": "        _mint(msg.sender, shares);",
+        "contract": "ExampleVault",
+        "function": "deposit(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:mint-impl",
+      "kind": "source",
+      "title": "ExampleVault._mint()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 56,
+        "end_line": 59,
+        "snippet": "    function _mint(address to, uint256 amount) internal {\n        totalSupply += amount;\n        balanceOf[to] += amount;\n    }",
+        "contract": "ExampleVault",
+        "function": "_mint(address,uint256)"
+      }
+    },
+    {
+      "id": "ev:a:burn-impl",
+      "kind": "source",
+      "title": "ExampleVault._burn()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 61,
+        "end_line": 64,
+        "snippet": "    function _burn(address from, uint256 amount) internal {\n        balanceOf[from] -= amount;   // reverts if `from` holds fewer shares\n        totalSupply -= amount;\n    }",
+        "contract": "ExampleVault",
+        "function": "_burn(address,uint256)"
+      }
+    },
+    {
+      "id": "ev:a:allocate",
+      "kind": "source",
+      "title": "ExampleVault.allocate()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 40,
+        "end_line": 44,
+        "snippet": "    function allocate(uint256 amount) external onlyKeeper {\n        require(amount <= asset.balanceOf(address(this)), \"idle\");\n        asset.transfer(address(strategy), amount);\n        strategy.deposit(amount);\n    }",
+        "contract": "ExampleVault",
+        "function": "allocate(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:allocate-idle",
+      "kind": "source",
+      "title": "require(amount <= idle)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 41,
+        "end_line": 41,
+        "snippet": "        require(amount <= asset.balanceOf(address(this)), \"idle\");",
+        "contract": "ExampleVault",
+        "function": "allocate(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:allocate-transfer",
+      "kind": "source",
+      "title": "asset.transfer(strategy, amount)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 42,
+        "end_line": 42,
+        "snippet": "        asset.transfer(address(strategy), amount);",
+        "contract": "ExampleVault",
+        "function": "allocate(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:allocate-call",
+      "kind": "source",
+      "title": "strategy.deposit(amount)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 43,
+        "end_line": 43,
+        "snippet": "        strategy.deposit(amount);",
+        "contract": "ExampleVault",
+        "function": "allocate(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:redeem",
+      "kind": "source",
+      "title": "ExampleVault.redeem()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 46,
+        "end_line": 54,
+        "snippet": "    function redeem(uint256 shares) external returns (uint256 assets) {\n        assets = shares * totalAssets() / totalSupply;\n        _burn(msg.sender, shares);\n        uint256 idle = asset.balanceOf(address(this));\n        if (idle < assets) {\n            strategy.withdraw(assets - idle);\n        }\n        asset.transfer(msg.sender, assets);\n    }",
+        "contract": "ExampleVault",
+        "function": "redeem(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:redeem-assets",
+      "kind": "source",
+      "title": "assets = shares * totalAssets() / totalSupply",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 47,
+        "end_line": 47,
+        "snippet": "        assets = shares * totalAssets() / totalSupply;",
+        "contract": "ExampleVault",
+        "function": "redeem(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:redeem-burn",
+      "kind": "source",
+      "title": "_burn(msg.sender, shares)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 48,
+        "end_line": 48,
+        "snippet": "        _burn(msg.sender, shares);",
+        "contract": "ExampleVault",
+        "function": "redeem(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:redeem-branch",
+      "kind": "source",
+      "title": "if (idle < assets) strategy.withdraw(...)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 50,
+        "end_line": 52,
+        "snippet": "        if (idle < assets) {\n            strategy.withdraw(assets - idle);\n        }",
+        "contract": "ExampleVault",
+        "function": "redeem(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:redeem-pay",
+      "kind": "source",
+      "title": "asset.transfer(msg.sender, assets)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleVault.sol",
+        "start_line": 53,
+        "end_line": 53,
+        "snippet": "        asset.transfer(msg.sender, assets);",
+        "contract": "ExampleVault",
+        "function": "redeem(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:s-onlyvault",
+      "kind": "source",
+      "title": "onlyVault modifier",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 17,
+        "end_line": 19,
+        "snippet": "    modifier onlyVault() {\n        require(msg.sender == vault, \"!vault\");\n        _;",
+        "contract": "ExampleStrategy"
+      }
+    },
+    {
+      "id": "ev:a:s-shares",
+      "kind": "source",
+      "title": "sU share ledger",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 14,
+        "end_line": 15,
+        "snippet": "    mapping(address => uint256) public balanceOf;   // sU shares\n    uint256 public totalSupply;",
+        "contract": "ExampleStrategy"
+      }
+    },
+    {
+      "id": "ev:a:s-totalassets",
+      "kind": "source",
+      "title": "ExampleStrategy.totalAssets()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 22,
+        "end_line": 24,
+        "snippet": "    function totalAssets() public view returns (uint256) {\n        return asset.balanceOf(address(this)) + market.balanceOf(address(this));\n    }",
+        "contract": "ExampleStrategy",
+        "function": "totalAssets()"
+      }
+    },
+    {
+      "id": "ev:a:s-deposit",
+      "kind": "source",
+      "title": "ExampleStrategy.deposit()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 26,
+        "end_line": 33,
+        "snippet": "    function deposit(uint256 amount) external onlyVault {\n        uint256 supply = totalSupply;\n        uint256 shares = supply == 0 ? amount : amount * supply / (totalAssets() - amount);\n        totalSupply += shares;\n        balanceOf[vault] += shares;\n        asset.approve(address(market), amount);\n        market.supply(address(asset), amount, address(this));\n    }",
+        "contract": "ExampleStrategy",
+        "function": "deposit(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:s-mint",
+      "kind": "source",
+      "title": "sU credited to vault",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 29,
+        "end_line": 30,
+        "snippet": "        totalSupply += shares;\n        balanceOf[vault] += shares;",
+        "contract": "ExampleStrategy",
+        "function": "deposit(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:s-supply",
+      "kind": "source",
+      "title": "market.supply(asset, amount, strategy)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 32,
+        "end_line": 32,
+        "snippet": "        market.supply(address(asset), amount, address(this));",
+        "contract": "ExampleStrategy",
+        "function": "deposit(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:s-withdraw",
+      "kind": "source",
+      "title": "ExampleStrategy.withdraw()",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 35,
+        "end_line": 44,
+        "snippet": "    function withdraw(uint256 amount) external onlyVault {\n        uint256 shares = amount * totalSupply / totalAssets();\n        balanceOf[vault] -= shares;\n        totalSupply -= shares;\n        uint256 idle = asset.balanceOf(address(this));\n        if (idle < amount) {\n            market.withdraw(address(asset), amount - idle, address(this));\n        }\n        asset.transfer(vault, amount);\n    }",
+        "contract": "ExampleStrategy",
+        "function": "withdraw(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:s-burn",
+      "kind": "source",
+      "title": "sU debited from vault",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 37,
+        "end_line": 38,
+        "snippet": "        balanceOf[vault] -= shares;\n        totalSupply -= shares;",
+        "contract": "ExampleStrategy",
+        "function": "withdraw(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:s-mwithdraw",
+      "kind": "source",
+      "title": "market.withdraw(asset, amount - idle, strategy)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 40,
+        "end_line": 42,
+        "snippet": "        if (idle < amount) {\n            market.withdraw(address(asset), amount - idle, address(this));\n        }",
+        "contract": "ExampleStrategy",
+        "function": "withdraw(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:s-pay",
+      "kind": "source",
+      "title": "asset.transfer(vault, amount)",
+      "synthetic": true,
+      "source": {
+        "file": "example/ExampleStrategy.sol",
+        "start_line": 43,
+        "end_line": 43,
+        "snippet": "        asset.transfer(vault, amount);",
+        "contract": "ExampleStrategy",
+        "function": "withdraw(uint256)"
+      }
+    },
+    {
+      "id": "ev:a:imarket",
+      "kind": "source",
+      "title": "IMarketL interface",
+      "synthetic": true,
+      "source": {
+        "file": "example/IMarketL.sol",
+        "start_line": 6,
+        "end_line": 13,
+        "snippet": "interface IMarketL {\n    /// Pulls `amount` of `token` from msg.sender and credits receipt tokens (lU) to `onBehalfOf`.\n    function supply(address token, uint256 amount, address onBehalfOf) external;\n\n    /// Burns receipt tokens of msg.sender and sends `amount` of `token` to `to`.\n    function withdraw(address token, uint256 amount, address to) external returns (uint256);\n\n    function balanceOf(address account) external view returns (uint256);",
+        "contract": "IMarketL"
+      }
+    },
+    {
+      "id": "ev:a:imarket-supply",
+      "kind": "source",
+      "title": "IMarketL.supply()",
+      "synthetic": true,
+      "source": {
+        "file": "example/IMarketL.sol",
+        "start_line": 7,
+        "end_line": 8,
+        "snippet": "    /// Pulls `amount` of `token` from msg.sender and credits receipt tokens (lU) to `onBehalfOf`.\n    function supply(address token, uint256 amount, address onBehalfOf) external;",
+        "contract": "IMarketL",
+        "function": "supply(address,uint256,address)"
+      }
+    },
+    {
+      "id": "ev:a:imarket-withdraw",
+      "kind": "source",
+      "title": "IMarketL.withdraw()",
+      "synthetic": true,
+      "source": {
+        "file": "example/IMarketL.sol",
+        "start_line": 10,
+        "end_line": 11,
+        "snippet": "    /// Burns receipt tokens of msg.sender and sends `amount` of `token` to `to`.\n    function withdraw(address token, uint256 amount, address to) external returns (uint256);",
+        "contract": "IMarketL",
+        "function": "withdraw(address,uint256,address)"
+      }
+    },
+    {
+      "id": "ev:a:tx-deposit",
+      "kind": "transaction",
+      "title": "Deposit transaction (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xexample000000000000000000000000000000000000000000000000000000a001",
+        "block": 1001,
+        "call_path": "User → ExampleVault.deposit(1000e18)",
+        "data": {
+          "assets": "1000000000000000000000",
+          "shares": "1000000000000000000000"
+        }
+      },
+      "description": "Synthetic trace of a first deposit; shares equal assets because totalSupply was 0."
+    },
+    {
+      "id": "ev:a:log-transfer",
+      "kind": "log",
+      "title": "Transfer(User → Vault, 1000 U) log (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xexample000000000000000000000000000000000000000000000000000000a001",
+        "block": 1001,
+        "log_index": 0,
+        "data": {
+          "event": "Transfer",
+          "from": "0x00000000000000000000000000000000000000aa",
+          "to": "0x00000000000000000000000000000000000000b1",
+          "value": "1000000000000000000000"
+        }
+      }
+    },
+    {
+      "id": "ev:a:tx-allocate",
+      "kind": "trace",
+      "title": "Allocate trace (synthetic)",
+      "synthetic": true,
+      "execution": {
+        "chain_id": 31337,
+        "tx_hash": "0xexample000000000000000000000000000000000000000000000000000000a002",
+        "block": 1100,
+        "call_path": "Keeper → ExampleVault.allocate(800e18) → ExampleStrategy.deposit(800e18) → MarketL.supply(U, 800e18, strategy)",
+        "data": {
+          "amount": "800000000000000000000"
+        }
+      }
+    },
+    {
+      "id": "ev:a:cfg-binding",
+      "kind": "config",
+      "title": "Deployment binding: ExampleVault.strategy = ExampleStrategy",
+      "synthetic": true,
+      "description": "Synthetic deployment configuration binding the vault's strategy variable to the ExampleStrategy instance."
+    },
+    {
+      "id": "ev:a:llm-liquidity",
+      "kind": "llm",
+      "title": "Model note on market liquidity",
+      "synthetic": true,
+      "description": "Suggested by a language model (synthetic example): redemption may revert if market L lacks liquidity; no check exists in ExampleStrategy.withdraw.",
+      "llm": {
+        "model": "example-model",
+        "prompt_version": "example",
+        "call_id": "example-1"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "example/ExampleVault.sol",
+      "language": "solidity",
+      "synthetic": true,
+      "sha256": "aa7e24b52b74183d9c2e329e8a5a7b09a5816d1210073f90a69fd9b3fe72016c",
+      "content": "// SYNTHETIC EXAMPLE CODE — not from a real project\n// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport {IERC20} from \"./IERC20.sol\";\nimport {ExampleStrategy} from \"./ExampleStrategy.sol\";\n\n/// Example vault: users deposit Token U and receive vU shares.\ncontract ExampleVault {\n    IERC20 public immutable asset;            // Token U (example)\n    ExampleStrategy public strategy;          // bound by configuration\n    address public keeper;\n    bool public paused;\n\n    mapping(address => uint256) public balanceOf;   // vU shares\n    uint256 public totalSupply;\n\n    modifier whenNotPaused() {\n        require(!paused, \"paused\");\n        _;\n    }\n\n    modifier onlyKeeper() {\n        require(msg.sender == keeper, \"!keeper\");\n        _;\n    }\n\n    function totalAssets() public view returns (uint256) {\n        return asset.balanceOf(address(this)) + strategy.totalAssets();\n    }\n\n    function deposit(uint256 assets) external whenNotPaused returns (uint256 shares) {\n        require(assets > 0, \"zero\");\n        uint256 supply = totalSupply;\n        shares = supply == 0 ? assets : assets * supply / totalAssets();\n        asset.transferFrom(msg.sender, address(this), assets);\n        _mint(msg.sender, shares);\n    }\n\n    function allocate(uint256 amount) external onlyKeeper {\n        require(amount <= asset.balanceOf(address(this)), \"idle\");\n        asset.transfer(address(strategy), amount);\n        strategy.deposit(amount);\n    }\n\n    function redeem(uint256 shares) external returns (uint256 assets) {\n        assets = shares * totalAssets() / totalSupply;\n        _burn(msg.sender, shares);\n        uint256 idle = asset.balanceOf(address(this));\n        if (idle < assets) {\n            strategy.withdraw(assets - idle);\n        }\n        asset.transfer(msg.sender, assets);\n    }\n\n    function _mint(address to, uint256 amount) internal {\n        totalSupply += amount;\n        balanceOf[to] += amount;\n    }\n\n    function _burn(address from, uint256 amount) internal {\n        balanceOf[from] -= amount;   // reverts if `from` holds fewer shares\n        totalSupply -= amount;\n    }\n}\n"
+    },
+    {
+      "path": "example/ExampleStrategy.sol",
+      "language": "solidity",
+      "synthetic": true,
+      "sha256": "8be00453417b501cbf9e0c4fddcf13c8492812f9c6a89c55061b87c35684ddca",
+      "content": "// SYNTHETIC EXAMPLE CODE — not from a real project\n// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\nimport {IERC20} from \"./IERC20.sol\";\nimport {IMarketL} from \"./IMarketL.sol\";\n\n/// Example strategy: issues sU shares to its vault and supplies Token U to market L.\ncontract ExampleStrategy {\n    IERC20 public immutable asset;               // Token U (example)\n    IMarketL public immutable market;            // lending market L (interface only)\n    address public immutable vault;\n\n    mapping(address => uint256) public balanceOf;   // sU shares\n    uint256 public totalSupply;\n\n    modifier onlyVault() {\n        require(msg.sender == vault, \"!vault\");\n        _;\n    }\n\n    function totalAssets() public view returns (uint256) {\n        return asset.balanceOf(address(this)) + market.balanceOf(address(this));\n    }\n\n    function deposit(uint256 amount) external onlyVault {\n        uint256 supply = totalSupply;\n        uint256 shares = supply == 0 ? amount : amount * supply / (totalAssets() - amount);\n        totalSupply += shares;\n        balanceOf[vault] += shares;\n        asset.approve(address(market), amount);\n        market.supply(address(asset), amount, address(this));\n    }\n\n    function withdraw(uint256 amount) external onlyVault {\n        uint256 shares = amount * totalSupply / totalAssets();\n        balanceOf[vault] -= shares;\n        totalSupply -= shares;\n        uint256 idle = asset.balanceOf(address(this));\n        if (idle < amount) {\n            market.withdraw(address(asset), amount - idle, address(this));\n        }\n        asset.transfer(vault, amount);\n    }\n}\n"
+    },
+    {
+      "path": "example/IMarketL.sol",
+      "language": "solidity",
+      "synthetic": true,
+      "sha256": "99d868573e2562709a9228d5d6b806f034e599165cb5eeac1d5ac715a7686440",
+      "content": "// SYNTHETIC EXAMPLE CODE — not from a real project\n// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\n/// Interface only: the implementation of lending market L is outside the analysis scope.\ninterface IMarketL {\n    /// Pulls `amount` of `token` from msg.sender and credits receipt tokens (lU) to `onBehalfOf`.\n    function supply(address token, uint256 amount, address onBehalfOf) external;\n\n    /// Burns receipt tokens of msg.sender and sends `amount` of `token` to `to`.\n    function withdraw(address token, uint256 amount, address to) external returns (uint256);\n\n    function balanceOf(address account) external view returns (uint256);\n}\n"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "unr:a:market-impl",
+      "kind": "external_implementation",
+      "text": "Lending market L is only available as the IMarketL interface. Receipt minting, exchange rate and withdrawal behaviour are taken from interface comments.",
+      "subjects": [
+        "ent:marketL",
+        "asset:lU",
+        "op:allocate.supply",
+        "op:redeem.mwithdraw"
+      ],
+      "evidence": [
+        "ev:a:imarket"
+      ],
+      "suggestion": "Add the market implementation to the analysis scope or bind it to a known adapter."
+    },
+    {
+      "id": "unr:a:liquidity",
+      "kind": "llm_question",
+      "text": "Can redemption revert when market L has insufficient liquidity? ExampleStrategy.withdraw has no fallback.",
+      "subjects": [
+        "exit:a:vU",
+        "op:redeem.mwithdraw"
+      ],
+      "evidence": [
+        "ev:a:llm-liquidity",
+        "ev:a:s-mwithdraw"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task:a:holder",
+      "question": "Who actually holds the Token U after a deposit and an allocation?",
+      "focus": [
+        "asset:U"
+      ],
+      "view": "holdings",
+      "answer": "ExampleVault (idle), ExampleStrategy (idle) and lending market L (supplied). The user holds vU shares — a claim on these positions, not Token U itself."
+    },
+    {
+      "id": "task:a:share",
+      "question": "What does the user's vU position represent, and which positions back it?",
+      "focus": [
+        "pos:user-vU"
+      ],
+      "view": "holdings",
+      "answer": "A pro-rata claim on ExampleVault.totalAssets(): idle U in the vault plus sU held by the vault, which in turn claims idle U in the strategy and lU at market L."
+    },
+    {
+      "id": "task:a:deps",
+      "question": "Which contracts and protocols does the vU share depend on?",
+      "focus": [
+        "asset:vU"
+      ],
+      "view": "dependencies",
+      "answer": "ExampleStrategy (totalAssets) and, through sU, lending market L, whose implementation is outside the analysis scope."
+    },
+    {
+      "id": "task:a:exit",
+      "question": "Which operations are needed to exit a vU position and who performs them?",
+      "focus": [
+        "exit:a:vU"
+      ],
+      "view": "exits",
+      "answer": "The holder calls redeem; the vault may call strategy.withdraw if idle U is insufficient; the strategy may withdraw from market L; the vault pays U to the holder. All in one transaction."
+    },
+    {
+      "id": "task:a:status",
+      "question": "Which steps were observed in a transaction and which are only static candidates?",
+      "focus": [
+        "op:deposit",
+        "op:allocate",
+        "op:redeem"
+      ],
+      "view": "flows",
+      "answer": "Deposit and allocate were observed (synthetic traces); redeem and the market-L withdrawal are static candidates."
+    }
+  ]
+}

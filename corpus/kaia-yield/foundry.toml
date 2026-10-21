@@ -1,0 +1,17 @@
+# Minimal build configuration for the pinned FluxScope snapshot (upstream on the next line).
+# Upstream: https://github.com/superearn-io/superearn-core-public @ ddbfd27e1fab5f7c3a759aca5a4565e22235c9b6
+# Upstream builds with via_ir = true; the analysis only needs the AST, so the IR pipeline is off here.
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.29"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 250
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts-5.3.0/",
+    "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable-4.9.4/",
+    "@superearn/=src/superearn/",
+    "@yearn-vaults/=src/yearn-vaults/",
+]

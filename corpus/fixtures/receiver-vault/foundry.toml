@@ -1,0 +1,5 @@
+# SYNTHETIC TEST FIXTURE for FluxScope (not a real project)
+[profile.default]
+src = "src"
+out = "out"
+solc_version = "0.8.23"
